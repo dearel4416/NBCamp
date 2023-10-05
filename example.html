@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5i5i 팀원 소개 페이지</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100;200&family=Orbit&display=swap');
+
+    * {
+      font-family: 'Black Han Sans', sans-serif;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-family: 'Orbit', sans-serif;
+    }
+
+    header {
+      margin-top: 30px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      margin-top: 10px;
+    }
+
+    .carousel-caption {
+      text-align: left;
+      color: white;
+      left: 50%;
+      width: 350px;
+    }
+
+    .title {
+      color: pink;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .heart-btn {
+      width: 100px;
+      height: 40px;
+    }
+
+    .content {
+      width: 100px;
+      height: 40px;
+      padding: 13px 16px;
+      display: flex;
+
+      border: 2px solid #eae2e1;
+      border-radius: 5px;
+    }
+
+    .content.heart-active {
+      border-color: #f9b9c4;
+      background: #fbd0d8;
+    }
+
+    .heart {
+      background-color: green;
+      background: url("heart.png") no-repeat;
+      background-position: left;
+      background-size: 2900%;
+      height: 90px;
+      width: 90px;
+  
+      transform: translate(-50%, -50%);
+    }
+
+
+    .numb:before {
+      content: '12';
+      font-size: 15px;
+      font-weight: 600;
+      color: #9C9496;
+      font-family: sans-serif;
+    }
+
+    .numb.heart-active:before {
+      content: '13';
+      color: #000;
+    }
+    
+    .heart.heart-active {
+      animation: animate .8s steps(28) 1;
+      background-position: right;
+    }
+
+    @keyframes animate {
+      0% {
+        background-position: left;
+      }
+
+      100% {
+        background-position: right;
+      }
+    }
+
+  </style>
+
+  <script type="module">
+    // Firebase SDK 라이브러리 가져오기
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyBw8nF7iRylWHOkr2CejrhuePQF-FhprbA",
+      authDomain: "sparta-98616.firebaseapp.com",
+      projectId: "sparta-98616",
+      storageBucket: "sparta-98616.appspot.com",
+      messagingSenderId: "441338528647",
+      appId: "1:441338528647:web:f5a7b951b63fd5c9c34922",
+      measurementId: "G-S5SH83J73B"
+    };
+
+    // Firebase 인스턴스 초기화
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+
+    $('.content').click(function () {
+      $('.content').toggleClass("heart-active")
+      $('.heart').toggleClass("heart-active")
+      let val = $('.numb').val();
+      console.log(val);
+    });
+
+
+    //데이터 읽기
+    let docs = await getDocs(collection(db, "member"));
+    docs.forEach((doc) => {
+      let row = doc.data();
+      
+      let url = row['url'];
+      let image = row['image'];
+      let name = row['name'];
+      let like = row['like'];
+
+      let temp_html =
+        ` <div class="col">
+          <a href="${url}" target="_blank">
+            <img
+              src=${image}
+              class="card-img-top" alt="...">
+          </a>
+          <h2 class="fw-normal">${name}</h2>
+          <p>l${like}</p>`;
+
+      $('#member_card').append(temp_html);
+    });
+
+  </script>
+</head>
+
+<body>
+  <header>
+    <img class="logo"
+      src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/c3ea707a-fbb3-4874-b55a-32ff55c5d24c/%EB%A1%9C%EA%B3%A0_%EC%B5%9C%EC%A2%85_%ED%81%AC%EA%B8%B0.png?id=78c70507-5c52-4990-a981-66b7aeedd88a&table=block&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1696514400000&signature=wf0qLO9pG2nQp2Dyf0bzxvaCQXeh0MckYMWPaDqAk6M&downloadName=%EB%A1%9C%EA%B3%A0+%EC%B5%9C%EC%A2%85+%ED%81%AC%EA%B8%B0.png">
+  </header>
+
+  </div>
+  <section class="container">
+    <div id="carouselExampleCaptions" class="carousel slide w-75 m-auto" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="2000">
+          <img src="example1.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h1 class="title">Introdution</h1>
+            <p>저희 팀은 협업과 문제 해결을 중요하게 생각하며 다양한 프로젝트와 기술 도전에 대한 열린 마음을 가지고 있습니다.
+              팀원들은 함께 문제를 해결하는데 강한 의지를 가지고 있으며 지식과 아이디어를 공유하고 다 함께 팀을 이끌어 나가며 프로젝트를 더 효과적으로 수행하기 위해 노력합니다.
+              MBTI I가 무려 5명이 모인… 조용하지만 강한 팀입니다. 아자아자!</p>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+          <img src="example2.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h1 class="title">Promise</h1>
+            <p>1.하루에 한번 TIL쓰기</p>
+            <p>2.문제가 생기면 싸우지 않고 함께 해결 방법을 고민하기문제가 생기면 싸우지 않고 함께 해결 방법을 고민하기</p>
+            <p>3.연락 잘 받고 시간 약속 잘 지키기, 일정 있으면 공유해주고 가기!</p>
+            <p>4.변수 명 공유하기, git pull, push 공유, 백업하기 등 개인 파일 관리 잘 하기</p>
+            <p>5.실력 차이가 나도 눈치 보지 않고 서로 부족한 부분 채워주기</p>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+          <img src="example3.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h1 class="title">Goal</h1>
+            <h4>지치지 않고 캠프 완주해서 완성형 백엔드 개발자가 되자!</h4>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>
+
+  <div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div id="member_card" class="row row-cols-1 row-cols-md-5">
+        <div class="col">
+          <!-- 개인페이지 주소 -->
+          <a href="https://google.com" target="_blank">
+            <img
+              src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fb2b63e42-f566-4f83-8a67-aea77a499566%2FKakaoTalk_20230911_171142516.jpg?table=block&id=f9351868-8717-47fd-bd9b-c06025ddc9cc&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=2000&userId=&cache=v2"
+              class="card-img-top" alt="...">
+          </a>
+          <h2 class="fw-normal">이름</h2>
+          <p>내용</p>
+          <!-- 좋아요 버튼 기능 구현 -->
+          <div class="heart-btn">
+            <div class="content">
+              <span class="heart"></span>
+              <span class="numb"></span>
+            </div>
+          </div>
+
+        </div>
+
+      </div><!-- /.row -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
