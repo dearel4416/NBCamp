@@ -79,7 +79,7 @@
             margin: 20px auto 30px auto;
             padding-top: 20px;
             text-align: center;
-            width: 1200px;
+            width: 500px;
             height: 80px;
             border-radius: 30px;
         }
@@ -96,19 +96,24 @@
             text-align: center;
         }
 
+        .like_num{
+            font-size: 25pt;
+            font-weight: bold;
+        }
         .like_btn {
             width: 32px;
             height: 32px;
             border: none;
             background-color: transparent !important;
             background-image: url("empty.png");
+            transition-duration: 0.3ms;
         }
 
-        .like_num {
-            top: 0%;
-            font-size: 22px;
-            font-weight: bold;
+        .like_btn.active {
+            background-image: url("full.png");
         }
+
+
 
         /*방명록 */
         .comment {
@@ -121,7 +126,7 @@
             margin: 20px auto 0px auto;
             padding-top: 20px;
             text-align: center;
-            width: 1200px;
+            width: 1000px;
             height: 80px;
             border-radius: 30px;
         }
@@ -167,9 +172,7 @@
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-
+        import { collection, addDoc, getDocs, query, where, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         // 일단 이민주 DB 가져옴
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -207,24 +210,49 @@
           </a>
           <div class="member_content">
             <h2>${name}</h2>
-            <p><button class="like_btn" id="like_btn-${id}" type="button"></button><span id="like_num-${id}" class="like_num">  ${like}</span></p>
+            <p id="${id}"><button class="like_btn" value="${id}" id="like_btn" type="button"></button><span id="like_num-${id}" class="like_num">  ${like}</span></p>
           </div> 
           </div>`
 
+
+
             $('#member_card').append(temp_html);
         });
-
-
+        
         //좋아요 버튼 누르면
-        $("#like_btn").click(async function () {
-            alert('클릭');
-            let mem_id = e.target.id.split("-")[1];//like_btn-id
-            
-            let mem = doc(db, "id", mem_id);
-            Console.log(mem);
-            await updateDoc(mem, {
-                'like': like
+        $(".like_btn").click(async function () {
+            //$(this) 클릭한 것만 적용
+            $(this).toggleClass("active")
+
+            /*
+            $(this).css({
+                "background-image": "url(full.png)"//꽉찬하트로 변경
             });
+            */
+
+            var mem_id = $(this).val();
+
+            const q = query(collection(db, "member"), where("id", "==", Number(mem_id)));
+            const mem = await getDocs(q);
+            let uid = 0;
+            let like = 0;
+
+            mem.forEach((doc) => {
+                uid = doc.id;//문서 이름 가져오기
+                let row = doc.data();
+                like = row['like'];
+            });
+            like++;
+
+            const member = doc(db, "member", uid);//문서이름으로 받는 방법밖에 없나???
+            // console.log(member);
+
+            await updateDoc(member, {
+                like: increment(1)//1증가
+            });
+
+
+            let txt = $("#like_num-" + mem_id).text("  "+like);//화면 num 값 증가시키기
 
         });
 
@@ -309,6 +337,7 @@
                 data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
+                
             </button>
         </div>
     </section>

@@ -12,8 +12,8 @@
 
 
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
         /* 폰트 */
@@ -63,8 +63,7 @@
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc, getDocs, query, where, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 
         // 일단 이민주 DB 가져옴
@@ -85,20 +84,22 @@
 
 
         //데이터 읽어서 개인 페이지 요소에 넣기
-        let docs = await getDocs(collection(db, "member"));
-        docs.forEach((doc) => {
+        //각자 이름 가져오고 파일명을 detail_mj.html(개인 URL) 이런식으로 저장해서 member url 필드에 저장하면 될듯?
+        const q = query(collection(db, "member"), where("name", "==", "이민주"));
+
+        const mem = await getDocs(q);
+
+        mem.forEach((doc) => {
             let row = doc.data();
-
+            let image = row['image'];
             let name = row['name'];
-            if (name == "이민주") {
-                //각자 이름 가져오고 파일명을 detail_mj.html(개인 URL) 이런식으로 저장해서 member url 필드에 저장하면 될듯?
-                let image = row['image'];
 
-                $('#img_pos').css("background-image", "url(" + image + ")");
-                $('#name').text(name);
-            }
-
+            $('#img_pos').css("background-image", "url(" + image + ")");
+            $('#name').text(name);
         });
+
+
+
 
     </script>
 </head>
