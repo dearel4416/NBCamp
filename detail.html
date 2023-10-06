@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>5i5i OOO 소개 페이지</title>
+    <title id="tilte"></title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -18,9 +18,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100;200&family=Orbit&display=swap');
 
         * {
-            font-family: 'Black Han Sans', sans-serif;
             font-family: 'Noto Sans KR', sans-serif;
-            font-family: 'Orbit', sans-serif;
         }
 
         /*헤더 */
@@ -54,6 +52,7 @@
             background-color: #e4e9d7;
         }
 
+        /*이미지*/
         .img_pos {
             background-color: green;
             margin-top: 70px;
@@ -67,7 +66,30 @@
             margin-top: 10px;
             width: 300px;
             height: 400px;
+        }
 
+        .blog{
+            width: 32px;
+            height: 32px;
+            margin: 10px 10px 10px 0px
+
+        }
+        .blog_img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            
+        }
+        .sns{
+            width: 32px;
+            height: 32px;
+            margin: 10px 10px 10px 0px
+        }
+        .sns_img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            margin: 10px 10px 10px 0px
         }
     </style>
 
@@ -113,11 +135,11 @@
             });
         });
 
-        //이전페이지 데이터 받아오기
+        //이전페이지 데이터 받아오기(이름으로 받음)
         const receivedData = location.href.split('?')[1];
         let name = decodeURI(receivedData); // data
-        console.log(name);
 
+        $('title').text(name + " 소개 페이지");
         //데이터 읽어서 개인 페이지 요소에 넣기
         const q = query(collection(db, "member"), where("name", "==", name));
 
@@ -127,9 +149,23 @@
             let row = doc.data();
             let image = row['image'];
             let name = row['name'];
+            let blog = row['blog'];
+            let sns = row['sns'];
 
             $('#img_pos').css("background-image", "url(" + image + ")");
             $('#name').text(name);
+
+
+            //존재할때
+            if (blog.indexOf('velog') != -1) {
+                $('.blog_img').attr("src", "velog_icon.png");
+            } else if (blog.indexOf('tistory') != -1) {
+                $('.blog_img').attr("src", "tistory.png");
+            }
+            $('#blog').attr("href", blog);
+      
+            $('.sns_img').attr("src", "instagram.png");
+            $('#sns').attr("href", sns);
         });
 
     </script>
@@ -170,9 +206,20 @@
         </nav>
     </header>
 
+    
     <div class="img_pos" id="img_pos">
     </div>
+
     <h1 class="name" id="name">이름</h1>
+
+    <!-- 블로그 버튼 -->
+    <a id="blog" class="blog" href="" target="_blank">
+        <img src="" class="blog_img" alt="...">
+    </a>
+    <!-- sns 버튼 -->
+    <a id="sns" class="sns" href="" target="_blank">
+        <img src="" class="sns_img" alt="...">
+    </a>
 </body>
 
 </html>
