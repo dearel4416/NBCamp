@@ -188,8 +188,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-
-
         // 헤더 멤버소개 부분
         $(document).ready(function () {
             var menuTimeout;
@@ -208,9 +206,6 @@
             });
         });
 
-
-
-        
         // 데이터 읽어서 멤버 카드에 넣기
         let docs = await getDocs(collection(db, "member"));
         docs.forEach((doc) => {
@@ -245,7 +240,6 @@
             $(this).css({
                 "background-image": "url(full.png)"//꽉찬하트로 변경
             });
-
 
             var mem_id = $(this).val();
 
@@ -327,12 +321,12 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#main">5i5i</a>
+                            <a class="nav-link" href="#5i5imain">5i5i</a>
                         </li>
                         <li class="nav-item">
                             <a id="memberIntroBtn" class="nav-link" href="#memberintro">멤버소개</a>
                             <div class="memberIntroMenu">
-                                <a href="detail.html?이슬비" target="_blank" >이슬비</a>
+                                <a href="detail.html?이슬비" target="_blank">이슬비</a>
                                 <a href="detail.html?이민주" target="_blank">이민주</a>
                                 <a href="detail.html?이선오" target="_blank">이선오</a>
                                 <a href="detail.html?홍효정" target="_blank">홍효정</a>
@@ -450,8 +444,9 @@
                 aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="button" id="msg_btn">입력</button>
 
-            <!-- 댓글 출력란 -->
         </div>
+
+        <!-- 댓글 출력란 -->
         <div class="commentarea my-3 p-3 m-auto bg-body rounded shadow-sm">
             <hr>
             <div class="text-body-secondarys w-100 pt-3" style="position: relative;">
