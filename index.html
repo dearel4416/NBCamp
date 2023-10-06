@@ -242,17 +242,18 @@
             //메세지 추가
             //선택자 안의 클래스 변경, 포스트 형식 변경_슬비
             $(".text-body-secondarys").append(`
-            <p class="cheer pb-3 mb-0 small lh-sm border-bottom">
+            <p class="cheer pb-3 mb-0 lh-sm border-bottom">
                     <strong class="comment d-block text-gray-dark">${selectVal}에게</strong>
-                    ${message}
-                    <button class="btn btn-sm btn-outline-danger comment-delete-btn" data-comment-id="{{id}}"
-                        width="25px" style="position: absolute; right: 0px;">
-                        삭제</button>
+                    <br>
+                    ${massage}
+                    <button width="10px"
+                        style="position: absolute; right: 0px; bottom: 4px;">삭제</button>
                 </p>
-            `);
+                `);
         });
 
-        // 댓글을 삭제. ..
+
+
     </script>
 </head>
 
@@ -337,9 +338,6 @@
 
             </div><!-- /.row -->
         </div>
-
-
-
         <div class="comment">
             <div class="mainmsg">
                 <h2>5i5i 팀원들에게 응원의 메세지를 남겨보세요</h2>
@@ -362,18 +360,18 @@
                 <button class="btn btn-outline-secondary" type="button" id="msg_btn">입력</button>
 
             </div>
+
             <!-- 댓글 출력란 -->
         </div>
         <div class="my-3 p-3 bg-body rounded shadow-sm">
             <hr>
-
-            <div class="text-body-secondarys pt-3" style="position: relative;">
-                <p class="cheer pb-3 mb-0 small lh-sm border-bottom">
+            <div class="text-body-secondarys pt-1" style="position: relative;">
+                <p class="cheer pb-3 mb-0 lh-sm border-bottom">
                     <strong class="comment d-block text-gray-dark">@username에게</strong>
+                    <br>
                     안녕하세요. 테스트입니다. 댓글을 남겨주세요!
-                    <button class="btn btn-sm btn-outline-danger comment-delete-btn" data-comment-id="{{id}}"
-                        width="25px" style="position: absolute; right: 0px;">
-                        삭제</button>
+                    <button width="10px"
+                        style="position: absolute; right: 0px; bottom: 4px;">삭제</button>
                 </p>
 
             </div>

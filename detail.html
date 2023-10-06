@@ -10,10 +10,8 @@
 
     <title>5i5i OOO 소개 페이지</title>
 
-
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
         /* 폰트 */
@@ -25,23 +23,39 @@
             font-family: 'Orbit', sans-serif;
         }
 
-
-        /*헤더*/
-        header {
-            width: 100%;
-            text-align: center;
-            padding-top: 10px;
-            margin-bottom: 10px;
-
+        /*헤더 */
+        .center-image {
+            margin-right: 600px;
         }
 
-        header img {
-            margin-top: 30px;
+        .navbar-nav .nav-link {
+            margin-right: 20px
+        }
+
+        /* 멤버소개 버튼에 마우스를 갖다 대면 나타나는 하위 메뉴 스타일 */
+        .memberIntroMenu {
+            display: none;
+            flex-direction: row;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        .memberIntroMenu a {
             display: block;
-            margin: 20px auto 20px auto;
+            padding: 8px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .memberIntroMenu a:hover {
+            background-color: #e4e9d7;
         }
 
         .img_pos {
+            background-color: green;
             margin-top: 70px;
             width: 300px;
             height: 400px;
@@ -57,14 +71,12 @@
         }
     </style>
 
-
     <script type="module">
 
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc, getDocs, query, where, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 
         // 일단 이민주 DB 가져옴
@@ -83,30 +95,79 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // 헤더 멤버소개 부분
+        $(document).ready(function () {
+            var menuTimeout;
+
+            // 멤버소개 버튼과 메뉴에 대한 마우스 진입 이벤트
+            $("#memberIntroBtn, .memberIntroMenu").mouseenter(function () {
+                clearTimeout(menuTimeout); // 이전 타임아웃 제거 (메뉴를 숨기는 것을 중지)
+                $(".memberIntroMenu").css("display", "flex");
+            });
+
+            // 멤버소개 버튼과 메뉴에 대한 마우스 이탈 이벤트
+            $("#memberIntroBtn, .memberIntroMenu").mouseleave(function () {
+                menuTimeout = setTimeout(function () {
+                    $(".memberIntroMenu").css("display", "none");
+                }, 500); // 0.5초 후에 숨기도록 설정
+            });
+        });
+
+        //이전페이지 데이터 받아오기
+        const receivedData = location.href.split('?')[1];
+        let name = decodeURI(receivedData); // data
+        console.log(name);
 
         //데이터 읽어서 개인 페이지 요소에 넣기
-        let docs = await getDocs(collection(db, "member"));
-        docs.forEach((doc) => {
+        const q = query(collection(db, "member"), where("name", "==", name));
+
+        const mem = await getDocs(q);
+
+        mem.forEach((doc) => {
             let row = doc.data();
-
+            let image = row['image'];
             let name = row['name'];
-            if (name == "이민주") {
-                //각자 이름 가져오고 파일명을 detail_mj.html(개인 URL) 이런식으로 저장해서 member url 필드에 저장하면 될듯?
-                let image = row['image'];
 
-                $('#img_pos').css("background-image", "url(" + image + ")");
-                $('#name').text(name);
-            }
-
+            $('#img_pos').css("background-image", "url(" + image + ")");
+            $('#name').text(name);
         });
 
     </script>
 </head>
 
 <body>
+    <!-- 헤더 -->
     <header>
-        <img
-            src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/c3ea707a-fbb3-4874-b55a-32ff55c5d24c/%EB%A1%9C%EA%B3%A0_%EC%B5%9C%EC%A2%85_%ED%81%AC%EA%B8%B0.png?id=78c70507-5c52-4990-a981-66b7aeedd88a&table=block&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1696514400000&signature=wf0qLO9pG2nQp2Dyf0bzxvaCQXeh0MckYMWPaDqAk6M&downloadName=%EB%A1%9C%EA%B3%A0+%EC%B5%9C%EC%A2%85+%ED%81%AC%EA%B8%B0.png">
+        <a name="home"></a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#5i5imain">5i5i</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="memberIntroBtn" class="nav-link" href="index.html#memberintro">멤버소개</a>
+                            <div class="memberIntroMenu">
+                                <a href="detail.html?이슬비" target="_blank">이슬비</a>
+                                <a href="detail.html?이민주" target="_blank">이민주</a>
+                                <a href="detail.html?이선오" target="_blank">이선오</a>
+                                <a href="detail.html?홍효정" target="_blank">홍효정</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#commentlink">응원하기</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="center-image">
+                    <a class="navbar-brand" href="index.html#home">
+                        <img src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/c3ea707a-fbb3-4874-b55a-32ff55c5d24c/%EB%A1%9C%EA%B3%A0_%EC%B5%9C%EC%A2%85_%ED%81%AC%EA%B8%B0.png?id=78c70507-5c52-4990-a981-66b7aeedd88a&table=block&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1696514400000&signature=wf0qLO9pG2nQp2Dyf0bzxvaCQXeh0MckYMWPaDqAk6M&downloadName=%EB%A1%9C%EA%B3%A0+%EC%B5%9C%EC%A2%85+%ED%81%AC%EA%B8%B0.png"
+                            alt="Your Logo" width="125px">
+                    </a>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <div class="img_pos" id="img_pos">
