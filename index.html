@@ -192,8 +192,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-
-
         // 헤더 멤버소개 부분
         $(document).ready(function () {
             var menuTimeout;
@@ -211,9 +209,6 @@
                 }, 500); // 0.5초 후에 숨기도록 설정
             });
         });
-
-
-
 
         // 데이터 읽어서 멤버 카드에 넣기
         let docs = await getDocs(collection(db, "member"));
@@ -249,7 +244,6 @@
             $(this).css({
                 "background-image": "url(full.png)"//꽉찬하트로 변경
             });
-
 
             var mem_id = $(this).val();
 
@@ -455,8 +449,9 @@
                 aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="button" id="msg_btn">입력</button>
 
-            <!-- 댓글 출력란 -->
         </div>
+
+        <!-- 댓글 출력란 -->
         <div class="commentarea my-3 p-3 m-auto bg-body rounded shadow-sm">
             <hr>
             <div class="text-body-secondarys w-100 pt-3" style="position: relative;">
