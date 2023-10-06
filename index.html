@@ -47,6 +47,13 @@
             width: 350px;
         }
 
+        .carousel-item>img {
+            /*이미지 크기 고정*/
+            width: 800px;
+            height: 500px;
+            object-fit: cover;
+        }
+
         .title1 {
             color: pink;
             font-weight: bold;
@@ -68,8 +75,8 @@
         /* 카드 부분 */
         .cardmsg {
             border: 1px soild;
-            background-color: rgb(255, 191, 0);
-            margin: 10px auto 30px auto;
+            background-color: rgba(255, 191, 0, 0.7);
+            margin: 20px auto 30px auto;
             padding-top: 20px;
             text-align: center;
             width: 1200px;
@@ -77,8 +84,30 @@
             border-radius: 30px;
         }
 
+        .card-img-top {
+            /*크기 고정*/
+            width: 300px;
+            height: 400px;
+            object-fit: cover;
+        }
+
         .member_content {
             margin-left: 10px;
+            text-align: center;
+        }
+
+        .like_btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background-color: transparent !important;
+            background-image: url("empty.png");
+        }
+
+        .like_num {
+            top: 0%;
+            font-size: 22px;
+            font-weight: bold;
         }
 
         /*방명록 */
@@ -88,8 +117,8 @@
 
         .mainmsg {
             border: 1px soild;
-            background-color: rgb(255, 191, 0);
-            margin: 0px auto 0px auto;
+            background-color: rgba(255, 191, 0, 0.7);
+            margin: 20px auto 0px auto;
             padding-top: 20px;
             text-align: center;
             width: 1200px;
@@ -162,6 +191,8 @@
         let docs = await getDocs(collection(db, "member"));
         docs.forEach((doc) => {
             let row = doc.data();
+
+            let id = row['id'];
             let url = row['url'];
             let image = row['image'];
             let name = row['name'];
@@ -176,11 +207,25 @@
           </a>
           <div class="member_content">
             <h2>${name}</h2>
-            <p>${like}</p>
+            <p><button class="like_btn" id="like_btn-${id}" type="button"></button><span id="like_num-${id}" class="like_num">  ${like}</span></p>
           </div> 
           </div>`
 
             $('#member_card').append(temp_html);
+        });
+
+
+        //좋아요 버튼 누르면
+        $("#like_btn").click(async function () {
+            alert('클릭');
+            let mem_id = e.target.id.split("-")[1];//like_btn-id
+            
+            let mem = doc(db, "id", mem_id);
+            Console.log(mem);
+            await updateDoc(mem, {
+                'like': like
+            });
+
         });
 
         //방명록
@@ -277,7 +322,8 @@
     <div class="container marketing">
 
         <div class="row">
-            <div id="member_card" class="row row-cols-1 row-cols-md-4">
+            <div id="member_card" class="row row-cols-3 row-cols-md-4">
+
             </div><!-- /.row -->
         </div>
 
