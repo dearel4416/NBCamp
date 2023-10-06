@@ -119,7 +119,7 @@
 
 
         /*방명록 */
-      
+
         .mainmsg {
             border: 1px soild;
             background-color: rgba(255, 191, 0, 0.7);
@@ -140,13 +140,9 @@
             width: 80%;
         }
 
-        .commentarea{
+        .commentarea {
             width: 1000px;
         }
-       
-
-
-
     </style>
 
     <script type="module">
@@ -172,6 +168,14 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        const data = 'data';
+
+        //데이터 보내는 코드
+        const aTag = document.querySelector('a');
+        aTag.addEventListener('click', () => {
+            location.href = `receive.html?${data}`;
+        });
+
         //데이터 읽어서 멤버 카드에 넣기
         let docs = await getDocs(collection(db, "member"));
         docs.forEach((doc) => {
@@ -185,7 +189,7 @@
 
             let temp_html =
                 ` <div class="col">
-          <a href="${url}" target="_blank" title="${name} 소개 페이지">
+          <a href="${url}?${name}" target="_blank" title="${name} 소개 페이지">
             <img
               src=${image}
               class="card-img-top" alt="...">
@@ -204,13 +208,12 @@
         //좋아요 버튼 누르면
         $(".like_btn").click(async function () {
             //$(this) 클릭한 것만 적용
-            $(this).toggleClass("active")
+            // $(this).toggleClass("active")
 
-            /*
             $(this).css({
                 "background-image": "url(full.png)"//꽉찬하트로 변경
             });
-            */
+
 
             var mem_id = $(this).val();
 
@@ -238,8 +241,8 @@
 
         });
 
-         //방명록
-         $("#msg_btn").click(function () {
+        //방명록
+        $("#msg_btn").click(function () {
             let selectVal = $("#inputGroupSelect01").val();
             let message = $("#inputmsg").val();
 

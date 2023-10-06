@@ -82,10 +82,13 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        //이전페이지 데이터 받아오기
+        const receivedData = location.href.split('?')[1];
+        let name = decodeURI(receivedData); // data
 
         //데이터 읽어서 개인 페이지 요소에 넣기
         //각자 이름 가져오고 파일명을 detail_mj.html(개인 URL) 이런식으로 저장해서 member url 필드에 저장하면 될듯?
-        const q = query(collection(db, "member"), where("name", "==", "이민주"));
+        const q = query(collection(db, "member"), where("name", "==", name));
 
         const mem = await getDocs(q);
 
