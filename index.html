@@ -96,13 +96,16 @@
             text-align: center;
         }
 
-        .like_num{
-            font-size: 25pt;
+        .like_num {
+            font-size: 20pt;
             font-weight: bold;
+            color: gray;
         }
+
         .like_btn {
-            width: 32px;
-            height: 32px;
+            width: 25px;
+            height: 25px;
+            object-fit: cover;
             border: none;
             background-color: transparent !important;
             background-image: url("empty.png");
@@ -116,10 +119,7 @@
 
 
         /*방명록 */
-        .comment {
-            margin-top: 30px;
-        }
-
+      
         .mainmsg {
             border: 1px soild;
             background-color: rgba(255, 191, 0, 0.7);
@@ -140,31 +140,13 @@
             width: 80%;
         }
 
-        .select {
-            width: 200px;
-            margin-right: 15px;
-        }
-
-        .msg {
+        .commentarea{
             width: 1000px;
-            margin-top: 15px;
-            margin-left: 15px;
         }
+       
 
-        .table {
-            width: 80%;
-            margin: 0px auto 30px auto;
-        }
 
-        .table th {
-            width: 200px;
-            text-align: center;
-        }
 
-        .table td {
-            width: 1000px;
-            text-align: center;
-        }
     </style>
 
     <script type="module">
@@ -203,7 +185,7 @@
 
             let temp_html =
                 ` <div class="col">
-          <a href="${url}" target="_blank" title="${name}소개 페이지">
+          <a href="${url}" target="_blank" title="${name} 소개 페이지">
             <img
               src=${image}
               class="card-img-top" alt="...">
@@ -218,7 +200,7 @@
 
             $('#member_card').append(temp_html);
         });
-        
+
         //좋아요 버튼 누르면
         $(".like_btn").click(async function () {
             //$(this) 클릭한 것만 적용
@@ -252,12 +234,12 @@
             });
 
 
-            let txt = $("#like_num-" + mem_id).text("  "+like);//화면 num 값 증가시키기
+            let txt = $("#like_num-" + mem_id).text("  " + like);//화면 num 값 증가시키기
 
         });
 
-        //방명록
-        $("#msg_btn").click(function () {
+         //방명록
+         $("#msg_btn").click(function () {
             let selectVal = $("#inputGroupSelect01").val();
             let message = $("#inputmsg").val();
 
@@ -268,8 +250,37 @@
             }
 
             //메세지 추가
-            $("table tbody").append(`<tr><th scope="row">${selectVal}</th><td>${message}</td></tr>`);
+            //선택자 안의 클래스 변경, 포스트 형식 변경_슬비
+            $(".text-body-secondarys").append(`
+            <p class="cheer pb-3 mb-0 small lh-sm border-bottom">
+                        <strong class="comment d-block text-gray-dark">${selectVal}에게</strong>
+                        ${message}
+                        <img class="optionPick" width="25px"
+                            style="position: absolute; right: 0px;"
+                            src="https://thenounproject.com/api/private/icons/3601576/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0">
+                    <ul class="dropdown-menu text-small show deletebtn" data-popper-placement="top-start"
+                        style="position: absolute; bottom:-10px; right: 3%; margin: 0px; display: none;">
+                        <li><a class="dropdown-item" href="#">삭제하기</a></li>
+                    </ul>
+                    </p>
+                    <input type="checkbox" style="display: none;">
+            `);
         });
+
+        // 댓글 삭제 버튼 토글
+        $(document).on("click", ".optionPick", function () {
+            var deleteBtn = $(this).closest(".text-body-secondarys").find(".deletebtn");
+            deleteBtn.toggle();
+        });
+
+        // 댓글을 삭제. 지금 삭제가 안 되고 있습니다..
+        $(document).on("click", ".deletebtn", function () {
+            //클릭에서 가장 가까운 .cheer 요소 찾기
+            var textBody = $(this).closest(".cheer");
+            // 찾은 .cheer 삭제
+            textBody.remove();
+        });
+
     </script>
 </head>
 
@@ -337,7 +348,7 @@
                 data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
-                
+
             </button>
         </div>
     </section>
@@ -355,7 +366,6 @@
 
             </div><!-- /.row -->
         </div>
-
 
 
         <div class="comment">
@@ -379,25 +389,28 @@
                     aria-label="Recipient's username" aria-describedby="button-addon2">
                 <button class="btn btn-outline-secondary" type="button" id="msg_btn">입력</button>
 
+                <!-- 댓글 출력란 -->
             </div>
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th scope="row">이름</th>
-                        <td>화이팅</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">이름</th>
-                        <td>화이팅</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div class="commentarea my-3 p-3 m-auto bg-body rounded shadow-sm">
+                <hr>
+                <div class="text-body-secondarys w-100 pt-3" style="position: relative;">
+                    <p class="cheer pb-3 mb-0 small lh-sm border-bottom">
+                        <strong class="comment d-block text-gray-dark">@username에게</strong>
+                        안녕하세요. 테스트입니다. 댓글을 남겨주세요!
+                        <img class="optionPick" width="25px" style="position: absolute; right: 0px;"
+                            src="https://thenounproject.com/api/private/icons/3601576/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0">
+                    <ul class="dropdown-menu text-small show deletebtn" data-popper-placement="top-start"
+                        style="position: absolute; bottom:-10px; right: 3%; margin: 0px; display: none;">
+                        <li><a class="dropdown-item" href="#">삭제하기</a></li>
+                    </ul>
+                    </p>
+                    <input type="checkbox" style="display: none;">
+                </div>
 
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-            crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+                    crossorigin="anonymous"></script>
 
 
 </body>
