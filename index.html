@@ -13,12 +13,10 @@
 
     <style>
         /* 폰트 */
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100;200&family=Orbit&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Noto+Sans+KR:wght@100;200;300&family=Orbit&display=swap');
 
         * {
-            font-family: 'Black Han Sans', sans-serif;
             font-family: 'Noto Sans KR', sans-serif;
-            font-family: 'Orbit', sans-serif;
         }
 
         /*헤더 */
@@ -54,23 +52,27 @@
 
         /* 캐러셀 부분*/
         .container {
-            margin-top: 10px;
+            margin-top: 30px;
+        }
+
+
+        .carousel-item>img {
+            /*이미지 크기 고정*/
+            width: 800px;
+            height: 700px;
+            object-fit: cover;
         }
 
         .carousel-caption {
             text-align: left;
             color: white;
-
-            left: 50%;
-            width: 350px;
         }
 
-        .carousel-item>img {
-            /*이미지 크기 고정*/
-            width: 800px;
-            height: 500px;
-            object-fit: cover;
-            overflow: clip;
+        .caption3>p {
+            text-align: center;
+            font-weight: bold;
+            font-size: 25pt;
+            text-shadow: 4px 2px 2px gray;
         }
 
         .title1 {
@@ -89,13 +91,15 @@
             color: green;
             font-weight: bold;
             margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 4px 2px 2px white;
         }
 
         /* 카드 부분 */
         .cardmsg {
             border: 1px soild;
             background-color: rgba(255, 191, 0, 0.7);
-            margin: 20px auto 30px auto;
+            margin: 50px auto 30px auto;
             padding-top: 20px;
             text-align: center;
             width: 500px;
@@ -113,6 +117,10 @@
         .member_content {
             margin-left: 10px;
             text-align: center;
+        }
+
+        .mem_name{
+            font-size: 20pt;
         }
 
         .like_num {
@@ -140,16 +148,12 @@
         .mainmsg {
             border: 1px soild;
             background-color: rgba(255, 191, 0, 0.7);
-            margin: 20px auto 0px auto;
+            margin: 80px auto 0px auto;
             padding-top: 20px;
             text-align: center;
             width: 1000px;
             height: 80px;
             border-radius: 30px;
-        }
-
-        .input-group {
-            width: 700px;
         }
 
         .inputbox {
@@ -158,7 +162,7 @@
             justify-content: center;
             align-items: center;
             margin: 15px auto 0px auto;
-            width: 80%;
+            width: 1000px;
         }
 
         .commentarea {
@@ -210,7 +214,7 @@
 
 
 
-        
+
         // 데이터 읽어서 멤버 카드에 넣기
         let docs = await getDocs(collection(db, "member"));
         docs.forEach((doc) => {
@@ -230,7 +234,7 @@
               class="card-img-top" alt="...">
           </a>
           <div class="member_content">
-            <h2>${name}</h2>
+            <p class="mem_name">${name}</p>
             <p id="${id}"><button class="like_btn" value="${id}" id="like_btn" type="button"></button><span id="like_num-${id}" class="like_num">  ${like}</span></p>
           </div> 
           </div>`
@@ -327,12 +331,12 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#main">5i5i</a>
+                            <a class="nav-link" href="#5i5imain">5i5i</a>
                         </li>
                         <li class="nav-item">
                             <a id="memberIntroBtn" class="nav-link" href="#memberintro">멤버소개</a>
                             <div class="memberIntroMenu">
-                                <a href="detail.html?이슬비" target="_blank" >이슬비</a>
+                                <a href="detail.html?이슬비" target="_blank">이슬비</a>
                                 <a href="detail.html?이민주" target="_blank">이민주</a>
                                 <a href="detail.html?이선오" target="_blank">이선오</a>
                                 <a href="detail.html?홍효정" target="_blank">홍효정</a>
@@ -366,10 +370,10 @@
                     aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner">
-                <div class="carousel-item active" data-bs-interval="2000">
+                <div class="carousel-item active" data-bs-interval="5000">
                     <img src="example1.jpg" class="d-block w-100" alt="...">
-                    <div class="caption1">
-                        <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-none d-md-block">
+                        <div class="caption1">
                             <h1 class="title1">Introdution</h1>
                             <p>저희 팀은 협업과 문제 해결을 중요하게 생각하며 다양한 프로젝트와 기술 도전에 대한 열린 마음을 가지고 있습니다.
                                 팀원들은 함께 문제를 해결하는데 강한 의지를 가지고 있으며 지식과 아이디어를 공유하고 다 함께 팀을 이끌어 나가며 프로젝트를 더 효과적으로 수행하기 위해
@@ -378,10 +382,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item" data-bs-interval="2000">
+                <div class="carousel-item" data-bs-interval="5000">
                     <img src="example2.jpg" class="d-block w-100" alt="...">
-                    <div class="caption2">
-                        <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-none d-md-block">
+                        <div class="caption2">
                             <h1 class="title2">Promise</h1>
                             <p>1.하루에 한번 TIL쓰기</p>
                             <p>2.문제가 생기면 싸우지 않고 함께 해결 방법을 고민하기문제가 생기면 싸우지 않고 함께 해결 방법을 고민하기</p>
@@ -391,12 +395,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item" data-bs-interval="2000">
+                <div class="carousel-item" data-bs-interval="5000">
                     <img src="example3.jpg" class="d-block w-100" alt="...">
-                    <div class="caption3">
-                        <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-none d-md-block">
+                        <div class="caption3">
                             <h1 class="title3">Goal</h1>
-                            <h4>지치지 않고 캠프 완주해서 완성형 백엔드 개발자가 되자!</h4>
+                            <p>지치지 않고 캠프 완주해서</p>
+                            <p>완성형 백엔드 개발자가 되자!</p>
                         </div>
                     </div>
                 </div>
