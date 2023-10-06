@@ -147,6 +147,10 @@
             border-radius: 30px;
         }
 
+        .input-group {
+            width: 700px;
+        }
+
         .inputbox {
             display: flex;
             flex-direction: row;
@@ -183,10 +187,10 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const data = 'data';
 
-         // 헤더 멤버소개 부분
-         $(document).ready(function () {
+
+        // 헤더 멤버소개 부분
+        $(document).ready(function () {
             var menuTimeout;
 
             // 멤버소개 버튼과 메뉴에 대한 마우스 진입 이벤트
@@ -205,12 +209,7 @@
 
 
 
-        //데이터 보내는 코드
-        const aTag = document.querySelector('a');
-        aTag.addEventListener('click', () => {
-            location.href = `receive.html?${data}`;
-        });
-
+        
         // 데이터 읽어서 멤버 카드에 넣기
         let docs = await getDocs(collection(db, "member"));
         docs.forEach((doc) => {
@@ -262,7 +261,6 @@
             like++;
 
             const member = doc(db, "member", uid);//문서이름으로 받는 방법밖에 없나???
-            // console.log(member);
 
             await updateDoc(member, {
                 like: increment(1)//1증가
@@ -327,15 +325,15 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#5i5imain">5i5i</a>
+                            <a class="nav-link" href="#main">5i5i</a>
                         </li>
                         <li class="nav-item">
                             <a id="memberIntroBtn" class="nav-link" href="#memberintro">멤버소개</a>
                             <div class="memberIntroMenu">
-                                <a href="#member1">이슬비</a>
-                                <a href="#member2">이민주</a>
-                                <a href="#member3">이선오</a>
-                                <a href="#member4">홍효정</a>
+                                <a href="detail.html?이슬비" target="_blank" >이슬비</a>
+                                <a href="detail.html?이민주" target="_blank">이민주</a>
+                                <a href="detail.html?이선오" target="_blank">이선오</a>
+                                <a href="detail.html?홍효정" target="_blank">홍효정</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -354,8 +352,9 @@
     </header>
 
     <!-- 캐러셀 -->
+
+    <a name="#main"></a>
     </div>
-    <a name="5i5imain"></a>
     <section class="container">
         <div id="carouselExampleCaptions" class="carousel slide w-75 m-auto" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -416,7 +415,7 @@
     </section>
 
     <!-- 멤버 카드 -->
-    <a name="meberintro"></a>
+    <a name="memberintro"></a>
     <div class="cardmsg">
         <h2>5i5i 팀원을 소개합니다.</h2>
     </div>
