@@ -229,31 +229,35 @@
         });
 
         //방명록
-        $("#msg_btn").click(function () {
-            let selectVal = $("#inputGroupSelect01").val();
-            let message = $("#inputmsg").val();
+        $("#inputBtn").click(async function () {
+            let user = $('#selectName').val();
+            let comment = $('#commentText').val();
+            let doc = {
+                'user': user,
+                'comment': comment
+            };
+            await addDoc(collection(db, "guestBook"), doc);
 
-            //둘중에 하나라도 선택 안되있으면
-            if (selectVal === "받는사람선택" || message === "") {
-                alert("받는 사람과 메시지를 입력하세요.");
-                return;
-            }
+            console.log(user, comment);
+            alert('입력 완료');
+            window.location.reload();
+        })
 
-            //메세지 추가
-            //선택자 안의 클래스 변경, 포스트 형식 변경_슬비
-            $(".text-body-secondarys").append(`
-            <p class="cheer pb-3 mb-0 lh-sm border-bottom">
-                    <strong class="comment d-block text-gray-dark">${selectVal}에게</strong>
-                    <br>
-                    ${massage}
-                    <button width="10px"
-                        style="position: absolute; right: 0px; bottom: 4px;">삭제</button>
-                </p>
-                `);
+        let docs = await getDocs(collection(db, "guestBook"));
+        docs.forEach((doc) => {
+            let row = doc.data();
+            console.log(row);
+
+            let user = row['user'];
+            let comment = row['comment'];
+
+            let commentInput = `
+                <p class="username">
+                  <strong class="d-block text-gray-dark">@${user}</strong>
+                  ${comment}
+                </p>`;
+            $('#commentList').append(commentInput);
         });
-
-
-
     </script>
 </head>
 
@@ -329,8 +333,6 @@
     <div class="cardmsg">
         <h2>5i5i 팀원을 소개합니다.</h2>
     </div>
-
-
     <div class="container marketing">
 
         <div class="row">
@@ -338,41 +340,21 @@
 
             </div><!-- /.row -->
         </div>
-        <div class="comment">
-            <div class="mainmsg">
-                <h2>5i5i 팀원들에게 응원의 메세지를 남겨보세요</h2>
+        <div class="input-group">
+            <div>
+                <select class="form-select" id="selectName" aria-label="Default select example">
+                    <option selected>팀원</option>
+                    <option value="이민주">이민주</option>
+                    <option value="이선오">이선오</option>
+                    <option value="이슬비">이슬비</option>
+                    <option value="홍효정">홍효정</option>
+                </select>
             </div>
-            <div class="input-group mb-3 inputbox">
-                <div class="select">
-                    <select class="form-select" id="inputGroupSelect01">
-                        <option selected>받는사람선택</option>
-                        <option value="5i5i">5i5i</option>
-                        <option value="이슬비">이슬비</option>
-                        <option value="이민주">이민주</option>
-                        <option value="이선오">이선오</option>
-                        <option value="홍효정">홍효정</option>
-                    </select>
-
-
-                </div>
-                <input id="inputmsg" type="text" class="form-control" placeholder="응원의 한마디!"
-                    aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="msg_btn">입력</button>
-
-            </div>
-
-            <!-- 댓글 출력란 -->
+            <input type="text" class="form-control" id="commentText" aria-label="Text input with 2 dropdown buttons">
+            <button id="inputBtn" class="btn-primary" type="commentBtn">입력</button>
         </div>
-        <div class="my-3 p-3 bg-body rounded shadow-sm">
-            <hr>
-            <div class="text-body-secondarys pt-1" style="position: relative;">
-                <p class="cheer pb-3 mb-0 lh-sm border-bottom">
-                    <strong class="comment d-block text-gray-dark">@username에게</strong>
-                    <br>
-                    안녕하세요. 테스트입니다. 댓글을 남겨주세요!
-                    <button width="10px"
-                        style="position: absolute; right: 0px; bottom: 4px;">삭제</button>
-                </p>
+    
+        <div class="commentList" id="commentList"></div>
 
             </div>
         </div>
