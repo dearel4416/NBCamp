@@ -4,75 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5i5i 소개 페이지</title>
+    <title>5i5i 팀원 소개 페이지</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+
     <style>
         /* 폰트 */
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Noto+Sans+KR:wght@100;200;300&family=Orbit&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100;200&family=Orbit&display=swap');
 
         * {
+            font-family: 'Black Han Sans', sans-serif;
             font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Orbit', sans-serif;
         }
 
-        /*헤더 */
-        .center-image {
-            margin-right: 600px;
+        /* 헤더 */
+        header {
+            text-align: center;
+            padding-top: 10px;
         }
 
-        .navbar-nav .nav-link {
-            margin-right: 20px
-        }
-
-        /* 멤버소개 버튼에 마우스를 갖다 대면 나타나는 하위 메뉴 스타일 */
-        .memberIntroMenu {
-            display: none;
-            flex-direction: row;
-            position: absolute;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            z-index: 1;
-        }
-
-        .memberIntroMenu a {
+        header img {
+            margin-top: 30px;
             display: block;
-            padding: 8px;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .memberIntroMenu a:hover {
-            background-color: #e4e9d7;
+            margin: 20px auto 20px auto;
         }
 
         /* 캐러셀 부분*/
         .container {
-            margin-top: 30px;
-        }
-
-
-        .carousel-item>img {
-            /*이미지 크기 고정*/
-            width: 800px;
-            height: 700px;
-            object-fit: cover;
+            margin-top: 10px;
         }
 
         .carousel-caption {
             text-align: left;
             color: white;
+
+            left: 50%;
+            width: 350px;
         }
 
-        .caption3>p {
-            text-align: center;
-            font-weight: bold;
-            font-size: 25pt;
-            text-shadow: 4px 2px 2px gray;
+        .carousel-item>img {
+            /*이미지 크기 고정*/
+            width: 800px;
+            height: 500px;
+            object-fit: cover;
         }
 
         .title1 {
@@ -91,19 +70,16 @@
             color: green;
             font-weight: bold;
             margin-bottom: 30px;
-            text-align: center;
-            text-shadow: 4px 2px 2px white;
         }
 
         /* 카드 부분 */
         .cardmsg {
             border: 1px soild;
             background-color: rgba(255, 191, 0, 0.7);
-            margin: 50px auto 30px auto;
+            margin: 20px auto 30px auto;
             padding-top: 20px;
             text-align: center;
-            font-weight: 700;
-            width: 500px;
+            width: 1200px;
             height: 80px;
             border-radius: 30px;
         }
@@ -131,29 +107,31 @@
         }
 
         .like_btn {
-            width: 25px;
-            height: 25px;
-            object-fit: cover;
+            width: 32px;
+            height: 32px;
             border: none;
             background-color: transparent !important;
             background-image: url("empty.png");
-            transition-duration: 0.3ms;
         }
 
-        .like_btn.active {
-            background-image: url("full.png");
+        .like_num {
+            top: 0%;
+            font-size: 22px;
+            font-weight: bold;
         }
 
         /*방명록 */
+        .comment {
+            margin-top: 30px;
+        }
 
         .mainmsg {
             border: 1px soild;
             background-color: rgba(255, 191, 0, 0.7);
-            margin: 80px auto 0px auto;
+            margin: 20px auto 0px auto;
             padding-top: 20px;
             text-align: center;
-            font-weight: bold;
-            width: 1000px;
+            width: 1200px;
             height: 80px;
             border-radius: 30px;
         }
@@ -164,11 +142,28 @@
             justify-content: center;
             align-items: center;
             margin: 15px auto 0px auto;
-            width: 1000px;
+            width: 80%;
         }
 
         .commentList {
             width: 1000px;
+            margin-top: 15px;
+            margin-left: 15px;
+        }
+
+        .table {
+            width: 80%;
+            margin: 0px auto 30px auto;
+        }
+
+        .table th {
+            width: 200px;
+            text-align: center;
+        }
+
+        .table td {
+            width: 1000px;
+            text-align: center;
         }
 
         .input-group {
@@ -190,6 +185,7 @@
     </style>
 
     <script type="module">
+
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -211,25 +207,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // 헤더 멤버소개 부분
-        $(document).ready(function () {
-            var menuTimeout;
-
-            // 멤버소개 버튼과 메뉴에 대한 마우스 진입 이벤트
-            $("#memberIntroBtn, .memberIntroMenu").mouseenter(function () {
-                clearTimeout(menuTimeout); // 이전 타임아웃 제거 (메뉴를 숨기는 것을 중지)
-                $(".memberIntroMenu").css("display", "flex");
-            });
-
-            // 멤버소개 버튼과 메뉴에 대한 마우스 이탈 이벤트
-            $("#memberIntroBtn, .memberIntroMenu").mouseleave(function () {
-                menuTimeout = setTimeout(function () {
-                    $(".memberIntroMenu").css("display", "none");
-                }, 500); // 0.5초 후에 숨기도록 설정
-            });
-        });
-
-        // 데이터 읽어서 멤버 카드에 넣기
+        //데이터 읽어서 멤버 카드에 넣기
         let docs = await getDocs(collection(db, "member"));
         docs.forEach((doc) => {
             let row = doc.data();
@@ -242,50 +220,31 @@
 
             let temp_html =
                 ` <div class="col">
-          <a href="${url}?${name}" target="_blank" title="${name} 소개 페이지">
+          <a href="${url}" target="_blank" title="${name}소개 페이지">
             <img
               src=${image}
               class="card-img-top" alt="...">
           </a>
           <div class="member_content">
-            <p class="mem_name">${name}</p>
-            <p id="${id}"><button class="like_btn" value="${id}" id="like_btn" type="button"></button><span id="like_num-${id}" class="like_num">  ${like}</span></p>
+            <h2>${name}</h2>
+            <p><button class="like_btn" id="like_btn-${id}" type="button"></button><span id="like_num-${id}" class="like_num">  ${like}</span></p>
           </div> 
           </div>`
+
             $('#member_card').append(temp_html);
         });
 
-        // 좋아요 버튼 누르면
-        $(".like_btn").click(async function () {
-            //$(this) 클릭한 것만 적용
-            // $(this).toggleClass("active")
 
-            $(this).css({
-                "background-image": "url(full.png)"//꽉찬하트로 변경
+        //좋아요 버튼 누르면
+        $("#like_btn").click(async function () {
+            alert('클릭');
+            let mem_id = e.target.id.split("-")[1];//like_btn-id
+
+            let mem = doc(db, "id", mem_id);
+            Console.log(mem);
+            await updateDoc(mem, {
+                'like': like
             });
-
-            var mem_id = $(this).val();
-
-            const q = query(collection(db, "member"), where("id", "==", Number(mem_id)));
-            const mem = await getDocs(q);
-            let uid = 0;
-            let like = 0;
-
-            mem.forEach((doc) => {
-                uid = doc.id;//문서 이름 가져오기
-                let row = doc.data();
-                like = row['like'];
-            });
-            like++;
-
-            const member = doc(db, "member", uid);//문서이름으로 받는 방법밖에 없나???
-
-            await updateDoc(member, {
-                like: increment(1)//1증가
-            });
-
-
-            let txt = $("#like_num-" + mem_id).text("  " + like);//화면 num 값 증가시키기
 
         });
 
@@ -387,7 +346,6 @@
 </head>
 
 <body>
-    <!-- 헤더 -->
     <header>
         <a name="home"></a>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -421,7 +379,7 @@
     </header>
 
     <!-- 캐러셀 -->
-    <a name="5i5imain"></a>
+    </div>
     <section class="container">
         <div id="carouselExampleCaptions" class="carousel slide w-75 m-auto" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -433,10 +391,10 @@
                     aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner">
-                <div class="carousel-item active" data-bs-interval="5000">
+                <div class="carousel-item active" data-bs-interval="2000">
                     <img src="example1.jpg" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <div class="caption1">
+                    <div class="caption1">
+                        <div class="carousel-caption d-none d-md-block">
                             <h1 class="title1">Introdution</h1>
                             <p>저희 팀은 협업과 문제 해결을 중요하게 생각하며 다양한 프로젝트와 기술 도전에 대한 열린 마음을 가지고 있습니다.
                                 팀원들은 함께 문제를 해결하는데 강한 의지를 가지고 있으며 지식과 아이디어를 공유하고 다 함께 팀을 이끌어 나가며 프로젝트를 더 효과적으로 수행하기 위해
@@ -444,11 +402,12 @@
                                 MBTI I가 무려 4명이 모인… 조용하지만 강한 팀입니다. 아자아자!</p>
                         </div>
                     </div>
+
                 </div>
-                <div class="carousel-item" data-bs-interval="5000">
+                <div class="carousel-item" data-bs-interval="2000">
                     <img src="example2.jpg" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <div class="caption2">
+                    <div class="caption2">
+                        <div class="carousel-caption d-none d-md-block">
                             <h1 class="title2">Promise</h1>
                             <p>1.하루에 한번 TIL쓰기</p>
                             <p>2.문제가 생기면 싸우지 않고 함께 해결 방법을 고민하기문제가 생기면 싸우지 않고 함께 해결 방법을 고민하기</p>
@@ -458,13 +417,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item" data-bs-interval="5000">
+                <div class="carousel-item" data-bs-interval="2000">
                     <img src="example3.jpg" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <div class="caption3">
+                    <div class="caption3">
+                        <div class="carousel-caption d-none d-md-block">
                             <h1 class="title3">Goal</h1>
-                            <p>지치지 않고 캠프 완주해서</p>
-                            <p>완성형 백엔드 개발자가 되자!</p>
+                            <h4>지치지 않고 캠프 완주해서 완성형 백엔드 개발자가 되자!</h4>
                         </div>
                     </div>
                 </div>
@@ -483,14 +441,14 @@
     </section>
 
     <!-- 멤버 카드 -->
-    <a name="memberintro"></a>
     <div class="cardmsg">
         <h2>5i5i 팀원을 소개합니다.</h2>
     </div>
-
     <div class="container marketing">
+
         <div class="row">
             <div id="member_card" class="row row-cols-3 row-cols-md-4">
+
             </div><!-- /.row -->
         </div>
     </div>
@@ -509,16 +467,17 @@
                     <option value="이슬비">이슬비</option>
                     <option value="이민주">이민주</option>
                     <option value="이선오">이선오</option>
+                    <option value="이슬비">이슬비</option>
                     <option value="홍효정">홍효정</option>
                 </select>
-
-
             </div>
             <input id="commentText" type="text" class="form-control" placeholder="응원의 한마디!"
                 aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="button" id="inputBtn">입력</button>
 
         </div>
+    
+        <div class="commentList" id="commentList"></div>
 
         <!-- 댓글 출력란 -->
         <div id="commentList" class="commentList my-3 p-3 m-auto bg-body rounded shadow-sm">
