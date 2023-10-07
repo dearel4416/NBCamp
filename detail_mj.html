@@ -160,6 +160,8 @@
         const receivedData = location.href.split('?')[1];
         let name = decodeURI(receivedData); // data
 
+        console.log(name);
+
         $('title').text(name + " 소개 페이지");
         //데이터 읽어서 개인 페이지 요소에 넣기
         const q = query(collection(db, "member"), where("name", "==", name));
