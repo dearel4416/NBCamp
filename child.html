@@ -1,0 +1,250 @@
+<html lang="en">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title id="tilte">이민주 소개 페이지</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        /* 폰트 */
+
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@100&family=Nanum+Myeongjo&family=Noto+Sans+KR:wght@100;200;300&family=Orbit&family=Stylish&display=swap');
+
+        * {
+            font-family: 'Stylish';
+        }
+
+        .box {
+            margin: 10px 10px 30px 10px;
+            padding: 30px;
+            background-color: #fff956f6;
+            height: auto;
+            border-radius: 30px;
+            border: 10px solid greenyellow;
+        }
+
+        .photo_area {
+            padding-bottom: 10px;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .photo {
+            width: 250px;
+            height: auto;
+        }
+
+        .input-group-text {
+            background-color: greenyellow;
+        }
+
+        .btn_area {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .btn_area>button {
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+    </style>
+    <script type="module">
+
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc, getDocs, query, where, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+        // 일단 이민주 DB 가져옴
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBw8nF7iRylWHOkr2CejrhuePQF-FhprbA",
+            authDomain: "sparta-98616.firebaseapp.com",
+            projectId: "sparta-98616",
+            storageBucket: "sparta-98616.appspot.com",
+            messagingSenderId: "441338528647",
+            appId: "1:441338528647:web:f5a7b951b63fd5c9c34922",
+            measurementId: "G-S5SH83J73B"
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        //이전페이지 데이터 받아오기(이름으로 받음)
+        const receivedData = location.href.split('?')[1];
+        let name = decodeURI(receivedData); // data
+
+        $('title').text(name + " 수정 페이지");
+
+        //데이터 읽어서 개인 페이지 요소에 넣기
+        const q = query(collection(db, "member"), where("name", "==", name));
+        const mem = await getDocs(q);
+        let uid;
+
+        mem.forEach((doc) => {
+            uid = doc.id;
+            let row = doc.data();
+            let image = row['image'];
+            let image2 = row['image2'];
+            let name = row['name'];
+            let blog = row['blog'];
+            let sns = row['sns'];
+            let mbti = row['mbti'];
+            let intro = row['intro'];
+            let advantage = row['advantage'];
+            let style = row['style'];
+            let hobby = row['hobby'];
+            let like = row['like'];
+
+            $('#name').val(name);
+            $('#image').val(image);
+            $('#image2').val(image2);
+            $('#blog').val(blog);
+            $('#sns').val(sns);
+            $('#mbti').val(mbti);
+            $("#advantage").val(advantage);
+            $("#style").val(style);
+            $("#intro").val(intro);
+            $("#hobby").val(hobby);
+            $("#like_num").val(like);
+
+        });
+
+
+
+        $("#modify_btn").click(async function () {
+            let image = $('#image').val();
+            let image2 = $('#image2').val();
+            let blog = $('#blog').val();
+            let sns = $('#sns').val();
+            let mbti = $('#mbti').val();
+            let intro = $("#intro").val();
+            let advantage = $("#advantage").val();
+            let style = $("#style").val();
+            let hobby = $("#hobby").val();
+
+            const member = doc(db, "member", uid);
+            await updateDoc(member, {
+                hobby: hobby,
+                intro: intro,
+                blog: blog,
+                sns: sns,
+                image: image,
+                image2: image2,
+                mbti: mbti,
+                style: style
+            });
+
+            opener.location.replace("detail_mj.html?" + name);
+            window.close();
+
+
+
+        });
+
+        $("#close_btn").click(async function () {
+            window.close();
+        });
+
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <div class="photo_area">
+            <img class="photo" src="pochacco.png">
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">이름</span>
+            <input id="name" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default" disabled>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">메인 image</span>
+
+
+            <input id="image" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+   
+        </div>
+
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">개인 image</span>
+
+
+            <input id="image2" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+   
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">blog 주소</span>
+            <input id="blog" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">sns 주소</span>
+            <input id="sns" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">mbti</span>
+            <input id="mbti" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">장점</span>
+            <input id="advantage" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">장점</span>
+            <input id="style" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">자기소개</span>
+            <input id="intro" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">취미</span>
+            <input id="hobby" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+
+
+
+        <div class="btn_area">
+            <button id="modify_btn">변경하기</button>
+            <button id="close_btn">닫기</button>
+        </div>
+    </div>
+
+</body>
+
+</html>
