@@ -11,7 +11,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-
     <style>
         /* 폰트 */
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100;200&family=Orbit&display=swap');
@@ -23,11 +22,11 @@
 
         /*헤더 */
         .center-image {
-            margin-right: 600px;
+            margin-right: 42%;
         }
 
         .navbar-nav .nav-link {
-            margin-right: 20px
+            margin-right: 20px;
         }
 
         .memberIntroMenu {
@@ -57,12 +56,16 @@
             margin-top: 30px;
         }
 
-
         .carousel-item>img {
             /*이미지 크기 고정*/
             width: 800px;
             height: 500px;
             object-fit: cover;
+        }
+
+        .d-block.w-100 {
+            /* 캐러셀 이미지 어둡게 */
+            filter: brightness(50%);
         }
 
         .caption2 {
@@ -93,6 +96,7 @@
             text-align: center;
             text-shadow: 4px 2px 2px white;
         }
+
 
         /* 카드 부분 */
         .cardmsg {
@@ -144,6 +148,7 @@
             font-weight: bold;
         }
 
+
         /*방명록 */
         .comment {
             margin-top: 30px;
@@ -193,7 +198,6 @@
     </style>
 
     <script type="module">
-
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -260,7 +264,6 @@
             $('#member_card').append(temp_html);
         });
 
-
         //좋아요 버튼 누르면
         $(".like_btn").click(async function () {
 
@@ -289,12 +292,10 @@
                 like: increment(1)//1증가
             });
 
-
             let txt = $("#like_num-" + mem_id).text("  " + like);//화면 num 값 증가시키기
-
         });
 
-        // ***방명록 ****
+        // 방명록
         let comment_id = 0;
 
         // 데이터베이스에서 현재 comment_id 값을 가져오는 함수
@@ -348,7 +349,6 @@
             window.location.reload();
         })
 
-
         // DB guestBook에서 방명록 데이터 꺼내오기
         let guest_docs = await getDocs(query(collection(db, "guestBook"), orderBy("timestamp", "desc"))); // timestamp desc순으로 꺼내옴
         guest_docs.forEach((doc) => {
@@ -369,7 +369,6 @@
         });
 
         // 삭제 버튼 클릭 이벤트 리스너 추가
-
         $(".deletebtn").click(async function () {
             let com_id = $(this).val()
 
@@ -386,7 +385,6 @@
             alert("삭제완료");
             window.location.reload();
         });
-
     </script>
 </head>
 
@@ -448,7 +446,6 @@
                                 MBTI I가 무려 4명이 모인… 조용하지만 강한 팀입니다. 아자아자!</p>
                         </div>
                     </div>
-
                 </div>
                 <div class="carousel-item" data-bs-interval="5000">
                     <img src="example2.jpg" class="d-block w-100" alt="...">
@@ -485,18 +482,13 @@
             </button>
         </div>
 
-
-
-
         <!-- 멤버 카드 -->
         <div class="cardmsg">
             <h2>5i5i 팀원을 소개합니다.</h2>
         </div>
         <div class="container marketing">
-
             <div class="row">
                 <div id="member_card" class="row row-cols-3 row-cols-md-4">
-
                 </div><!-- /.row -->
             </div>
         </div>
@@ -522,9 +514,7 @@
                 <input id="commentText" type="text" class="form-control" placeholder="응원의 한마디!"
                     aria-label="Recipient's username" aria-describedby="button-addon2">
                 <button class="btn btn-outline-secondary" type="button" id="inputBtn">입력</button>
-
             </div>
-
             <div class="commentList" id="commentList"></div>
 
             <!-- 댓글 출력란 -->
@@ -532,8 +522,6 @@
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
                     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
                     crossorigin="anonymous"></script>
-
-
 </body>
 
 </html>
