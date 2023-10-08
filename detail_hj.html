@@ -56,33 +56,27 @@
         .profile {
             margin: 20px auto 20px auto;
             padding: 20px;
-            border: 1px solid black;
-            border-radius: 10px;
 
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             justify-content: center;
+            /* 수직 가운데 정렬 */
             align-items: center;
+            /* 수평 가운데 정렬 */
+            text-align: center;
+            /* 텍스트 가운데 정렬 */
             width: 80%;
         }
 
-        .left {
-            padding: 10px;
-            margin-right: 20px;
-            width: 400px;
-            height: auto;
-        }
-
-        .right {
-            width: 700px;
-            height: auto;
+        .eng_name {
+            text-align: left;
         }
 
         .img_pos {
             background-color: green;
-            margin-top: 70px;
-            width: 300px;
-            height: 400px;
+            margin-top: 20px;
+            width: 250px;
+            height: 250px;
             border-radius: 70%;
             /*이미지 둥글게*/
             background-position: center;
@@ -91,13 +85,17 @@
 
         .img_pos>img {
             margin-top: 10px;
-            width: 300px;
-            height: 400px;
+            width: 250px;
+            height: 250px;
             object-fit: cover;
         }
 
         a {
             text-decoration: none;
+        }
+
+        .blog_sns {
+            margin-bottom: 60px;
         }
 
         .blog_img {
@@ -106,12 +104,43 @@
             object-fit: cover;
         }
 
+        .github_img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            margin: 10px 0px 10px 0px
+        }
 
         .sns_img {
             width: 32px;
             height: 32px;
             object-fit: cover;
-            margin: 10px 10px 10px 0px
+            margin: 10px 0px 10px 0px
+        }
+
+        ul {
+            text-align: center;
+            list-style-position: inside;
+        }
+
+        .nav-item1 {
+            margin: 0px 100px 0px 0px;
+        }
+
+        .nav-item2 {
+            margin: 0px 100px 0px 0px;
+        }
+
+        .aboutme {
+            display: none;
+        }
+
+        .more {
+            display: none;
+        }
+
+        .mbti_more {
+            display: none;
         }
     </style>
 
@@ -170,8 +199,9 @@
         mem.forEach((doc) => {
             let row = doc.data();
             let image = row['image2'];
-            let name = row['name'];
+            let eng_name = row['eng_name'];
             let blog = row['blog'];
+            let github = row['github'];
             let sns = row['sns'];
 
             let mbti = row['mbti'];
@@ -180,8 +210,8 @@
             let style = row['style'];
             let intro = row['intro'];
 
+            $('#eng_name').text("I'm " + eng_name);
             $('#img_pos').css("background-image", "url(" + image + ")");
-            $('#name').text(name);
 
             // velog 또는 tistory 블로그가 존재할때
             if (blog.indexOf('velog') != -1) {
@@ -190,6 +220,9 @@
                 $('.blog_img').attr("src", "tistory.png");
             }
             $('#blog').attr("href", blog); // href 속성에 blog값 추가
+
+            $('.github_img').attr("src", "github.png");
+            $('#github').attr("href", github);
 
             $('.sns_img').attr("src", "instagram.png");
             $('#sns').attr("href", sns);
@@ -200,6 +233,18 @@
             $('#style').text("협업스타일: " + style);
             $('#intro').text("자기소개: " + intro);
         });
+
+        $("#aboutme").click(async function () {
+            $('.aboutme').toggle();
+        })
+
+        $("#more").click(async function () {
+            $('.more').toggle();
+        })
+
+        $("#mbti_more").click(async function () {
+            $('.mbti_more').toggle();
+        })
 
     </script>
 </head>
@@ -239,15 +284,18 @@
     </header>
 
     <div class="profile">
-        <div class="left">
-            <div class="img_pos" id="img_pos">
-            </div>
+        <h1 class="eng_name">Hello,<br><span id="eng_name"></span></h1>
 
-            <h1 class="name" id="name"></h1>
+        <div class="img_pos" id="img_pos"></div>
 
+        <div class="blog_sns">
             <!-- 블로그 버튼 -->
             <a id="blog" class="blog" href="" target="_blank">
                 <img src="" class="blog_img" alt="블로그 이동">
+            </a>
+            <!-- 깃허브 버튼 -->
+            <a id="github" class="github" href="" target="_blank">
+                <img src="" class="github_img" alt="깃허브 이동">
             </a>
             <!-- sns 버튼 -->
             <a id="sns" class="sns" href="" target="_blank">
@@ -255,13 +303,38 @@
             </a>
         </div>
 
-        <div class="right">
-            <h2 id="mbti" class="mbti"></h2>
+        <ul class="nav justify-content-center">
+            <li class="nav-item1">
+                <a class="nav-link active" id="aboutme" aria-current="page" href="#aboutme">
+                    <h3>About me</h3>
+                </a>
+            </li>
+            <li class="nav-item2">
+                <a class="nav-link" id="more" href="#more">
+                    <h3>more</h3>
+                </a>
+            </li>
+            <li class="nav-item3">
+                <a class="nav-link" id="mbti_more" href="#mbti_more">
+                    <h3>mbti</h3>
+                </a>
+            </li>
+        </ul>
+
+        <div class="aboutme">
+            <h2 id="intro" class="intro"></h2>
+        </div>
+
+        <div class="more">
             <h2 id="hobby" class="hobby"></h2>
             <h2 id="advantage" class="advantage"></h2>
             <h2 id="style" class="style"></h2>
-            <h2 id="intro" class="intro"></h2>
         </div>
+
+        <div class="mbti_more">
+            <h2 id="mbti" class="mbti"></h2>
+        </div>
+
     </div>
 </body>
 
