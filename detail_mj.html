@@ -143,6 +143,11 @@
             object-fit: cover;
         }
 
+        .github_img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+        }
         .modify_btn {
             background-image: url("modify.png");
             width: 40px;
@@ -218,6 +223,7 @@
             let style = row['style'];
             let hobby = row['hobby'];
             let like = row['like'];
+            let github = row['github'];
 
             $('#img_pos').css("background-image", "url(" + image + ")");
             $('#name').text(name);
@@ -240,7 +246,10 @@
             $('#blog').attr("href", blog);
 
             $('.sns_img').attr("src", "instagram.png");
+            $('.github_img').attr("src", "github.png");
+
             $('#sns').attr("href", sns);
+            $('#github').attr("href", github);
 
 
         });
@@ -313,7 +322,7 @@
                 </div>
                 <div class="center-image">
                     <a class="navbar-brand" href="index.html#home">
-                        <img src="logo_pink.png" alt="Your Logo" width="125px">
+                        <img src="memLogo/mj/mj3.png" alt="Your Logo" width="125px">
                     </a>
                 </div>
             </div>
@@ -339,6 +348,11 @@
                 <!-- sns 버튼 -->
                 <a id="sns" class="sns" href="" target="_blank">
                     <img src="" class="sns_img" alt="...">
+                </a>
+
+                <!-- github 버튼 -->
+                <a id="github" class="github" href="" target="_blank">
+                    <img src="" class="github_img" alt="...">
                 </a>
             </span>
         </div>
