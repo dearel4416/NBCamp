@@ -15,15 +15,21 @@
 
     <style>
         /* 폰트 */
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100;200&family=Orbit&display=swap');
+        @font-face {
+            font-family: 'LeeSeoyun';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-        * {
-            font-family: 'Noto Sans KR', sans-serif;
+        body {
+            background-color: #f2f2f2ee;
         }
 
         /*헤더 */
         .center-image {
             margin-right: 600px;
+            font-family: 'Noto Sans KR', sans-serif;
         }
 
         .navbar-nav .nav-link {
@@ -52,91 +58,87 @@
             background-color: #e4e9d7;
         }
 
-        /*이미지*/
+        /*프로필*/
         .profile {
-            margin: 20px auto 20px auto;
-            padding: 20px;
-            border: 2px solid black;
-            border-radius: 10px;
-
+            background-image: url("board_image.png");
+            background-position: center;
+            background-size: cover;
+            margin: 20px auto;
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            width: 80%;
+            width: 100%;
+            max-width: 1300px;
+            height: 750px;
         }
 
         .left {
             padding: 10px;
-            margin-right: 20px;
-            width: 400px;
+            width: 350px;
             height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .right {
-            width: 700px;
+            width: 100%;
+            max-width: 700px;
             height: auto;
-        }
-
-        .right>ui {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .right>ui>li {
-            font-size: 20px;
-            margin-bottom: 12px;
-            border: 1px solid;
-            border-radius: 15px;
-            padding: 15px;
-            font-weight: bold;
-        }
-
-        .right>ui>li::before {
-            content: "\2022";
-            color: #333;
-            font-size: 20px;
-            margin-right: 10px;
+            color: white;
+            padding-left: 100px;
+            margin-bottom: 20px;
+            font-size: 18pt;
+            font-weight: lighter;
+            font-family: 'LeeSeoyun';
         }
 
         .img_pos {
-            margin-top: 70px;
             width: 300px;
             height: 400px;
-            border: 1px solid;
-            border-radius: 70%;
+            border-radius: 60%;
             /*이미지 둥글게*/
             background-position: center;
             background-size: cover;
         }
 
-        .img_pos>img {
-            margin-top: 10px;
-            width: 300px;
-            height: 400px;
-            object-fit: cover;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
         .name {
-            margin-left: 25%;
-            font-weight: bold;
+            color: white;
+            font-size: 40pt;
+            font-family: 'LeeSeoyun';
+        }
+
+        .modify_btn {
+            background-image: url("modify.png");
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border: none;
+            filter: invert(100%);
+            margin-left: 10px;
+            margin-bottom: 23px;
+        }
+
+        .name_modify {
+            display: flex;
+            align-items: center;
+            padding-left: 40px;
         }
 
         .blog_img {
             width: 32px;
             height: 32px;
             object-fit: cover;
+            margin-right: 10px;
         }
 
         .sns_img {
             width: 32px;
             height: 32px;
             object-fit: cover;
-            margin: 10px 10px 10px 0px
+            margin-right: 10px;
         }
     </style>
 
@@ -227,6 +229,15 @@
             $('#sns').attr("href", sns);
         });
 
+        //수정하기 버튼
+        $("#modify_btn").click(async function () {
+            window.open(
+                "detail_so_modify.html?" + name,
+                name + " 수정 페이지",
+                "width=600, height=900, top=50, left=500"
+            );
+        });
+
     </script>
 </head>
 
@@ -244,10 +255,10 @@
                         <li class="nav-item">
                             <a id="memberIntroBtn" class="nav-link" href="index.html#memberintro">멤버소개</a>
                             <div class="memberIntroMenu">
-                                <a href="detail_sb.html?이슬비" target="_blank">이슬비</a>
-                                <a href="detail_mj.html?이민주" target="_blank">이민주</a>
-                                <a href="detail_so.html?이선오" target="_blank">이선오</a>
-                                <a href="detail_hj.html?홍효정" target="_blank">홍효정</a>
+                                <a href="detail_sb.html?이슬비" target="_self">이슬비</a>
+                                <a href="detail_mj.html?이민주" target="_self">이민주</a>
+                                <a href="detail_so.html?이선오" target="_self">이선오</a>
+                                <a href="detail_hj.html?홍효정" target="_self">홍효정</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -268,28 +279,31 @@
         <div class="left">
             <div class="img_pos" id="img_pos">
             </div>
+            <div class="name_modify">
+                <h1 class="name" id="name">이름</h1>
+                <button id="modify_btn" class="modify_btn"></button>
+            </div>
 
-            <h1 class="name" id="name">이름</h1>
+            <span>
+                <!-- 블로그 버튼 -->
+                <a id="blog" class="blog" href="" target="_blank">
+                    <img src="" class="blog_img" alt="...">
+                </a>
 
-            <!-- 블로그 버튼 -->
-            <a id="blog" class="blog" href="" target="_blank">
-                <img src="" class="blog_img" alt="...">
-            </a>
-            <!-- sns 버튼 -->
-            <a id="sns" class="sns" href="" target="_blank">
-                <img src="" class="sns_img" alt="...">
-            </a>
+                <!-- sns 버튼 -->
+                <a id="sns" class="sns" href="" target="_blank">
+                    <img src="" class="sns_img" alt="...">
+                </a>
+            </span>
         </div>
 
         <div class="right">
-            <ui>
-                <li class="li1">MBTI: <span class="mbti" id="mbti"></span></li>
-                <li class="li2">사는 곳: <span class="home" id="home"></span></li>
-                <li class="li3">관심사: <span class="Interest" id="Interest"></span></li>
-                <li class="li4">장점: <span class="advantage" id="advantage"></span></li>
-                <li class="li5">협업스타일: <span class="style" id="style"></span></li>
-                <li class="li6">자기소개: <span class="intro" id="intro"></span></li>
-            </ui>
+            <p><span><b> MBTI: </b></span> <span id="mbti"> </span></p>
+            <p><span><b> 사는 곳: </b></span> <span id="home"> </span></p>
+            <p><span><b> 관심사: </b></span> <span id="Interest"> </span></p>
+            <p><span><b> 장점: </b></span> <span id="advantage"> </span></p>
+            <p><span><b> 협업스타일: </b></span> <span id="style"> </span></p>
+            <p><span><b> 자기소개: </b></span> <span id="intro"> </span></p>
         </div>
 </body>
 
