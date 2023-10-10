@@ -103,6 +103,7 @@
             let name = row['name'];
             let blog = row['blog'];
             let sns = row['sns'];
+            let github = row['github'];
             let mbti = row['mbti'];
             let intro = row['intro'];
             let advantage = row['advantage'];
@@ -114,6 +115,7 @@
             $('#image').val(image);
             $('#image2').val(image2);
             $('#blog').val(blog);
+            $('#github').val(github);
             $('#sns').val(sns);
             $('#mbti').val(mbti);
             $("#advantage").val(advantage);
@@ -130,6 +132,7 @@
             let image = $('#image').val();
             let image2 = $('#image2').val();
             let blog = $('#blog').val();
+            let github = $('#github').val();
             let sns = $('#sns').val();
             let mbti = $('#mbti').val();
             let intro = $("#intro").val();
@@ -146,7 +149,8 @@
                 image: image,
                 image2: image2,
                 mbti: mbti,
-                style: style
+                style: style,
+                github : github
             });
 
             opener.location.replace("detail_mj.html?" + name);
@@ -166,7 +170,7 @@
 <body>
     <div class="box">
         <div class="photo_area">
-            <img class="photo" src="pochacco.png">
+            <img class="photo" src="mj_image/pochacco.png">
         </div>
 
         <div class="input-group mb-3">
@@ -203,6 +207,12 @@
         <div class="input-group mb-3">
             <span class="input-group-text" id="inputGroup-sizing-default">sns 주소</span>
             <input id="sns" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">github 주소</span>
+            <input id="github" type="text" class="form-control" aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default">
         </div>
 
