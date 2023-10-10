@@ -219,6 +219,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+
         // 헤더 멤버소개 부분
         $(document).ready(function () {
             var menuTimeout;
@@ -238,7 +239,7 @@
         });
 
         //데이터 읽어서 멤버 카드에 넣기
-        let docs = await getDocs(collection(db, "member"));
+        let docs = await getDocs(query(collection(db, "member"), orderBy("name")));//이름순 정렬
         docs.forEach((doc) => {
             let row = doc.data();
 
@@ -286,7 +287,7 @@
             like++;
 
             const member = doc(db, "member", uid);//문서이름으로 받는 방법밖에 없나???
-            // console.log(member);
+        
 
             await updateDoc(member, {
                 like: increment(1)//1증가
@@ -330,10 +331,8 @@
                 return;
             }
             else {
-                console.log("Before increment: " + comment_id);
                 // comment_id++; // 윈도우 리로드 시 0으로 초기화되는 문제 생김
                 await incrementCommentId();
-                console.log("After increment: " + comment_id);
             }
 
             let doc = {
@@ -344,7 +343,6 @@
             };
             await addDoc(collection(db, "guestBook"), doc);
 
-            console.log(comment_id, user, comment);
             alert('입력 완료');
             window.location.reload();
         })
@@ -380,7 +378,6 @@
                 uid = doc.id;//문서 이름 가져오기
             });
 
-            console.log(uid);
             await deleteDoc(doc(db, "guestBook", uid));
             alert("삭제완료");
             window.location.reload();
