@@ -116,7 +116,11 @@
             border: none;
             background-color: transparent;
             background-image: url("empty.png");
-            transition-duration: 0.3ms;
+            transition: transform 0.3s ease-in-out;
+        }
+        .like_btn:hover {
+            transform: scale(1.05);
+            background-image: url("full.png");
         }
 
         .like_num {
@@ -135,18 +139,35 @@
             width: 32px;
             height: 32px;
             object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        
         }
+
+        .blog_img:hover{
+            transform: scale(1.5);
+        }
+        
 
         .sns_img {
             width: 32px;
             height: 32px;
             object-fit: cover;
+            transition: transform 0.3s ease-in-out;
         }
 
+        .sns_img:hover{
+            transform: scale(1.5);
+        }
+        
         .github_img {
             width: 32px;
             height: 32px;
             object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .github_img:hover{
+            transform: scale(1.5);
         }
         .modify_btn {
             background-image: url("modify.png");

@@ -99,6 +99,17 @@
 
 
         /* 카드 부분 */
+        
+        .col {
+            transition: transform 0.3s ease-in-out;
+            /* Add a smooth transition effect with ease-in-out timing function */
+        }
+
+        .col:hover {
+            transform: scale(1.05);
+            /* Enlarge the card slightly on hover */
+        }
+
         .cardmsg {
             border: 1px soild;
             background-color: rgba(255, 191, 0, 0.7);
@@ -140,6 +151,12 @@
             background-color: transparent !important;
             background-image: url("empty.png");
             transition-duration: 0.3ms;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .like_btn:hover{
+            transform: scale(1.05);
+            background-image: url("full.png");
         }
 
         .like_num {
