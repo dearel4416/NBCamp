@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         MainMenu mainMenu = new MainMenu(); // 메인메뉴 클래스
@@ -7,8 +9,8 @@ public class Main {
         String goodsName;
         double goodsPrice;
         String goodsDct;
-
         int turn = 0; // 대기 번호
+        Scanner scan = new Scanner(System.in);
 
         while (true) {
             mainMenu.printMainMenu();
@@ -40,6 +42,15 @@ public class Main {
             else if (mainMenuName.equals("Cancel")) {
                 System.out.println("진행하던 주문이 취소 되었습니다.\n");
                 order.clearCart(); // 장바구니 비움
+            } // 총 판매금액 조회
+            else if(mainMenuName.equals("Total")) {
+                System.out.println("[ 총 판매금액 현황 ]\n현재까지 총 판매된 금액은 [ W " + Math.round(order.getSalesAmount() * 10) / 10.0 + " ] 입니다.\n");
+                while (true) {
+                    System.out.println("1. 돌아가기 ('1' 입력)");
+                    if (scan.nextInt() == 1) {
+                        break;
+                    }
+                }
             } // 상품 선택
             else {
                 while (true) {

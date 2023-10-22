@@ -48,6 +48,9 @@ public class MainMenu {
 
             // 숫자로 입력 하거나 주문 옵션을 선택할 경우
             switch (choose) {
+                case "0":
+                    choose = "Total"; // 숨겨진 기능 : 총 판매금액 조회
+                    return choose;
                 case "1":
                     choose = "Burgers";
                     description = (String) mainMenu.get(choose);
