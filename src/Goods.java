@@ -4,17 +4,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Goods extends MainMenu {
-    Map<Integer, String[]> goodsMenu = new LinkedHashMap<>(); // 상품 종류 저장
-    Map<Integer, String[]> detailMenu = new LinkedHashMap<>(); // 상품 옵션 저장
-    private String gName;
-    private String gDescription;
-    private double price;
+    Map<Integer, String[]> goodsMenu = new LinkedHashMap<>(); // 상품 목록 저장 컬렉션
+    Map<Integer, String[]> detailMenu = new LinkedHashMap<>(); // 상품 옵션 저장 컬렉션
+    private String gName; // 상품 이름
+    private String gDescription; // 상품 설명
+    private double price; // 상품 가격
 
-    Goods(String gName) {
+    Goods(String gName) { // 매개변수 : 선택한 메인메뉴명
         this.gName = gName;
     }
 
-    // 선택한 메인 메뉴에 따라 상품 정보를 map에 추가
+    // 선택한 메인메뉴에 따라 상품 목록 세팅
     private void setGoodsMap() {
         switch (gName) {
             case "Burgers":
@@ -40,8 +40,8 @@ public class Goods extends MainMenu {
         }
     }
 
-    // 상품 옵션 목록 설정
-    private void setDetailMap(String n) {
+    // 선택한 상품에 따라 상품 옵션 세팅
+    private void setDetailMap(String n) { // 매개변수 : 선택한 상품명
         switch (n) {
             case "ShackBurger":
                 detailMenu.put(1, new String[] { "Single", "6.9" });
@@ -84,8 +84,8 @@ public class Goods extends MainMenu {
             int choose = scan.nextInt();
 
             for (int menu : goodsMenu.keySet()) {
-                if (choose == menu) { // 선택한 상품 번호가 올바를 경우
-                    n = (String) goodsMenu.get(menu)[0]; // 상품 번호(키값)에 매치 되는 상품명(value[0] 값) 저장
+                if (choose == menu) { // 선택한 상품 번호가 키 값과 동일할 경우
+                    n = (String) goodsMenu.get(menu)[0]; // n에 상품 번호(키값)에 매치 되는 상품명(value[0] 값) 저장
                     price = Double.parseDouble(goodsMenu.get(menu)[1]); // 상품 가격(value[1] 값)
                     gDescription = (String) goodsMenu.get(menu)[2]; // 상품 설명(value[2] 값)
 
@@ -94,22 +94,21 @@ public class Goods extends MainMenu {
                         case "ShackBurger":
                         case "SmokeShack":
                         case "Fountain Soda":
-                            printDetail(n); // 옵션 출력
-                            n = chooseDetail(n); // 옵션 선택
+                            printDetail(n); // 상품 옵션 출력
+                            n = chooseDetail(n); // 상품 옵션 선택
                             break;
                     }
 
                     return n;
                 }
             }
-
             System.out.println("올바른 상품 번호를 입력해주세요.\n");
         }
     }
 
     // 상품 옵션 출력
-    void printDetail(String n) {
-        setDetailMap(n); // 상품명을 받아 옵션 설정
+    private void printDetail(String n) { // 매개변수 : 선택한 상품명
+        setDetailMap(n);
         System.out.println("\n" + n + "\t| W " + price + " | " + gDescription);
         System.out.println("위 메뉴의 어떤 옵션으로 추가하시겠습니까?\n");
 
@@ -121,20 +120,19 @@ public class Goods extends MainMenu {
     }
 
     // 상품 옵션 선택 메소드
-    private String chooseDetail(String n) {
+    private String chooseDetail(String n) { // 매개변수 : 선택한 상품명
         while (true) {
             System.out.print("옵션 선택 : ");
             int choose = scan.nextInt();
 
             for (int menu : detailMenu.keySet()) {
-                if (choose == menu) {
-                    n = n + "(" + (String) detailMenu.get(menu)[0] + ")";  // 상품 번호(키값)에 매치 되는 상품 옵션(value[0] 값)을 상품명(n)에 더함
-                    price = Double.parseDouble(detailMenu.get(menu)[1]); // 상품 옵션 가격(value[1] 값)
+                if (choose == menu) {  // 선택한 옵션 번호가 키 값과 동일할 경우
+                    n = n + "(" + (String) detailMenu.get(menu)[0] + ")";  // 옵션 번호(키값)에 매치 되는 상품 옵션(value[0] 값)을 상품명(n)에 더하기 연산
+                    price = Double.parseDouble(detailMenu.get(menu)[1]); // 옵션 가격(value[1] 값)
                     return n;
                 }
             }
-
-            System.out.println("올바른 상품 옵션을 입력해주세요.\n");
+            System.out.println("올바른 상품 옵션 번호를 입력해주세요.\n");
         }
     }
 

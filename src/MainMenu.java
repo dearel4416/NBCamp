@@ -4,19 +4,20 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainMenu {
-    Map<String, String> mainMenu = new LinkedHashMap<>(); // LinkedHashMap : 데이터를 추가한 순서 대로 출력됨
+    Map<String, String> mainMenu = new LinkedHashMap<>(); // 메인메뉴 저장 컬렉션, LinkedHashMap : 데이터를 추가한 순서 대로 출력됨
     Scanner scan = new Scanner(System.in);
     private String name = ""; // 메뉴 이름
     //private String description = ""; // 메뉴 설명
 
     MainMenu() {
+        // 메인메뉴 세팅
         mainMenu.put("Burgers", "앵거스 비프 통살을 다져만든 버거");
         mainMenu.put("Forzen Custard", "매장에서 신선하게 만드는 아이스크림");
         mainMenu.put("Drinks", "매장에서 직접 만드는 음료");
         mainMenu.put("Beer", "뉴욕 브루클린 브루어리에서 양조한 맥주");
     }
 
-    // 메인 메뉴 목록 출력
+    // 메인메뉴 목록 출력
     void printMainMenu() {
         System.out.println("SHAKESHACK BURGER 에 오신걸 환영합니다.\n아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.\n");
         System.out.println("[ SHAKESHACK MENU ]");
@@ -31,7 +32,7 @@ public class MainMenu {
         System.out.println("6. Cancel      | 진행중인 주문을 취소합니다.\n");
     }
 
-    // 메뉴 선택 메소드
+    // 메인메뉴 선택 메소드
     private String chooseMenu() {
         while (true) {
             System.out.print("메뉴 선택 : ");

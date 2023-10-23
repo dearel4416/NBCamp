@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Order {
-    Map<String, String[]> orderList = new LinkedHashMap<>(); // 장바구니 목록
-    ArrayList<String[]> totalOrder = new ArrayList<String[]>(); // 총 판매상품 목록
+    Map<String, String[]> orderList = new LinkedHashMap<>(); // 장바구니 상품 목록 저장 컬렉션
+    ArrayList<String[]> totalOrder = new ArrayList<String[]>(); // 총 판매 상품 목록 저장 컬렉션
     Scanner scan = new Scanner(System.in);
     private double totalPrice = 0.0; // 장바구니에 담긴 상품 총 금액
     private double salesAmount = 0.0; // 지금까지의 총 판매 금액
@@ -15,24 +15,24 @@ public class Order {
     //    orderList.put(cName, new String[]{String.valueOf(cPrice), cDescription}); // Map : 같은 상품(키 값)이면 add 되지 않는 문제 있음
     //}
 
-    // 장바구니에 상품 더하기 (같은 상품이면 num + 1)
-    void addCart(String cName, double cPrice, String cDescription) {
-        totalPrice += cPrice;
+    // 선택한 상품을 장바구니에 추가
+    void addCart(String cName, double cPrice, String cDescription) { // 매개변수 : 상품명, 상품 가격, 상품 설명
+        totalPrice += cPrice; // 장바구니에 담긴 상품 총 금액 + 선택한 상품 가격
 
-        String num; // 주문 개수
-        if (orderList.containsKey(cName)) { // 같은 키값을 가지고 있다면
-            num = Integer.toString((Integer.valueOf(orderList.get(cName)[1]) + 1)); // num++
-        } else {
+        String num; // 상품명 별 장바구니에 담겨 있는 개수
+        if (orderList.containsKey(cName)) { // orderList에 cName과 동일한 키값이 있다면
+            num = Integer.toString((Integer.valueOf(orderList.get(cName)[1]) + 1)); // 해당 키값의 value[1] 값인 num++
+        } else { // 새로운 cName(키값)이 들어오면 num = 1
             num = "1";
         }
-        orderList.put(cName, new String[]{String.valueOf(cPrice), num, cDescription}); // num으로 주문한 상품 개수를 명시해서 장바구니 Map에 추가
+        orderList.put(cName, new String[]{String.valueOf(cPrice), num, cDescription}); // num으로 주문한 상품 개수를 명시해서 orderList 세팅
     }
 
-    // 장바구니에 목록 확인 후 담긴 상품 주문 여부 선택
+    // 장바구니 목록 확인 후 상품 주문 여부 선택
     int orderCart() {
         int ch = 0;
 
-        if (orderList.isEmpty()) { // 장바구니에 아무 항목도 없는 경우
+        if (orderList.isEmpty()) { // 장바구니가 비어있는 경우
             return ch;
         }
 
@@ -48,7 +48,7 @@ public class Order {
             ch = scan.nextInt();
             if (ch == 1) {
                 salesAmount += totalPrice; // 지금까지의 총 판매 금액에 장바구니에 담긴 상품 총 금액 더하기
-                addTotalOrder(); // 총 판매상품 목록 totalOrder에 주문한 상품 추가
+                addTotalOrder(); // 총 판매상품 목록 totalOrder에 주문한 상품을 추가
                 break;
             } else if (ch == 2) {
                 break;
@@ -65,7 +65,7 @@ public class Order {
         totalPrice = 0.0;
     }
 
-    // 총 판매상품 목록에 주문한 상품 추가
+    // 총 판매상품 목록에 주문한 상품을 추가
     private void addTotalOrder() {
         orderList.forEach((key, value) -> {
             int count = Integer.parseInt(value[1]);
