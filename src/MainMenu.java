@@ -7,7 +7,7 @@ public class MainMenu {
     Map<String, String> mainMenu = new LinkedHashMap<>(); // LinkedHashMap : 데이터를 추가한 순서 대로 출력됨
     Scanner scan = new Scanner(System.in);
     private String name = ""; // 메뉴 이름
-    private String description = ""; // 메뉴 설명
+    //private String description = ""; // 메뉴 설명
 
     MainMenu() {
         mainMenu.put("Burgers", "앵거스 비프 통살을 다져만든 버거");
@@ -40,38 +40,41 @@ public class MainMenu {
 
             // 메뉴명으로 입력한 경우
             for (String menu : mainMenu.keySet()) {
-                if(choose.equals(menu)){
-                    description = (String) mainMenu.get(menu); // 메뉴명(키값)에 매치 되는 value 값 저장
+                if (choose.equals(menu)) {
+                    //description = (String) mainMenu.get(menu); // 메뉴명(키값)에 매치 되는 상품 설명(value 값) 저장
                     return choose;
                 }
             }
 
             // 숫자로 입력 하거나 주문 옵션을 선택할 경우
             switch (choose) {
-                case "0":
-                    choose = "Total"; // 숨겨진 기능 : 총 판매금액 조회
+                case "0": // 숨겨진 기능 : 총 판매금액 조회, 총 판매상품 목록 현황
+                    choose = "Total";
+                    return choose;
+                case "000": // 숨겨진 기능 : 프로그램 종료
+                    choose = "000";
                     return choose;
                 case "1":
                     choose = "Burgers";
-                    description = (String) mainMenu.get(choose);
+                    //description = (String) mainMenu.get(choose);
                     return choose;
                 case "2":
                     choose = "Forzen Custard";
-                    description = (String) mainMenu.get(choose);
+                    //description = (String) mainMenu.get(choose);
                     return choose;
                 case "3":
                     choose = "Drinks";
-                    description = (String) mainMenu.get(choose);
+                    //description = (String) mainMenu.get(choose);
                     return choose;
                 case "4":
                     choose = "Beer";
-                    description = (String) mainMenu.get(choose);
+                    //description = (String) mainMenu.get(choose);
                     return choose;
-                case "5":
+                case "5": // 장바구니 목록 주문
                     choose = "Order";
                 case "Order":
                     return choose;
-                case "6":
+                case "6": // 주문 취소 후 장바구니 비우기
                     choose = "Cancel";
                 case "Cancel":
                     return choose;
@@ -89,7 +92,7 @@ public class MainMenu {
         return name;
     }
 
-    public String getDescription(){
-        return description;
-    }
+//    public String getDescription() {
+//        return description;
+//    }
 }
