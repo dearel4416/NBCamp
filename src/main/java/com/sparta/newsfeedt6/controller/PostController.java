@@ -22,4 +22,12 @@ public class PostController {
         PostResponseDto responseDto = postService.addPost(requestDto);
         return responseDto;
     }
+
+    // 게시글 선택 조회 (GET) : by ID
+    @GetMapping("/{postId}")
+    public PostResponseDto getPost(
+            @PathVariable Long postId
+    ){
+        return postService.getPost(postId);
+    }
 }

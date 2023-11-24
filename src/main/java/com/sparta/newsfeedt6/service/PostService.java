@@ -19,4 +19,17 @@ public class PostService {
 
         return new PostResponseDto(savePost);
     }
+
+    // 게시글 선택 조회 (GET) : by ID
+    public PostResponseDto getPost(Long postId) {
+        PostEntity postEntity = getPostEntity(postId);
+
+        return new PostResponseDto(postEntity);
+    }
+
+    // 게시글 Id 찾기
+    private PostEntity getPostEntity(Long postId){
+        return postJpaReqository.findById(postId)
+                .orElseThrow(() -> new NullPointerException("해당 게시글을 찾을 수 없습니다."));
+    }
 }
