@@ -7,6 +7,9 @@ import com.sparta.newsfeedt6.repository.PostJpaReqository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -25,6 +28,13 @@ public class PostService {
         PostEntity postEntity = getPostEntity(postId);
 
         return new PostResponseDto(postEntity);
+    }
+
+    // 게시글 전체 조회
+    public List<PostResponseDto> getPosts(){
+        return postJpaReqository.findAllByOrderByCreatedAtDesc().stream()
+                .map(PostResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     // 게시글 Id 찾기
