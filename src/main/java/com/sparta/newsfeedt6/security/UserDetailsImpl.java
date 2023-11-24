@@ -1,6 +1,6 @@
 package com.sparta.newsfeedt6.security;
 
-import com.sparta.newsfeedt6.user.entity.User;
+import com.sparta.newsfeedt6.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
