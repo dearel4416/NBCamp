@@ -1,6 +1,7 @@
 package com.sparta.newsfeedt6.entity;
 
 import com.sparta.newsfeedt6.dto.PostAddRequestDto;
+import com.sparta.newsfeedt6.dto.PostUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,6 +21,12 @@ public class PostEntity extends com.sparta.newsfeedt6.entity.TimeEntity {
     private String content;
 
     public PostEntity(PostAddRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+    }
+
+    // 게시글 수정
+    public void update(PostUpdateRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
     }

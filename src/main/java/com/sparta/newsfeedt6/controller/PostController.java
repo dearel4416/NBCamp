@@ -2,6 +2,7 @@ package com.sparta.newsfeedt6.controller;
 
 import com.sparta.newsfeedt6.dto.PostAddRequestDto;
 import com.sparta.newsfeedt6.dto.PostResponseDto;
+import com.sparta.newsfeedt6.dto.PostUpdateRequestDto;
 import com.sparta.newsfeedt6.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,14 @@ public class PostController {
     @GetMapping
     public List<PostResponseDto> getPosts(){
         return postService.getPosts();
+    }
+
+    // 게시글 수정
+    @PatchMapping("/{postId}")
+    public PostResponseDto updatePost(
+            @PathVariable Long postId,
+            @RequestBody PostUpdateRequestDto requestDto
+    ){
+        return postService.updatePost(postId, requestDto);
     }
 }

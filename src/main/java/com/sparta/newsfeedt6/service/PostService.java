@@ -2,10 +2,12 @@ package com.sparta.newsfeedt6.service;
 
 import com.sparta.newsfeedt6.dto.PostAddRequestDto;
 import com.sparta.newsfeedt6.dto.PostResponseDto;
+import com.sparta.newsfeedt6.dto.PostUpdateRequestDto;
 import com.sparta.newsfeedt6.entity.PostEntity;
 import com.sparta.newsfeedt6.repository.PostJpaReqository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +37,19 @@ public class PostService {
         return postJpaReqository.findAllByOrderByCreatedAtDesc().stream()
                 .map(PostResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    // 게시글 수정
+    @Transactional
+    public PostResponseDto updatePost(Long postId, PostUpdateRequestDto requestDto) {
+        PostEntity postEntity = getPostEntity(postId);
+
+//        if(postEntity.getPassword().equals(requestDto.getPassword()){
+//            throw new NullPointerException("작성자의 게시글만 수정할 수 있습니다.");
+//        }
+        postEntity.update(requestDto);
+
+        return new PostResponseDto(postEntity);
     }
 
     // 게시글 Id 찾기
