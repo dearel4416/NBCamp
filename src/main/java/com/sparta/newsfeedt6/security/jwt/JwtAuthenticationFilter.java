@@ -1,8 +1,8 @@
 package com.sparta.newsfeedt6.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.newsfeedt6.dto.LoginRequestDto;
 import com.sparta.newsfeedt6.security.UserDetailsImpl;
-import com.sparta.newsfeedt6.LoginRequestDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
+        setFilterProcessesUrl("/login");
     }
 
     @Override
@@ -29,6 +31,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             LoginRequestDto requestDto = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDto.class);
 
+            System.out.println("suc");
             return getAuthenticationManager().authenticate(
                     new UsernamePasswordAuthenticationToken(
                             requestDto.getUsername(),
@@ -48,6 +51,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain chain, Authentication authen)
         throws IOException, ServletException {
+        System.out.println("success!!");
 
         String username = ((UserDetailsImpl) authen.getPrincipal()).getUsername();
 
@@ -56,11 +60,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String refToken = jwtUtil.createRefreshToken(username);
         jwtUtil.addRefreshTokenToCookie(refToken, response);
+
+        response.setHeader(JwtUtil.AUTH_HEADER,accessToken);
+        System.out.println("success");
     }
 
     @Override
     protected void unsuccessfulAuthentication (HttpServletRequest request, HttpServletResponse response,
                                                AuthenticationException failed) throws IOException, ServletException {
+        System.out.println("401");
         response.setStatus(401);
     }
 
