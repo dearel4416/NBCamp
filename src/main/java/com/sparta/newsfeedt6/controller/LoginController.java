@@ -1,6 +1,6 @@
 package com.sparta.newsfeedt6.controller;
+
 import com.sparta.newsfeedt6.dto.LoginRequestDto;
-import com.sparta.newsfeedt6.dto.SignupRequestDto;
 import com.sparta.newsfeedt6.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
@@ -8,23 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/api/user")
-public class UserController {
+public class LoginController {
+
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public LoginController(UserService userService) {
         this.userService = userService;
-    }
-
-
-    @PostMapping("/signupForm")
-    public String signup(@RequestBody SignupRequestDto requestDto){
-        userService.signup(requestDto);
-
-        return "home";
     }
 
     @PostMapping("/login")

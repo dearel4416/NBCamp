@@ -1,8 +1,10 @@
 package com.sparta.newsfeedt6.service;
 
+import com.sparta.newsfeedt6.dto.LoginRequestDto;
 import com.sparta.newsfeedt6.dto.SignupRequestDto;
 import com.sparta.newsfeedt6.entity.User;
 import com.sparta.newsfeedt6.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +43,21 @@ public class UserService {
 
         User user = new User(username, password, email, introduction);
         userRepository.save(user);
+    }
+
+    public void login(LoginRequestDto requestDto, HttpServletResponse res) {
+        String username = requestDto.getUsername();
+        String password = requestDto.getPassword();
+
+        System.out.println("ccc");
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("등록된 사용자가 없습니다.")
+        );
+        System.out.println("bb");
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        System.out.println("aaa");
     }
 }

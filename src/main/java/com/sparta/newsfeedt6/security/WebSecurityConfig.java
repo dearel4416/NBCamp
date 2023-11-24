@@ -54,9 +54,10 @@ public class WebSecurityConfig {
                         authorizeHttpRequests
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/api/user/**").permitAll()
+                                .requestMatchers("/login").permitAll()
                                 .anyRequest().authenticated())
-                .formLogin((formLogin) ->
-                        formLogin.loginPage("/api/user/login").permitAll())
+//                .formLogin((formLogin) ->
+//                        formLogin.loginPage("/api/user/login").permitAll())
                 .addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 

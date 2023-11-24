@@ -2,8 +2,10 @@ package com.sparta.newsfeedt6.security;
 
 import com.sparta.newsfeedt6.entity.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -31,27 +33,33 @@ public class UserDetailsImpl implements UserDetails {
 
     // 인터페이스라서 반드시 구현해야합니다.  하지만 프로젝트 구현사항에서 사용자 관리자 권한을 구분하지 않았기 때문에 모두의 권한을 통일할 예정입니다.
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
-        return Collections.emptyList();
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        String authority = "ROLE_USER";
+
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(simpleGrantedAuthority);
+
+        return authorities;
     }
 
     @Override
-    public boolean isAccountNonExpired(){
+    public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
-    public boolean isAccountNonLocked(){
+    public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
-    public boolean isCredentialsNonExpired(){
+    public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
-    public boolean isEnabled(){
+    public boolean isEnabled() {
         return true;
     }
 
