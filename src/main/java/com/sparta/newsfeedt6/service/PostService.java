@@ -52,6 +52,16 @@ public class PostService {
         return new PostResponseDto(postEntity);
     }
 
+    // 게시글 삭제
+    public void deletePost(Long postId) {
+        PostEntity postEntity = getPostEntity(postId);
+
+//        if(postEntity.getPassword().equals(password){
+//            throw new NullPointerException("작성자의 게시글만 삭제할 수 있습니다.");
+//        }
+        postJpaReqository.delete(postEntity);
+    }
+
     // 게시글 Id 찾기
     private PostEntity getPostEntity(Long postId){
         return postJpaReqository.findById(postId)
