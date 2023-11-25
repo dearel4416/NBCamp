@@ -17,3 +17,33 @@
 #### 리스트 조회 : 전체 목록을 조회할 수 있습니다.
 #### 수정
 <br>
+
+
+## 애플리케이션 실행
+#### 1. git clone
+```
+git clone https://github.com/alstjd2627/newsfeed-t6.git
+```
+
+#### 2. 환경변수 설정
+
+1. 인텔리제이 오른쪽 위 디버깅버튼 옆에 점 세개 클릭
+   - 확인해야할것  NewsfeedT6Application  으로 설정되어있는지 확인
+   - 버튼 클릭 후 Configration 아래 edit 클릭
+   
+
+2. Environment variables 에 아래에 적힌 것들을 입력하시면 됩니다.
+   - Environment variables이 없다면?  Modify Option을 클릭 후<br>
+      Environment variables를 찾아 클릭하시면 됩니다. (또는 alt + E)
+```
+port=???;db_name=???;username=???;password=???;jwt.secret.key=???;
+```
+???에 본인의 해당 값을 입력하고, 
+Apply 후 Run을 하여 정상적으로 실행되는지 확인하면 끝입니다.
+
+
+#### 3. 
+   
+
+
+
