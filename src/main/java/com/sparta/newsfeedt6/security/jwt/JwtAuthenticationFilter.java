@@ -2,7 +2,7 @@ package com.sparta.newsfeedt6.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.newsfeedt6.security.UserDetailsImpl;
-import com.sparta.newsfeedt6.user.LoginRequestDto;
+import com.sparta.newsfeedt6.user.dto.LoginRequestDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
