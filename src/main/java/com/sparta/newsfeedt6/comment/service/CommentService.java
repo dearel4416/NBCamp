@@ -5,8 +5,8 @@ import com.sparta.newsfeedt6.comment.dto.CommentRequestDto;
 import com.sparta.newsfeedt6.comment.dto.CommentResponseDto;
 import com.sparta.newsfeedt6.comment.entity.Comment;
 import com.sparta.newsfeedt6.comment.repository.CommentRepository;
-import com.sparta.newsfeedt6.entity.PostEntity;
-import com.sparta.newsfeedt6.repository.PostJpaReqository;
+import com.sparta.newsfeedt6.post.entity.PostEntity;
+import com.sparta.newsfeedt6.post.repository.PostJpaReqository;
 import com.sparta.newsfeedt6.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,10 +49,11 @@ public class CommentService {
         commentRepository.delete(comment);
     }
 
+    // 에러처리 1. 로그찍고  2. 에러를 다시 던진다.  3. trycatch 로 컨트롤러에서 받고  리스폰스엔티티를 활용하여 응답한다.  일괄처리도 알아보기
     private Comment checkCommentId(Long commentId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new IllegalArgumentException("해당 댓글을 찾을 수 없습니다.")
-        ); // 에러처리 1. 로그찍고  2. 에러를 다시 던진다.  3. trycatch 로 컨트롤러에서 받고  리스폰스엔티티를 활용하여 응답한다.  일괄처리도 알아보기
+        );
         return comment;
     }
 
@@ -66,4 +67,3 @@ public class CommentService {
 
 // dto 작명 더좋은?
 
-// 코테할때도 변수명 잘짓기

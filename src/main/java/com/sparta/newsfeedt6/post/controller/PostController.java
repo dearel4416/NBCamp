@@ -1,9 +1,9 @@
-package com.sparta.newsfeedt6.controller;
+package com.sparta.newsfeedt6.post.controller;
 
-import com.sparta.newsfeedt6.dto.PostAddRequestDto;
-import com.sparta.newsfeedt6.dto.PostResponseDto;
-import com.sparta.newsfeedt6.dto.PostUpdateRequestDto;
-import com.sparta.newsfeedt6.service.PostService;
+import com.sparta.newsfeedt6.post.dto.PostAddRequestDto;
+import com.sparta.newsfeedt6.post.dto.PostResponseDto;
+import com.sparta.newsfeedt6.post.dto.PostUpdateRequestDto;
+import com.sparta.newsfeedt6.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

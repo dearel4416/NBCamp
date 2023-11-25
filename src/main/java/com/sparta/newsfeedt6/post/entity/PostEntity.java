@@ -1,8 +1,8 @@
-package com.sparta.newsfeedt6.entity;
+package com.sparta.newsfeedt6.post.entity;
 
 import com.sparta.newsfeedt6.comment.entity.Comment;
-import com.sparta.newsfeedt6.dto.PostAddRequestDto;
-import com.sparta.newsfeedt6.dto.PostUpdateRequestDto;
+import com.sparta.newsfeedt6.post.dto.PostAddRequestDto;
+import com.sparta.newsfeedt6.post.dto.PostUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.sparta.newsfeedt6.dto;
+package com.sparta.newsfeedt6.post.dto;
 
-import com.sparta.newsfeedt6.entity.PostEntity;
+import com.sparta.newsfeedt6.post.entity.PostEntity;
 import java.time.LocalDateTime;
 // 게시글 ResponseDto
 public record PostResponseDto(

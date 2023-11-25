@@ -1,13 +1,11 @@
 package com.sparta.newsfeedt6.comment.entity;
 
-import com.sparta.newsfeedt6.entity.PostEntity;
+import com.sparta.newsfeedt6.post.entity.PostEntity;
 import com.sparta.newsfeedt6.entity.TimeEntity;
 import com.sparta.newsfeedt6.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter
