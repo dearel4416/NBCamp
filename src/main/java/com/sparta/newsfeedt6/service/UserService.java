@@ -1,8 +1,8 @@
 package com.sparta.newsfeedt6.service;
 
 import com.sparta.newsfeedt6.dto.SignupRequestDto;
-import com.sparta.newsfeedt6.entity.User;
-import com.sparta.newsfeedt6.repository.UserRepository;
+import com.sparta.newsfeedt6.user.entity.User;
+import com.sparta.newsfeedt6.user.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
