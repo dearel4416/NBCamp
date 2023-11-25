@@ -47,6 +47,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity.csrf((csrf) -> csrf.disable())
                 .sessionManagement((sessionManagement) ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -54,13 +55,19 @@ public class WebSecurityConfig {
                         authorizeHttpRequests
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/api/user/**").permitAll()
-                                .anyRequest().authenticated())
-//                .formLogin((formLogin) ->
-//                        formLogin.loginPage("/api/user/login").permitAll())
-                .addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class)
-                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                                .requestMatchers("/").permitAll()
+                                .anyRequest().authenticated());
+
+        httpSecurity.formLogin((formLogin) ->
+                formLogin.
+                        loginPage("/api/user/login").permitAll());
+
+        httpSecurity.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
 
         return httpSecurity.build();
-
     }
+
+
 }

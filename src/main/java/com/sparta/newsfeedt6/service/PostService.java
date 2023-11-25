@@ -4,6 +4,7 @@ import com.sparta.newsfeedt6.dto.PostAddRequestDto;
 import com.sparta.newsfeedt6.dto.PostResponseDto;
 import com.sparta.newsfeedt6.dto.PostUpdateRequestDto;
 import com.sparta.newsfeedt6.entity.PostEntity;
+import com.sparta.newsfeedt6.entity.User;
 import com.sparta.newsfeedt6.repository.PostJpaReqository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class PostService {
     private final PostJpaReqository postJpaReqository;
 
     // 게시글 등록 (POST)
-    public PostResponseDto addPost(PostAddRequestDto requestDto) {
+    public PostResponseDto addPost(PostAddRequestDto requestDto, User user) {
         PostEntity postEntity = new PostEntity(requestDto);
         PostEntity savePost = postJpaReqository.save(postEntity);
 
@@ -41,24 +42,18 @@ public class PostService {
 
     // 게시글 수정
     @Transactional
-    public PostResponseDto updatePost(Long postId, PostUpdateRequestDto requestDto) {
+    public PostResponseDto updatePost(Long postId, PostUpdateRequestDto requestDto, User user) {
         PostEntity postEntity = getPostEntity(postId);
 
-//        if(postEntity.getPassword().equals(requestDto.getPassword()){
-//            throw new NullPointerException("작성자의 게시글만 수정할 수 있습니다.");
-//        }
         postEntity.update(requestDto);
 
         return new PostResponseDto(postEntity);
     }
 
     // 게시글 삭제
-    public void deletePost(Long postId) {
+    public void deletePost(Long postId, User user) {
         PostEntity postEntity = getPostEntity(postId);
 
-//        if(postEntity.getPassword().equals(password){
-//            throw new NullPointerException("작성자의 게시글만 삭제할 수 있습니다.");
-//        }
         postJpaReqository.delete(postEntity);
     }
 

@@ -8,6 +8,7 @@ public record PostResponseDto(
         String title,
         String content,
         LocalDateTime createdAt // 게시글 저장 시점
+
 ) {
     public PostResponseDto(PostEntity savePost) {
         this(
