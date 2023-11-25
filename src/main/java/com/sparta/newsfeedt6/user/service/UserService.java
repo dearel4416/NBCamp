@@ -1,9 +1,9 @@
-package com.sparta.newsfeedt6.service;
+package com.sparta.newsfeedt6.user.service;
 
-import com.sparta.newsfeedt6.dto.LoginRequestDto;
-import com.sparta.newsfeedt6.dto.SignupRequestDto;
-import com.sparta.newsfeedt6.entity.User;
-import com.sparta.newsfeedt6.repository.UserRepository;
+import com.sparta.newsfeedt6.user.dto.LoginRequestDto;
+import com.sparta.newsfeedt6.user.dto.SignupRequestDto;
+import com.sparta.newsfeedt6.user.entity.User;
+import com.sparta.newsfeedt6.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

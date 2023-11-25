@@ -13,3 +13,6 @@ public class HomeController {
         return "/";
     }
 }
+
+
+이거 어디 쓰는건가요?

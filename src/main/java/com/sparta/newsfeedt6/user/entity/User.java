@@ -1,13 +1,11 @@
-package com.sparta.newsfeedt6.entity;
+package com.sparta.newsfeedt6.user.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.sparta.newsfeedt6.comment.entity.Comment;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @Entity
@@ -30,6 +28,9 @@ public class User {
     @Column(nullable = false)
     private String introduction;
 
+    // 댓글 유저 연관관계 설정
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
 
     public User(String username, String password, String email, String introduction) {
         this.username = username;

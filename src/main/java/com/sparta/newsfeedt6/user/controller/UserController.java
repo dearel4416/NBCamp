@@ -1,7 +1,9 @@
-package com.sparta.newsfeedt6.controller;
-import com.sparta.newsfeedt6.dto.LoginRequestDto;
-import com.sparta.newsfeedt6.dto.SignupRequestDto;
-import com.sparta.newsfeedt6.service.UserService;
+package com.sparta.newsfeedt6.user.controller;
+import com.sparta.newsfeedt6.user.dto.SignupRequestDto;
+import com.sparta.newsfeedt6.user.service.UserService;
+import com.sparta.newsfeedt6.user.dto.LoginRequestDto;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/api/user")
+@RequestMapping
 public class UserController {
     private final UserService userService;
 
@@ -20,8 +22,8 @@ public class UserController {
     }
 
 
-    @PostMapping("/signupForm")
-    public String signup(@RequestBody SignupRequestDto requestDto){
+    @PostMapping("/signup")
+    public String signup(@Valid SignupRequestDto requestDto){
         userService.signup(requestDto);
 
         return "home";

@@ -1,10 +1,10 @@
-package com.sparta.newsfeedt6.service;
+package com.sparta.newsfeedt6.post.service;
 
-import com.sparta.newsfeedt6.dto.PostAddRequestDto;
-import com.sparta.newsfeedt6.dto.PostResponseDto;
-import com.sparta.newsfeedt6.dto.PostUpdateRequestDto;
-import com.sparta.newsfeedt6.entity.PostEntity;
-import com.sparta.newsfeedt6.repository.PostJpaReqository;
+import com.sparta.newsfeedt6.post.dto.PostAddRequestDto;
+import com.sparta.newsfeedt6.post.dto.PostResponseDto;
+import com.sparta.newsfeedt6.post.dto.PostUpdateRequestDto;
+import com.sparta.newsfeedt6.post.entity.PostEntity;
+import com.sparta.newsfeedt6.post.repository.PostJpaReqository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,3 +68,6 @@ public class PostService {
                 .orElseThrow(() -> new NullPointerException("해당 게시글을 찾을 수 없습니다."));
     }
 }
+
+혹시 제가 나중에 까먹을까봐 에러 나도록 적어둘게요
+      1.  C U D  권한검사 로직 추가하기
