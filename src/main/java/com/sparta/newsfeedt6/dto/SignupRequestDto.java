@@ -1,5 +1,6 @@
 package com.sparta.newsfeedt6.dto;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,8 @@ public class SignupRequestDto {
 
     private String username;
     private String password;
+
+    @Pattern(regexp = "^[a-zA-Z0-9-_]+@(naver\\.com|gmail\\.com)$", message = "naver.com 또는 gmail.com 이메일이 아닙니다.")
     private String email;
     private String introduction;
 
