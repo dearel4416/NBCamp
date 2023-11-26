@@ -1,13 +1,16 @@
 package com.sparta.newsfeedt6.user.service;
 
+import com.sparta.newsfeedt6.security.jwt.JwtUtil;
 import com.sparta.newsfeedt6.user.dto.LoginRequestDto;
 import com.sparta.newsfeedt6.user.dto.SignupRequestDto;
 import com.sparta.newsfeedt6.user.entity.EmailVerification;
 import com.sparta.newsfeedt6.user.entity.User;
 import com.sparta.newsfeedt6.user.repository.EmailVerificationRepository;
 import com.sparta.newsfeedt6.user.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
     private final EmailVerificationRepository emailVerificationRepository;
+    private final JwtUtil jwtUtil;
 
 
     public void signup(SignupRequestDto requestDto) {
@@ -53,6 +57,10 @@ public class UserService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
+    }
+
+    public void logout(HttpServletRequest req){
+        System.out.println(jwtUtil.getTokenFromRequest(req));
     }
 
     public void sendCodeToEmail(String email) {

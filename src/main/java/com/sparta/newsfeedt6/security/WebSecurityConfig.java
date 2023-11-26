@@ -58,9 +58,9 @@ public class WebSecurityConfig {
                                 .requestMatchers("/").permitAll()
                                 .anyRequest().authenticated());
 
-        httpSecurity.formLogin((formLogin) ->
-                formLogin.
-                        loginPage("/api/user/login").permitAll());
+//        httpSecurity.formLogin((formLogin) ->
+//                formLogin.
+//                        loginPage("/api/user/login").permitAll());
 
         httpSecurity.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
