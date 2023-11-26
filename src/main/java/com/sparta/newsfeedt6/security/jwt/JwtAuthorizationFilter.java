@@ -39,8 +39,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String tokenValue = jwtUtil.getTokenFromRequest(req);
 
         if (StringUtils.hasText(tokenValue)) {
-            tokenValue = jwtUtil.substringToken(tokenValue);
             log.info(tokenValue);
+            tokenValue = jwtUtil.substringToken(tokenValue);
 
             try {
                 if (jwtUtil.validateToken(tokenValue)) {
@@ -84,6 +84,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
+                System.out.println("Cookie name: " + cookie.getName());
                 if (cookie.getName().equals(REFRESH_HEADER)) {
                     try {
                         return URLDecoder.decode(cookie.getValue(), "UTF-8");

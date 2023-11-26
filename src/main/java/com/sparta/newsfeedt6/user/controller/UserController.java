@@ -43,15 +43,15 @@ public class UserController {
         return "loginForm";
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletResponse res) {
-
-        userService.login(requestDto, res);
-
-        HttpHeaders headers = new HttpHeaders();
-        res.setHeader(JwtUtil.AUTH_HEADER, jwtUtil.createToken(requestDto.getUsername()));
-        return ResponseEntity.ok().headers(headers).body("로그인에 성공하였습니다.");
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletResponse res) {
+//
+//        userService.login(requestDto, res);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        res.setHeader(JwtUtil.AUTH_HEADER, jwtUtil.createToken(requestDto.getUsername()));
+//        return ResponseEntity.ok().headers(headers).body("로그인에 성공하였습니다.");
+//    }
 
     @PatchMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest req) {
