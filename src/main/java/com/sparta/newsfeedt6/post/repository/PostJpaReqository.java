@@ -1,6 +1,6 @@
-package com.sparta.newsfeedt6.repository;
+package com.sparta.newsfeedt6.post.repository;
 
-import com.sparta.newsfeedt6.entity.PostEntity;
+import com.sparta.newsfeedt6.post.entity.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -76,6 +76,7 @@ public class JwtUtil {
 
         return BEARER_PREFIX +
                 Jwts.builder()
+                        .claim(AUTH_KEY, "ROLE_USER")
                         .setSubject(username) // 사용자 식별자값(ID)
                         .setExpiration(new Date(date.getTime() + REFRESH_TOKEN_EXPIRATION)) // 만료 시간  7일
                         .setIssuedAt(date)
@@ -110,7 +111,7 @@ public class JwtUtil {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        } catch (SecurityException | MalformedJwtException  e) {
+        } catch (SecurityException | MalformedJwtException | SignatureException e) {
             logger.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
         } catch (ExpiredJwtException e) {
             logger.error("Expired JWT token, 만료된 JWT token 입니다.");

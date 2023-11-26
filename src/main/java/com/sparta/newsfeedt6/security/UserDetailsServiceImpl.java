@@ -1,7 +1,7 @@
 package com.sparta.newsfeedt6.security;
 
-import com.sparta.newsfeedt6.entity.User;
-import com.sparta.newsfeedt6.repository.UserRepository;
+import com.sparta.newsfeedt6.user.entity.User;
+import com.sparta.newsfeedt6.user.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,11 +1,20 @@
-package com.sparta.newsfeedt6.service;
+package com.sparta.newsfeedt6.post.service;
 
+/*<<<<<<< HEAD:src/main/java/com/sparta/newsfeedt6/service/PostService.java
 import com.sparta.newsfeedt6.dto.PostAddRequestDto;
 import com.sparta.newsfeedt6.dto.PostResponseDto;
 import com.sparta.newsfeedt6.dto.PostUpdateRequestDto;
 import com.sparta.newsfeedt6.entity.PostEntity;
 import com.sparta.newsfeedt6.entity.User;
 import com.sparta.newsfeedt6.repository.PostJpaReqository;
+=======
+>>>>>>> d74a1bb47ce36b5837242fe9f943ad161f255799:src/main/java/com/sparta/newsfeedt6/post/service/PostService.java*/
+import com.sparta.newsfeedt6.post.dto.PostAddRequestDto;
+import com.sparta.newsfeedt6.post.dto.PostResponseDto;
+import com.sparta.newsfeedt6.post.dto.PostUpdateRequestDto;
+import com.sparta.newsfeedt6.post.entity.PostEntity;
+import com.sparta.newsfeedt6.post.repository.PostJpaReqository;
+import com.sparta.newsfeedt6.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,3 +72,7 @@ public class PostService {
                 .orElseThrow(() -> new NullPointerException("해당 게시글을 찾을 수 없습니다."));
     }
 }
+
+/*혹시 제가 나중에 까먹을까봐 에러 나도록 적어둘게요
+      1.  C U D  권한검사 로직 추가하기
+*/

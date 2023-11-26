@@ -1,8 +1,8 @@
 package com.sparta.newsfeedt6.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.newsfeedt6.dto.LoginRequestDto;
 import com.sparta.newsfeedt6.security.UserDetailsImpl;
+import com.sparta.newsfeedt6.user.dto.LoginRequestDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,7 +50,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain chain, Authentication authen)
         throws IOException, ServletException {
-        System.out.println("success!!");
 
         String username = ((UserDetailsImpl) authen.getPrincipal()).getUsername();
 
@@ -61,13 +60,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         jwtUtil.addRefreshTokenToCookie(refToken, response);
 
         response.setHeader(JwtUtil.AUTH_HEADER,accessToken);
-        System.out.println("success");
     }
 
     @Override
     protected void unsuccessfulAuthentication (HttpServletRequest request, HttpServletResponse response,
                                                AuthenticationException failed) throws IOException, ServletException {
-        System.out.println("401");
         response.setStatus(401);
     }
 
