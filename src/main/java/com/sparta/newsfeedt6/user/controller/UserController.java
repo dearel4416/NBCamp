@@ -3,15 +3,13 @@ import com.sparta.newsfeedt6.user.dto.SignupRequestDto;
 import com.sparta.newsfeedt6.user.service.UserService;
 import com.sparta.newsfeedt6.user.dto.LoginRequestDto;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping
@@ -28,8 +26,9 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String signup(@RequestBody SignupRequestDto requestDto){
+    public String signup(@Valid @RequestBody SignupRequestDto requestDto) {
         userService.signup(requestDto);
+
         return "home";
     }
 
@@ -49,4 +48,23 @@ public class UserController {
         return ResponseEntity.ok().headers(headers).body("로그인에 성공하였습니다.");
     }
 
+    // 이메일 인증 관련 메소드 2개
+    @PostMapping("/emails/verification-requests")
+    public ResponseEntity sendMessage(@RequestParam("email") @Valid String email) {
+        userService.sendCodeToEmail(email);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/emails/verifications")
+    public ResponseEntity<String> verificationEmail(@RequestParam("email") @Valid String email,
+                                            @RequestParam("code") String authCode) {
+        Boolean isVerified = userService.verifyCode(email, authCode);
+
+        if (isVerified) {
+            return ResponseEntity.ok("이메일 인증에 성공하였습니다");
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인증 실패");
+        }
+    }
 }

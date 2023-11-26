@@ -16,4 +16,3 @@ public class HomeController {
 }
 
 
-//이거 어디 쓰는건가요?
