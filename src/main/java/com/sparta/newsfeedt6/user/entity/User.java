@@ -1,6 +1,7 @@
 package com.sparta.newsfeedt6.user.entity;
 
 import com.sparta.newsfeedt6.comment.entity.Comment;
+import com.sparta.newsfeedt6.post.entity.PostEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,10 @@ public class User {
 
     @Column(nullable = false)
     private String introduction;
+
+    // 게시글 유저 연관관계 설정
+    @OneToMany(mappedBy = "user")
+    private List<PostEntity> postEntities;
 
     // 댓글 유저 연관관계 설정
     @OneToMany(mappedBy = "user")

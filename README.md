@@ -8,6 +8,11 @@
 ### 의존성 관리: ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
 <br>
 
+## Version 
+### JDK 17
+### Spring Boot 3.1.5
+<br>
+
 ## 핵심 구현 기능
 #### 회원가입 : 사용자는 회원가입하여 사용권한을 얻을 수 있습니다.
 #### 로그인, 로그아웃 
@@ -52,7 +57,8 @@ port=???;db_name=???;username=???;password=???;jwt.secret.key=???;
     Apply 후 Run을 하여 정상적으로 실행되는지 확인하면 끝입니다.
 - email 인증도 활용해보고 싶으시다면
  아래의 내용 또한 추가하면 됩니다. <br>
-  (인증번호 발신 메일이 해당 메일 이름으로 전송됩니다.)
+  (인증번호 발신 메일이 해당 메일 이름으로 전송됩니다.)<br>
+- 다만 SMTP 적용한 계정과 앱 비밀번호를 입력하셔야합니다.
 ```
 mail=???;mailpwd=???;  
 ```

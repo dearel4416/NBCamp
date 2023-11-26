@@ -3,6 +3,7 @@ package com.sparta.newsfeedt6.post.entity;
 import com.sparta.newsfeedt6.comment.entity.Comment;
 import com.sparta.newsfeedt6.post.dto.PostAddRequestDto;
 import com.sparta.newsfeedt6.post.dto.PostUpdateRequestDto;
+import com.sparta.newsfeedt6.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,11 +24,16 @@ public class PostEntity extends com.sparta.newsfeedt6.entity.TimeEntity {
     @Column(nullable = false, length = 500)
     private String content;
 
+    // 유저와 게시글 연관관계 설정
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     // 댓글과 게시글 연관관계 설정
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
-    public PostEntity(PostAddRequestDto requestDto) {
+    public PostEntity(PostAddRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
     }
