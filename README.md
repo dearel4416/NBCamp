@@ -22,11 +22,9 @@
 #### 특이사항 
 <ul>
 <li>회원가입시 이메일 정규식을 적용하여 네이버와 지메일만 허용</li>
-<li><strong>회원가입시 이메일 인증 추가</strong</li>
+<li><strong>회원가입시 이메일 인증 추가</strong></li>
 <li>게시글 조회 시 게시글 id 뿐만 아니라 게시글 제목으로도 검색가능</li>
-<li><strong>게시글 좋아요 기능 적용</strong></li>
-<li><strong>게시글 작성 시 멀티미디어 삽입 구현</strong></li>
-<li><strong>카카오 소셜 로그인 기능 구현</strong></li>
+
 
 
 
