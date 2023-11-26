@@ -48,8 +48,6 @@ public class UserController {
 
         HttpHeaders headers = new HttpHeaders();
         res.setHeader(JwtUtil.AUTH_HEADER, jwtUtil.createToken(requestDto.getUsername()));
-
-
         return ResponseEntity.ok().headers(headers).body("로그인에 성공하였습니다.");
     }
 
@@ -58,6 +56,7 @@ public class UserController {
         userService.logout(req);
         return ResponseEntity.ok("Logout successful");
     }
+
 
     // 이메일 인증 관련 메소드 2개
     @PostMapping("/emails/verification-requests")
