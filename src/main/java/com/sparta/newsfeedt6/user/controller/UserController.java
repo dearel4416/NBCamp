@@ -1,5 +1,7 @@
 package com.sparta.newsfeedt6.user.controller;
 import com.sparta.newsfeedt6.security.jwt.JwtUtil;
+import com.sparta.newsfeedt6.user.dto.EmailRequestDto;
+import com.sparta.newsfeedt6.user.dto.EmailVerificationRequestDto;
 import com.sparta.newsfeedt6.user.dto.SignupRequestDto;
 import com.sparta.newsfeedt6.user.service.UserService;
 import com.sparta.newsfeedt6.user.dto.LoginRequestDto;
@@ -60,16 +62,15 @@ public class UserController {
 
     // 이메일 인증 관련 메소드 2개
     @PostMapping("/emails/verification-requests")
-    public ResponseEntity sendMessage(@RequestParam("email") @Valid String email) {
-        userService.sendCodeToEmail(email);
+    public ResponseEntity sendMessage(@Valid @RequestBody EmailRequestDto requestDto) {
+        userService.sendCodeToEmail(requestDto.getEmail());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/emails/verifications")
-    public ResponseEntity<String> verificationEmail(@RequestParam("email") @Valid String email,
-                                            @RequestParam("code") String authCode) {
-        Boolean isVerified = userService.verifyCode(email, authCode);
+    @PostMapping("/emails/verifications")
+    public ResponseEntity<String> verificationEmail(@Valid @RequestBody EmailVerificationRequestDto requestDto) {
+        Boolean isVerified = userService.verifyCode(requestDto.getEmail(), requestDto.getAuthCode());
 
         if (isVerified) {
             return ResponseEntity.ok("이메일 인증에 성공하였습니다");
