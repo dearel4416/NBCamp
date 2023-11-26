@@ -1,10 +1,20 @@
 package com.sparta.newsfeedt6.post.service;
 
+/*<<<<<<< HEAD:src/main/java/com/sparta/newsfeedt6/service/PostService.java
+import com.sparta.newsfeedt6.dto.PostAddRequestDto;
+import com.sparta.newsfeedt6.dto.PostResponseDto;
+import com.sparta.newsfeedt6.dto.PostUpdateRequestDto;
+import com.sparta.newsfeedt6.entity.PostEntity;
+import com.sparta.newsfeedt6.entity.User;
+import com.sparta.newsfeedt6.repository.PostJpaReqository;
+=======
+>>>>>>> d74a1bb47ce36b5837242fe9f943ad161f255799:src/main/java/com/sparta/newsfeedt6/post/service/PostService.java*/
 import com.sparta.newsfeedt6.post.dto.PostAddRequestDto;
 import com.sparta.newsfeedt6.post.dto.PostResponseDto;
 import com.sparta.newsfeedt6.post.dto.PostUpdateRequestDto;
 import com.sparta.newsfeedt6.post.entity.PostEntity;
 import com.sparta.newsfeedt6.post.repository.PostJpaReqository;
+import com.sparta.newsfeedt6.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +28,7 @@ public class PostService {
     private final PostJpaReqository postJpaReqository;
 
     // 게시글 등록 (POST)
-    public PostResponseDto addPost(PostAddRequestDto requestDto) {
+    public PostResponseDto addPost(PostAddRequestDto requestDto, User user) {
         PostEntity postEntity = new PostEntity(requestDto);
         PostEntity savePost = postJpaReqository.save(postEntity);
 
@@ -41,24 +51,18 @@ public class PostService {
 
     // 게시글 수정
     @Transactional
-    public PostResponseDto updatePost(Long postId, PostUpdateRequestDto requestDto) {
+    public PostResponseDto updatePost(Long postId, PostUpdateRequestDto requestDto, User user) {
         PostEntity postEntity = getPostEntity(postId);
 
-//        if(postEntity.getPassword().equals(requestDto.getPassword()){
-//            throw new NullPointerException("작성자의 게시글만 수정할 수 있습니다.");
-//        }
         postEntity.update(requestDto);
 
         return new PostResponseDto(postEntity);
     }
 
     // 게시글 삭제
-    public void deletePost(Long postId) {
+    public void deletePost(Long postId, User user) {
         PostEntity postEntity = getPostEntity(postId);
 
-//        if(postEntity.getPassword().equals(password){
-//            throw new NullPointerException("작성자의 게시글만 삭제할 수 있습니다.");
-//        }
         postJpaReqository.delete(postEntity);
     }
 
@@ -69,5 +73,6 @@ public class PostService {
     }
 }
 
-혹시 제가 나중에 까먹을까봐 에러 나도록 적어둘게요
+/*혹시 제가 나중에 까먹을까봐 에러 나도록 적어둘게요
       1.  C U D  권한검사 로직 추가하기
+*/

@@ -10,9 +10,10 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("username", "username");
-        return "/";
+        return "home";
     }
+
 }
 
 
-이거 어디 쓰는건가요?
+//이거 어디 쓰는건가요?
