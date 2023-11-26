@@ -2,24 +2,26 @@ package com.sparta.newsfeedt6.user.service;
 
 import com.sparta.newsfeedt6.user.dto.LoginRequestDto;
 import com.sparta.newsfeedt6.user.dto.SignupRequestDto;
+import com.sparta.newsfeedt6.user.entity.EmailVerification;
 import com.sparta.newsfeedt6.user.entity.User;
+import com.sparta.newsfeedt6.user.repository.EmailVerificationRepository;
 import com.sparta.newsfeedt6.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) { //password encoder해결하기
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final MailService mailService;
+    private final EmailVerificationRepository emailVerificationRepository;
 
 
     public void signup(SignupRequestDto requestDto) {
@@ -34,11 +36,7 @@ public class UserService {
         }
 
         // 이메일 중복 확인
-        String email = requestDto.getEmail();
-        Optional<User> checkEmail = userRepository.findByEmail(email);
-        if (checkEmail.isPresent()) {
-            throw new IllegalArgumentException("중복된 Email 입니다.");
-        }
+        String email = checkDuplicatedEmail(requestDto);
 
         User user = new User(username, password, email, introduction);
         userRepository.save(user);
@@ -55,5 +53,40 @@ public class UserService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
+    }
+
+    public void sendCodeToEmail(String email) {
+        String title = " 이메일 인증 번호";
+        String authCode = String.valueOf((int) (Math.random() * 900) + 100);
+        LocalDateTime expiredCodeTime = LocalDateTime.now().plusMinutes(30);
+
+        EmailVerification emailVerification = new EmailVerification();
+        emailVerification.setEmail(email);
+        emailVerification.setVerificationCode(authCode);
+        emailVerification.setExpiredCodeTime(expiredCodeTime);
+
+        emailVerificationRepository.save(emailVerification);
+
+        mailService.sendEmail(email, title, authCode);
+    }
+
+    public boolean verifyCode(String email, String authCode) {
+        EmailVerification emailVerification = emailVerificationRepository.findById(email)
+                .orElseThrow(() -> new IllegalArgumentException("인증코드가 없습니다."));
+        if (emailVerification.getExpiredCodeTime().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("인증 코드 시간 만료");
+        }
+        return authCode.equals(emailVerification.getVerificationCode());
+    }
+
+    // 이메일 중복 확인
+    private String checkDuplicatedEmail(SignupRequestDto requestDto) {
+        // 이메일 중복 확인
+        String email = requestDto.getEmail();
+        Optional<User> checkEmail = userRepository.findByEmail(email);
+        if (checkEmail.isPresent()) {
+            throw new IllegalArgumentException("중복된 Email 입니다.");
+        }
+        return email;
     }
 }
