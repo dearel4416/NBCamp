@@ -27,7 +27,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication (
             HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        log.warn("Start login");
         try {
             LoginRequestDto requestDto = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDto.class);
 
@@ -60,6 +59,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         jwtUtil.addRefreshTokenToCookie(refToken, response);
 
         response.setHeader(JwtUtil.AUTH_HEADER,accessToken);
+        System.out.println("success");
     }
 
     @Override
