@@ -1,14 +1,5 @@
 package com.sparta.newsfeedt6.post.service;
 
-/*<<<<<<< HEAD:src/main/java/com/sparta/newsfeedt6/service/PostService.java
-import com.sparta.newsfeedt6.dto.PostAddRequestDto;
-import com.sparta.newsfeedt6.dto.PostResponseDto;
-import com.sparta.newsfeedt6.dto.PostUpdateRequestDto;
-import com.sparta.newsfeedt6.entity.PostEntity;
-import com.sparta.newsfeedt6.entity.User;
-import com.sparta.newsfeedt6.repository.PostJpaReqository;
-=======
->>>>>>> d74a1bb47ce36b5837242fe9f943ad161f255799:src/main/java/com/sparta/newsfeedt6/post/service/PostService.java*/
 import com.sparta.newsfeedt6.post.dto.PostAddRequestDto;
 import com.sparta.newsfeedt6.post.dto.PostResponseDto;
 import com.sparta.newsfeedt6.post.dto.PostUpdateRequestDto;
