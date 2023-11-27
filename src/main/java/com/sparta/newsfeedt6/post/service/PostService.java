@@ -6,6 +6,7 @@ import com.sparta.newsfeedt6.post.dto.PostUpdateRequestDto;
 import com.sparta.newsfeedt6.post.entity.PostEntity;
 import com.sparta.newsfeedt6.post.repository.PostJpaReqository;
 import com.sparta.newsfeedt6.user.entity.User;
+import com.sparta.newsfeedt6.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,12 @@ import java.util.stream.Collectors;
 public class PostService {
     private final PostJpaReqository postJpaReqository;
 
+    private final UserService userService;
+
     // 게시글 등록 (POST)
     public PostResponseDto addPost(PostAddRequestDto requestDto, User user) {
-        PostEntity postEntity = new PostEntity(requestDto, user);
+        User findUser = userService.findByid(user.getId());
+        PostEntity postEntity = new PostEntity(requestDto, findUser); // 유저디테일스가 들어갔기때문에 유저로 변경
         PostEntity savePost = postJpaReqository.save(postEntity);
 
         return new PostResponseDto(savePost);
@@ -48,7 +52,6 @@ public class PostService {
                 .collect(Collectors.toList());
     }
     // 게시글 수정
-
     @Transactional
     public PostResponseDto updatePost(Long postId, PostUpdateRequestDto requestDto, User user) {
         PostEntity postEntity = getPostEntity(postId);

@@ -40,12 +40,12 @@ public class PostController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // 게시글 선택 조회 (GET) : by TITLE
-    @GetMapping("/{title}")
-    public ResponseEntity<List<PostResponseDto>> getPostByTitle(@RequestParam String title) {
-        List<PostResponseDto> responseDtos =  postService.getPostsByTitle(title);
-        return ResponseEntity.ok(responseDtos);
-    }
+//    // 게시글 선택 조회 (GET) : by TITLE        URI에서 ID와 TITLE을 구분 할 수 없기 때문에 두 메소드가 동시에 매핑됨.
+//    @GetMapping("/{title}")
+//    public ResponseEntity<List<PostResponseDto>> getPostByTitle(@RequestParam String title) {
+//        List<PostResponseDto> responseDtos =  postService.getPostsByTitle(title);
+//        return ResponseEntity.ok(responseDtos);
+//    }
 
     // 게시글 전체 조회
     @GetMapping
