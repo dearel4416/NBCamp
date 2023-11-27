@@ -36,6 +36,7 @@ public class PostEntity extends com.sparta.newsfeedt6.entity.TimeEntity {
     public PostEntity(PostAddRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
+        this.user = user;
     }
 
     // 게시글 수정

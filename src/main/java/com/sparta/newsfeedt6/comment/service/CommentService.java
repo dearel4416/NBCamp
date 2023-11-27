@@ -29,6 +29,7 @@ public class CommentService {
 
         Comment comment = new Comment(requestDto.getContent(), user, post);
         commentRepository.save(comment);
+        System.out.println(requestDto.getContent());
 
         return new CommentResponseDto(comment);
     }

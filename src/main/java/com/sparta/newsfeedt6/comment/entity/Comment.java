@@ -18,7 +18,7 @@ public class Comment extends TimeEntity {
     @Column(name = "comments_id")
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String content;
 
     @ManyToOne

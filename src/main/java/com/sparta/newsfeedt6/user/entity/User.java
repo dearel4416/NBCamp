@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -42,5 +43,7 @@ public class User {
         this.password = password;
         this.email = email;
         this.introduction = introduction;
+        this.postEntities = new ArrayList<>();
+        this.comments = new ArrayList<>();
     }
 }

@@ -27,6 +27,9 @@ public class UserService {
     private final EmailVerificationRepository emailVerificationRepository;
     private final JwtUtil jwtUtil;
 
+    public User findByid(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
 
     public void signup(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
