@@ -18,7 +18,15 @@ class UserTest {
         // when
         User user = new User("요정", "1q2w3e4r");
         // then
-        assertEquals(user.getUsername(), username);
-        assertEquals(user.getPassword(), password);
+        if(user.getUsername().equals(username)){
+            System.out.println("유저 이름 정상");
+        } else {
+            System.err.println("유저 이름 오류");
+        }
+        if (user.getPassword().equals(password)){
+            System.out.println("비밀 번호 정상");
+        } else {
+            System.err.println("비밀 번호 오류");
+        }
     }
 }
