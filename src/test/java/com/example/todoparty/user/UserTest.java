@@ -13,10 +13,10 @@ class UserTest {
     @DisplayName("Getter 테스트")
     void test(){
         // given
-        String username = "요정";
+        String username = "이름";
         String password = "1q2w3e4r";
         // when
-        User user = new User("요정", "1q2w3e4r");
+        User user = new User("이름", "1q2w3e4r");
         // then
         if(user.getUsername().equals(username)){
             System.out.println("유저 이름 정상");

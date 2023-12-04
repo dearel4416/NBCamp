@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 @Nested
 @DisplayName("UserRequestDTO 테스트")
 class UserRequestDTOTest {
-    String[] usernames = {"qwer1234", "11111111111", "A", "&", "요정"};
+    String[] usernames = {"qwer1234", "11111111111", "A", "&", "이름"};
     String[] passwords = {"QwEr1234", "111111111111111111", "喝", "%", "비번"};
     @Test
     @DisplayName("UserRequestDTO SET & GET")

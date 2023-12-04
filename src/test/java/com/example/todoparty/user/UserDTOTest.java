@@ -13,7 +13,7 @@ class UserDTOTest {
     @DisplayName("UserDTO 생성 & GET")
     void test(){
         // given & when
-        UserDTO dto = new UserDTO(new User("요정", "1q2w3e4r"));
+        UserDTO dto = new UserDTO(new User("이름", "1q2w3e4r"));
         
         // then
         if(dto.getUsername().equals("요정")){
