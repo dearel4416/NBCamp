@@ -19,14 +19,5 @@ public class ErrorResponse {
         .errorMessages(errorMessages)
         .build();
   }
-
-  public static ErrorResponse of(HttpStatus status, String errorMessage) {
-    List<String> errorMessages = List.of(errorMessage);
-
-    return ErrorResponse.builder()
-        .status(status.value())
-        .errorMessages(errorMessages)
-        .build();
-  }
 }
 

@@ -1,5 +1,6 @@
 package com.example.sparta_a13.follow.entity;
 
+import com.example.sparta_a13.user.entity.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,17 +19,15 @@ public class Follow {
   private Long userId;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "follower_id", nullable = false)
-  private User follower;
-
-  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "following_id", nullable = false)
   private User following;
 
-  public Follow(User follower, User following) {
-    this.follower = follower;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "follower_id", nullable = false)
+  private User follower;
+
+  public Follow(User following, User follower) {
     this.following = following;
+    this.follower = follower;
   }
-
-
 }
