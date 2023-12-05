@@ -21,7 +21,7 @@ public class FollowService {
     // 팔로우 하기
     public Follow followUser(String username, Long followerId) {
       User user = checkUser(username);
-      User follower = checkFollower(followerId);
+      User follower = checkFollowerUser(followerId);
 
       // 이미 팔로우 한 경우
       if (isAlreadyFollow(user, follower)) {
@@ -30,6 +30,7 @@ public class FollowService {
 
       Follow follow = new Follow(user, follower);
       return followRepository.save(follow);
+
     }
 
   // 유저 확인
@@ -42,7 +43,7 @@ public class FollowService {
   }
 
   // 팔로워 확인
-  private User checkFollower(Long followerId) {
+  private User checkFollowerUser(Long followerId) {
     Optional<User> follower = userRepository.findByUserId(followerId);
     if (follower.isEmpty()) {
       throw new UserNotFoundException();

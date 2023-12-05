@@ -5,11 +5,6 @@ import com.example.sparta_a13.user.entity.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface FollowRepository extends JpaRepository<Long, Follow> {
-
-  Optional<Follow> findByFollowerAndFollowing(User following, User follower);
-
-  void deleteFollowByFollowerAndFollowing(User following, User follower);
-
+public interface FollowRepository extends JpaRepository<Follow, Long> {
   Optional<Follow> findByFollowingAndFollower(User following, User follower);
 }

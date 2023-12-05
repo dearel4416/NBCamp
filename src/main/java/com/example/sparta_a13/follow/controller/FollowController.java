@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/follow")
 @RequiredArgsConstructor
 public class FollowController {
 
   private final FollowService followService;
 
   // 팔로우 하기
-  @PostMapping("/{followerId}/follow")
+  @PostMapping("/{followerId}")
   public ResponseEntity<?> followUser(@PathVariable Long followerId) {
 
     // 임시 유저
