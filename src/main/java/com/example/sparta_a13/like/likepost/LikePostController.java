@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LikePostController {
 
+/*
   private final LikePostService likePostService;
 
   // 게시글 좋아요 하기
@@ -30,5 +31,6 @@ public class LikePostController {
 
   // 게시글 좋아요 취소하기
 
+*/
 
 }
