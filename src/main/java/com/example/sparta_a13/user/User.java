@@ -19,8 +19,16 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    public User(String username, String password){
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String introduce;
+
+    public User(String username, String password, String email, String introduce){
         this.username = username;
         this.password = password;
+        this.email = email;
+        this.introduce = introduce;
     }
 }
