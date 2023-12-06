@@ -14,4 +14,9 @@ public class UserRequestDTO {
         this.username = username;
         this.password = password;
     }
+
+    public UserRequestDTO(User user) {
+        this.username = user.getUsername();
+        this.password= user.getPassword();
+    }
 }

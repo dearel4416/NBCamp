@@ -1,7 +1,8 @@
-package post.response;
+package com.example.sparta_a13.post.response;
 
+import com.example.sparta_a13.CommonResponseDto;
+import com.example.sparta_a13.post.Post;
 import lombok.*;
-import post.Post;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
-public class PostResponseDto extends CommonResponseDTO {
+public class PostResponseDto extends CommonResponseDto {
     private Long id;
     private String postTitle;
     private String userName;

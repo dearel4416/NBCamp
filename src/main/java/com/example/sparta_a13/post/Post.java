@@ -1,15 +1,12 @@
-package post;
+package com.example.sparta_a13.post;
 
+import com.example.sparta_a13.user.User;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import post.PostRequestDto;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
+@Setter
 @Getter
 @Entity
 @NoArgsConstructor
@@ -34,9 +31,9 @@ public class Post implements Serializable {
     @Column
     private Boolean isCompleted;
 
-/*    @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;*/
+    private User user;
 
 
     @Builder
@@ -56,9 +53,9 @@ public class Post implements Serializable {
     }
 
     // 연관관계 메서드
-/*    public void setUser(User user) {
+    public void setUser(User user) {
         this.user = user;
-    }*/
+    }
 
     // 서비스 메서드
     public void setTitle(String postTitle) {

@@ -1,8 +1,12 @@
-package post;
+package com.example.sparta_a13.post;
 
 
-import post.response.PostListResponseDto;
-import post.response.PostResponseDto;
+import com.example.sparta_a13.CommonResponseDto;
+import com.example.sparta_a13.user.UserDetailsImpl;
+import com.example.sparta_a13.user.UserRequestDTO;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import com.example.sparta_a13.post.response.PostListResponseDto;
+import com.example.sparta_a13.post.response.PostResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +33,7 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<CommonResponseDto> getPost(@PathVariable Long postId) {
+    public ResponseEntity<?> getPost(@PathVariable Long postId) {
         try {
             PostResponseDto responseDto = postService.getPostDto(postId);
             return ResponseEntity.ok().body(responseDto);
@@ -42,7 +46,7 @@ public class PostController {
     public ResponseEntity<List<PostListResponseDto>> getPostList() {
         List<PostListResponseDto> response = new ArrayList<>();
 
-        Map<UserDto, List<PostResponseDto>> responseDtoMap = postService.getUserPostMap();
+        Map<UserRequestDTO, List<PostResponseDto>> responseDtoMap = postService.getUserPostMap();
 
         responseDtoMap.forEach((key, value) -> response.add(new PostListResponseDto(key, value)));
 

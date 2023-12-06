@@ -1,4 +1,4 @@
-package post;
+package com.example.sparta_a13.post;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

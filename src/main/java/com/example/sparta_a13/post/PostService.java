@@ -1,14 +1,17 @@
-package post;
+package com.example.sparta_a13.post;
 
+import com.example.sparta_a13.user.User;
+import com.example.sparta_a13.user.UserRequestDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import post.response.PostResponseDto;
+import com.example.sparta_a13.post.response.PostResponseDto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.RejectedExecutionException;
 
 @Service
@@ -31,13 +34,13 @@ public class PostService {
         return new PostResponseDto(post);
     }
 
-    public Map<UserDto, List<PostResponseDto>> getUserPostMap() {
-        Map<UserDto, List<PostResponseDto>> userPostMap = new HashMap<>();
+    public Map<UserRequestDTO, List<PostResponseDto>> getUserPostMap() {
+        Map<UserRequestDTO, List<PostResponseDto>> userPostMap = new HashMap<>();
 
         List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "createDate")); // 작성일 기준 내림차순
 
         postList.forEach(post -> {
-            var userDto = new UserDto(post.getUser());
+            var userDto = new UserRequestDTO(post.getUser());
             var postDto = new PostResponseDto(post);
             if (userPostMap.containsKey(userDto)) {
                 // 유저 할일목록에 항목을 추가
