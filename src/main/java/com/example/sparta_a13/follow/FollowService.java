@@ -1,12 +1,10 @@
-package com.example.sparta_a13.follow.service;
+package com.example.sparta_a13.follow;
 
-import com.example.sparta_a13.follow.entity.Follow;
-import com.example.sparta_a13.follow.repositoty.FollowRepository;
 import com.example.sparta_a13.global.follow.DuplicatedFollowException;
 import com.example.sparta_a13.global.follow.FollowNotFoundException;
 import com.example.sparta_a13.global.user.UserNotFoundException;
-import com.example.sparta_a13.user.entity.User;
-import com.example.sparta_a13.user.repository.UserRepository;
+import com.example.sparta_a13.user.User;
+import com.example.sparta_a13.user.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

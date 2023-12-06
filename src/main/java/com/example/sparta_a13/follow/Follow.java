@@ -1,6 +1,6 @@
-package com.example.sparta_a13.follow.entity;
+package com.example.sparta_a13.follow;
 
-import com.example.sparta_a13.user.entity.User;
+import com.example.sparta_a13.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

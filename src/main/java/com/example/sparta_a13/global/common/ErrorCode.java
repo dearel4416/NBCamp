@@ -26,7 +26,6 @@ public enum ErrorCode {
   DUPLICATED_FOLLOW_EXCEPTION(401, "팔로우 내역이 이미 존재합니다."),
 
   // 댓글
-  REJECTED_EXCUTION_EXCEPTION(401,"작성자만 수정할 수 있습니다."),
   NOT_FOUND_COMMENT_EXCEPTION(401, "댓글 ID를 찾을 수 없습니다."),
 
   // 좋아요
@@ -34,7 +33,7 @@ public enum ErrorCode {
   DUPLICATED_LIKE_EXCEPTION(401, "좋아요 내역이 이미 존재합니다."),
 
   // 게시글
-  BOARD_NOT_FOUND_EXCEPTION(401, "게시글을 찾을 수 없습니다.");
+  NOT_FOUND_POST_EXCEPTION(401, "게시글을 찾을 수 없습니다.");
 
   private final int status;
 

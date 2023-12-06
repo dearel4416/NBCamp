@@ -1,6 +1,5 @@
-package com.example.sparta_a13.follow.controller;
+package com.example.sparta_a13.follow;
 
-import com.example.sparta_a13.follow.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
