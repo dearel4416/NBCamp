@@ -26,7 +26,7 @@ public enum ErrorCode {
   DUPLICATED_FOLLOW_EXCEPTION(401, "팔로우 내역이 이미 존재합니다."),
 
   // 댓글
-  NOT_FOUND_COMMENT_EXCEPTION(401, "댓글 ID를 찾을 수 없습니다."),
+  NOT_FOUND_COMMENT_EXCEPTION(401, "댓글을 찾을 수 없습니다."),
 
   // 좋아요
   NOT_FOUND_LIKE_EXCEPTION(401, "좋아요 내역을 찾을 수 없습니다."),

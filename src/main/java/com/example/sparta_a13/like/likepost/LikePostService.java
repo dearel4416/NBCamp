@@ -1,10 +1,12 @@
 package com.example.sparta_a13.like.likepost;
 
 import com.example.sparta_a13.global.like.DuplicatedLikeException;
+import com.example.sparta_a13.global.like.NotFoundLikeException;
 import com.example.sparta_a13.global.post.PostNotFoundException;
 import com.example.sparta_a13.post.Post;
 import com.example.sparta_a13.post.PostRepository;
 import com.example.sparta_a13.user.User;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,17 +21,26 @@ public class LikePostService {
 
   // 게시글 좋아요 하기
   @Transactional
-  public LikePost createLikePost(User user, Long postId) {
+  public LikePost likePost(User loginUser, Long postId) {
     Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
 
-    if (likePostRepository.findByUserAndPost(user, post).isPresent()) {
+    if (likePostRepository.findByUserAndPost(loginUser, post).isPresent()) {
       throw new DuplicatedLikeException();
     }
 
-    LikePost likePost = LikePost.fromUserAndPost(user, post);
+    LikePost likePost = LikePost.fromUserAndPost(loginUser, post);
     return likePostRepository.save(likePost);
   }
 
   // 게시글 좋아요 취소하기
+  @Transactional
+  public void unLikePost(User loginUser, Long postId) {
+    Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
+
+    LikePost likePost = likePostRepository.findByUserAndPost(loginUser, post)
+        .orElseThrow(NotFoundLikeException::new);
+
+    likePostRepository.deleteById(likePost.getId());
+  }
 
 }

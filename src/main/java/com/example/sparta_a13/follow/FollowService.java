@@ -36,6 +36,7 @@ public class FollowService {
     User user = checkUser(username);
     User follower = checkFollowerUser(followerId);
 
+    // 팔로우 한 적이 없는 경우
     if (!isAlreadyFollow(user, follower)) {
       throw new FollowNotFoundException();
     }

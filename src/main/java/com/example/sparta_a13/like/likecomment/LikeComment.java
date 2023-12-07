@@ -1,6 +1,6 @@
-package com.example.sparta_a13.like.likepost;
+package com.example.sparta_a13.like.likecomment;
 
-import com.example.sparta_a13.post.Post;
+import com.example.sparta_a13.comment.Comment;
 import com.example.sparta_a13.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,10 +20,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LikePost {
+public class LikeComment {
 
   @Id
-  @Column(name = "like_post_id")
+  @Column(name = "like_comment_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
@@ -32,13 +32,13 @@ public class LikePost {
   private User user;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "post_id", nullable = false)
-  private Post post;
+  @JoinColumn(name = "comment_id", nullable = false)
+  private Comment comment;
 
-  public static LikePost fromUserAndPost(User user, Post post) {
-    return LikePost.builder()
+  public static LikeComment fromUserAndComment(User user, Comment comment) {
+    return LikeComment.builder()
         .user(user)
-        .post(post)
+        .comment(comment)
         .build();
   }
 

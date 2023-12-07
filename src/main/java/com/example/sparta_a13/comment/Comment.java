@@ -1,4 +1,4 @@
-package com.example.sparta_a13.post;
+package com.example.sparta_a13.comment;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,10 +11,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Post {
+public class Comment {
 
-  @Id
-  @Column(name = "post_id")
+  @Id @Column(name = "comment_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 

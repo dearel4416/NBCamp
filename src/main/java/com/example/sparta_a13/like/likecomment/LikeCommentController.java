@@ -1,4 +1,4 @@
-package com.example.sparta_a13.like.likepost;
+package com.example.sparta_a13.like.likecomment;
 
 import com.example.sparta_a13.user.User;
 import com.example.sparta_a13.user.UserDetailsImpl;
@@ -13,29 +13,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/post/{postId}/like")
+@RequestMapping("/api/comment/{commentId}/like")
 @RequiredArgsConstructor
-public class LikePostController {
+public class LikeCommentController {
 
-  private final LikePostService likePostService;
+  private final LikeCommentService likeCommentService;
 
-  // 게시글 좋아요 하기
+  // 댓글 좋아요 하기
   @PostMapping
-  public ResponseEntity<?> likePost(@PathVariable Long postId,
+  public ResponseEntity<?> likeComment(@PathVariable Long commentId,
       @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
     User loginUser = userDetails.getUser();
-    likePostService.likePost(loginUser, postId);
+    likeCommentService.likeComment(loginUser, commentId);
     return ResponseEntity.status(HttpStatus.CREATED).body("요청 성공");
   }
 
-  // 게시글 좋아요 취소하기
+  // 댓글 좋아요 취소하기
   @DeleteMapping
-  public ResponseEntity<?> unLikePost(@PathVariable Long postId,
+  public ResponseEntity<?> unLikeComment(@PathVariable Long commentId,
       @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
     User loginUser = userDetails.getUser();
-    likePostService.unLikePost(loginUser, postId);
+    likeCommentService.unLikeComment(loginUser, commentId);
     return ResponseEntity.ok().body("요청 성공");
   }
+
 }
