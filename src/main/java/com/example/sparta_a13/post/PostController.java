@@ -26,7 +26,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity<PostResponseDto> postPost(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<PostResponseDto> createPost(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         PostResponseDto responseDto = postService.createPost(postRequestDto, userDetails.getUser());
 
         return ResponseEntity.status(201).body(responseDto);
@@ -54,8 +54,8 @@ public class PostController {
     }
 
 
-    @PutMapping("/{postId}")
-    public ResponseEntity<PostResponseDto> putPost(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    @PatchMapping("/{postId}")
+    public ResponseEntity<PostResponseDto> updatePost(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
             PostResponseDto responseDto = postService.updatePost(postId, postRequestDto, userDetails.getUser());
             return ResponseEntity.ok().body(responseDto);
@@ -65,11 +65,11 @@ public class PostController {
     }
 
 
-    @PatchMapping("/{postId}/complete")
-    public ResponseEntity<PostResponseDto> completePost(@PathVariable Long postId,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<PostResponseDto> deletePost (@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
-            PostResponseDto responseDto = postService.completePost(postId, userDetails.getUser());
-            return ResponseEntity.ok().body(responseDto);
+            postService.deletePost(postId, userDetails.getUser());
+            return ResponseEntity.ok().body(new PostResponseDto("정상적으로 삭제 되었습니다.", HttpStatus.OK.value()));
         } catch (RejectedExecutionException | IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(new PostResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }

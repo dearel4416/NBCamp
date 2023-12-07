@@ -12,7 +12,7 @@ import lombok.Setter;
 public class PostRequestDto {
 
     private String postTitle;
-    private String userName;
+    private String username;
     private String postContent;
 
 }

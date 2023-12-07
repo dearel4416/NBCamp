@@ -20,7 +20,7 @@ public class Post implements Serializable {
     private String postTitle;
 
     @Column
-    private String userName;
+    private String username;
 
     @Column
     private String postContent;
@@ -40,13 +40,13 @@ public class Post implements Serializable {
 
     public Post(String postTitle,String userName, String postContent) {
         this.postTitle = postTitle;
-        this.userName= userName;
+        this.username = userName;
         this.postContent = postContent;
     }
 
     public Post(PostRequestDto dto) {
         this.postTitle = dto.getPostTitle();
-        this.userName= dto.getUserName();
+        this.username = dto.getUsername();
         this.postContent = dto.getPostContent();
         this.createDate = LocalDateTime.now();
         this.isCompleted = false;
@@ -61,8 +61,8 @@ public class Post implements Serializable {
     public void setTitle(String postTitle) {
         this.postTitle = postTitle;
     }
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
     public void setContent(String postContent) {
         this.postContent = postContent;

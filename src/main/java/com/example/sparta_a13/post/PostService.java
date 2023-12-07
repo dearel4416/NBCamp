@@ -65,12 +65,10 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponseDto completePost(Long postId, User user) {
+    public void deletePost(Long postId, User user) {
         Post post = getUserPost(postId, user);
 
-        post.complete(); // 완료 처리
-
-        return new PostResponseDto(post);
+        postRepository.delete(post);
     }
 
     public Post getPost(Long postId) {

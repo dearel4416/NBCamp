@@ -27,7 +27,7 @@ public class PostResponseDto extends CommonResponseDto {
     public PostResponseDto(Post post) {
         this.id = post.getId();
         this.postTitle = post.getPostTitle();
-        this.userName=post.getUserName();
+        this.userName=post.getUsername();
         this.postContent = post.getPostContent();
         this.isCompleted = post.getIsCompleted();
         //this.user = new UserDTO(post.getUser());
