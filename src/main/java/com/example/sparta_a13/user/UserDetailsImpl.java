@@ -2,13 +2,15 @@ package com.example.sparta_a13.user;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 
+@Getter
 public class UserDetailsImpl implements UserDetails {
-    @Getter
     private final User user;
 
     public UserDetailsImpl(User user) {
@@ -17,9 +19,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+        SimpleGrantedAuthority adminAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(adminAuthority);
 
+        return authorities;
+    }
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -49,4 +54,5 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+
 }
