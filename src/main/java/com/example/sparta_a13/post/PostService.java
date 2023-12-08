@@ -21,7 +21,7 @@ public class PostService {
     private final PostRepository postRepository;
 
     public PostResponseDto createPost(PostRequestDto dto, User user) {
-        Post post = new Post(dto);
+        Post post = new Post(dto,user);
         post.setUser(user);
 
         var saved = postRepository.save(post);
