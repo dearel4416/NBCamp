@@ -74,7 +74,7 @@ public class PostService {
     public Post getPost(Long postId) {
 
         return postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 할일 ID 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ID 입니다."));
     }
 
     public Post getUserPost(Long postId, User user) {

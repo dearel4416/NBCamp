@@ -1,11 +1,10 @@
 package com.example.sparta_a13.like.likecomment;
 
-import com.example.sparta_a13.comment.Comment;
-import com.example.sparta_a13.comment.CommentRepository;
+import com.example.sparta_a13.comment.entity.Comment;
+import com.example.sparta_a13.comment.repository.CommentRepository;
 import com.example.sparta_a13.global.comment.CommentNotFoundException;
 import com.example.sparta_a13.global.like.DuplicatedLikeException;
 import com.example.sparta_a13.global.like.NotFoundLikeException;
-import com.example.sparta_a13.global.post.PostNotFoundException;
 import com.example.sparta_a13.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,11 +1,14 @@
 package com.example.sparta_a13.post;
 
+import com.example.sparta_a13.comment.entity.Comment;
 import com.example.sparta_a13.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Setter
 @Getter
 @Entity
@@ -33,6 +36,9 @@ public class Post implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
 
     @Builder
 

@@ -62,6 +62,7 @@ public class WebSecurityConfig {
                         authorizeHttpRequests
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/api/users/**").permitAll()
+                                .requestMatchers("/api/posts/{postId}/comments").permitAll()
                                 .anyRequest().authenticated());
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), JwtAuthenticationFilter.class);
