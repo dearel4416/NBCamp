@@ -7,10 +7,12 @@ import com.example.sparta_a13.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "comment")
 @Getter
+@Setter
 @NoArgsConstructor
 public class Comment extends Timestamped {
     @Id
@@ -19,6 +21,9 @@ public class Comment extends Timestamped {
 
     @Column
     private String content;
+
+    @Column
+    private int likeCount;
 
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)

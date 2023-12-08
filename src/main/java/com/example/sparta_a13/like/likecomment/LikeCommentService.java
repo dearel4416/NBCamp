@@ -29,7 +29,12 @@ public class LikeCommentService {
     }
 
     LikeComment likeComment = LikeComment.fromUserAndComment(loginUser, comment);
-    return likeCommentRepository.save(likeComment);
+    likeCommentRepository.save(likeComment);
+
+    comment.setLikeCount(comment.getLikeCount() + 1);
+    commentRepository.save(comment);
+
+    return likeComment;
   }
 
   // 댓글 좋아요 취소하기
@@ -42,6 +47,9 @@ public class LikeCommentService {
         .orElseThrow(NotFoundLikeException::new);
 
     likeCommentRepository.deleteById(likeComment.getId());
+
+    comment.setLikeCount(comment.getLikeCount() - 1);
+    commentRepository.save(comment);
   }
 }
 
