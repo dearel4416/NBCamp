@@ -4,7 +4,10 @@ import com.example.sparta_a13.global.follow.DuplicatedFollowException;
 import com.example.sparta_a13.global.follow.FollowNotFoundException;
 import com.example.sparta_a13.global.user.UserNotFoundException;
 import com.example.sparta_a13.user.User;
+import com.example.sparta_a13.user.UserDTO;
 import com.example.sparta_a13.user.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,6 +46,21 @@ public class FollowService {
     Optional<Follow> follow = followRepository.findByFollowingAndFollower(user, follower);
 
     followRepository.delete(follow.get());
+  }
+
+  // 팔로우 목록 조회하기 (로그인한 유저가 팔로우 한 유저들의 목록)
+  public List<UserDTO> getFollowers(String username) {
+    User user = checkUser(username);
+    List<Follow> followers = followRepository.findByFollowing(user);
+
+    List<UserDTO> followerDTOList = new ArrayList<>();
+    for (Follow follow : followers) {
+      User follower = follow.getFollower();
+      UserDTO userDTO = new UserDTO(follower.getUsername());
+      followerDTOList.add(userDTO);
+    }
+
+    return followerDTOList;
   }
 
   // 유저 확인
