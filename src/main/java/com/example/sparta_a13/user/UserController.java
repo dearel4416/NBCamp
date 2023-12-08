@@ -1,6 +1,6 @@
 package com.example.sparta_a13.user;
 
-import com.example.sparta_a13.CommonResponseDTO;
+import com.example.sparta_a13.CommonResponseDto;
 import com.example.sparta_a13.jwt.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -18,27 +18,29 @@ public class UserController {
     private final JwtUtil jwtUtil;
 
     @PostMapping("/signup")
-    public ResponseEntity<CommonResponseDTO> signup(@Valid @RequestBody UserInfoRequestDTO infoRequestDTO){
+    public ResponseEntity<CommonResponseDto> signup(@Valid @RequestBody UserInfoRequestDTO infoRequestDTO){
         try {
             userService.signup(infoRequestDTO);
         }catch (IllegalArgumentException exception){
-            return ResponseEntity.badRequest().body(new CommonResponseDTO("중복된 username", HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body(new CommonResponseDto("중복된 username", HttpStatus.BAD_REQUEST.value()));
         }
         return ResponseEntity.status(HttpStatus.CREATED.value())
-                .body(new CommonResponseDTO("회원 가입 성공", HttpStatus.CREATED.value()));
+                .body(new CommonResponseDto("회원 가입 성공", HttpStatus.CREATED.value()));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<CommonResponseDTO> login(@RequestBody UserRequestDTO userRequestDto, HttpServletResponse response, @AuthenticationPrincipal UserDetailsImpl userDetails){
+
+    public ResponseEntity<CommonResponseDto> login(@RequestBody UserRequestDTO userRequestDto, HttpServletResponse response){
+
         try {
             userService.login(userRequestDto);
         } catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(new CommonResponseDTO(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
 
         response.setHeader(JwtUtil.AUTH_HEADER, jwtUtil.createToken(userRequestDto.getUsername()));
 
-        return ResponseEntity.ok().body(new CommonResponseDTO("로그인 성공", HttpStatus.OK.value()));
+        return ResponseEntity.ok().body(new CommonResponseDto("로그인 성공", HttpStatus.OK.value()));
     }
 
     @GetMapping("/logout")
