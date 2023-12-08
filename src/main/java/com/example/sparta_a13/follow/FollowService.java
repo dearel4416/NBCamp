@@ -2,6 +2,7 @@ package com.example.sparta_a13.follow;
 
 import com.example.sparta_a13.global.follow.DuplicatedFollowException;
 import com.example.sparta_a13.global.follow.FollowNotFoundException;
+import com.example.sparta_a13.global.follow.SelfFollowException;
 import com.example.sparta_a13.global.user.UserNotFoundException;
 import com.example.sparta_a13.user.User;
 import com.example.sparta_a13.user.UserDTO;
@@ -24,6 +25,11 @@ public class FollowService {
   public Follow followUser(String username, Long followerId) {
     User user = checkUser(username);
     User follower = checkFollowerUser(followerId);
+
+    // 자기 자신은 팔로우 하는 경우
+    if (user.getId().equals(follower.getId())) {
+      throw new SelfFollowException();
+    }
 
     // 이미 팔로우 한 경우
     if (isAlreadyFollow(user, follower)) {

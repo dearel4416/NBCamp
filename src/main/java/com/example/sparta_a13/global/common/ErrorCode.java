@@ -24,6 +24,7 @@ public enum ErrorCode {
   // 팔로우
   NOT_FOUND_FOLLOW_EXCEPTION(401, "팔로우 내역을 찾을 수 없습니다."),
   DUPLICATED_FOLLOW_EXCEPTION(401, "팔로우 내역이 이미 존재합니다."),
+  SELF_FOLLOW_EXCEPTION(401, "자기 자신은 팔로우 할 수 없습니다."),
 
   // 댓글
   NOT_FOUND_COMMENT_EXCEPTION(401, "댓글을 찾을 수 없습니다."),
