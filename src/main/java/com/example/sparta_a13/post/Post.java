@@ -28,8 +28,6 @@ public class Post implements Serializable {
     @Column
     private LocalDateTime createDate;
 
-    @Column
-    private Boolean isCompleted;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -38,9 +36,9 @@ public class Post implements Serializable {
 
     @Builder
 
-    public Post(String postTitle,String userName, String postContent) {
+    public Post(String postTitle,String username, String postContent) {
         this.postTitle = postTitle;
-        this.username = userName;
+        this.username = username;
         this.postContent = postContent;
     }
 
@@ -49,7 +47,6 @@ public class Post implements Serializable {
         this.username = dto.getUsername();
         this.postContent = dto.getPostContent();
         this.createDate = LocalDateTime.now();
-        this.isCompleted = false;
     }
 
     // 연관관계 메서드
@@ -61,14 +58,11 @@ public class Post implements Serializable {
     public void setTitle(String postTitle) {
         this.postTitle = postTitle;
     }
-    public void setUsername(String userName) {
-        this.username = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
     public void setContent(String postContent) {
         this.postContent = postContent;
     }
 
-    public void complete() {
-        this.isCompleted = true;
-    }
 }
