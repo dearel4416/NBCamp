@@ -1,5 +1,6 @@
 package com.example.sparta_a13.post;
 
+import com.example.sparta_a13.Timestamped.Timestamped;
 import com.example.sparta_a13.comment.entity.Comment;
 import com.example.sparta_a13.user.User;
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Post implements Serializable {
+public class Post extends Timestamped implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -49,9 +50,9 @@ public class Post implements Serializable {
         this.postContent = postContent;
     }
 
-    public Post(PostRequestDto dto) {
+    public Post(PostRequestDto dto, User user) {
         this.postTitle = dto.getPostTitle();
-        this.username = dto.getUsername();
+        this.username = user.getUsername();
         this.postContent = dto.getPostContent();
         this.createDate = LocalDateTime.now();
     }
