@@ -17,6 +17,7 @@ public class PostResponseDto extends CommonResponseDTO {
     private String username;
     private String postContent;
     private LocalDateTime createDate;
+    private LocalDateTime modifiedAt;
 
     public PostResponseDto(String msg, Integer statusCode) {
         super(msg, statusCode);
@@ -28,5 +29,6 @@ public class PostResponseDto extends CommonResponseDTO {
         this.username =post.getUsername();
         this.postContent = post.getPostContent();
         this.createDate = post.getCreateDate();
+        this.modifiedAt=post.getModifiedAt();
     }
 }
