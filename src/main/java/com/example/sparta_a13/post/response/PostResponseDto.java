@@ -2,7 +2,6 @@ package com.example.sparta_a13.post.response;
 
 import com.example.sparta_a13.CommonResponseDTO;
 import com.example.sparta_a13.post.Post;
-import com.example.sparta_a13.user.UserRequestDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,7 +16,6 @@ public class PostResponseDto extends CommonResponseDTO {
     private String postTitle;
     private String username;
     private String postContent;
-    private UserRequestDTO user;
     private LocalDateTime createDate;
 
     public PostResponseDto(String msg, Integer statusCode) {
@@ -29,7 +27,6 @@ public class PostResponseDto extends CommonResponseDTO {
         this.postTitle = post.getPostTitle();
         this.username =post.getUsername();
         this.postContent = post.getPostContent();
-        this.user = new UserRequestDTO(post.getUser());
         this.createDate = post.getCreateDate();
     }
 }
