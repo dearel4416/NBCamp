@@ -1,6 +1,6 @@
 package com.example.sparta_a13.jwt;
 
-import com.example.sparta_a13.CommonResponseDTO;
+import com.example.sparta_a13.CommonResponseDto;
 import com.example.sparta_a13.user.UserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
@@ -45,7 +45,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 // userDetails에 저장
                 UserDetails userDetails = userDetailsService.getUserDetails(username);
                 // authentication의 principal에 저장
-                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
                 // 저장한 내용을 securityContent에 저장
                 context.setAuthentication(authentication);
                 // securityContent를 SecurityContextHolder에 저장
@@ -53,7 +53,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 // 위 작업으로 인해 @AuthenticationPrincipal로 조회 가능
             } else {
                 // 인증 토큰 없을떄
-                CommonResponseDTO commonResponseDto = new CommonResponseDTO("토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST.value());
+                CommonResponseDto commonResponseDto = new CommonResponseDto("토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST.value());
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.setContentType("application/json; charset=UTF-8");
                 response.getWriter().write(objectMapper.writeValueAsString(commonResponseDto));
@@ -63,4 +63,20 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
+    // 인증 처리
+    public void setAuthentication(String username) {
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        Authentication authentication = createAuthentication(username);
+        context.setAuthentication(authentication);
+
+        SecurityContextHolder.setContext(context);
+    }
+
+    // 인증 객체 생성
+    private Authentication createAuthentication(String username) {
+        UserDetails userDetails = userDetailsService.getUserDetails(username);
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
 }
