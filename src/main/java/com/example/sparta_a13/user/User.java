@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -26,6 +28,9 @@ public class User {
 
     @Column(nullable = false)
     private String introduce;
+
+    @Column
+    private String pastPassword;
 
     public User(String username, String password, String email, String introduce){
         this.username = username;
