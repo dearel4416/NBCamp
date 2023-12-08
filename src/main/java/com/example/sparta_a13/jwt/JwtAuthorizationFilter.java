@@ -45,7 +45,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 // userDetails에 저장
                 UserDetails userDetails = userDetailsService.getUserDetails(username);
                 // authentication의 principal에 저장
-                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
                 // 저장한 내용을 securityContent에 저장
                 context.setAuthentication(authentication);
                 // securityContent를 SecurityContextHolder에 저장
