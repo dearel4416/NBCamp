@@ -55,5 +55,12 @@ public class FollowController {
   }
 
   // 팔로잉 목록 조회하기 (로그인한 유저를 팔로우 한 유저들의 목록)
+  @GetMapping("/followings")
+  public ResponseEntity<List<UserDTO>> getFollowings(
+      @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
+    String username = userDetails.getUsername();
+    List<UserDTO> followers = followService.getFollowings(username);
+    return ResponseEntity.ok(followers);
+  }
 }

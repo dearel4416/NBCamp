@@ -63,6 +63,21 @@ public class FollowService {
     return followerDTOList;
   }
 
+  // 팔로잉 목록 조회하기 (로그인한 유저를 팔로우 한 유저들의 목록)
+  public List<UserDTO> getFollowings(String username) {
+    User user = checkUser(username);
+    List<Follow> followings = followRepository.findByFollower(user);
+
+    List<UserDTO> followingDTOList = new ArrayList<>();
+    for (Follow follow : followings) {
+      User following = follow.getFollowing();
+      UserDTO userDTO = new UserDTO(following.getUsername());
+      followingDTOList.add(userDTO);
+    }
+
+    return followingDTOList;
+  }
+
   // 유저 확인
   private User checkUser(String username) {
     Optional<User> user = userRepository.findByUsername(username);
