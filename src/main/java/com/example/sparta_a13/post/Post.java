@@ -31,11 +31,12 @@ public class Post implements Serializable {
     @Column
     private LocalDateTime createDate;
 
+    @Column
+    private int likeCount;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;

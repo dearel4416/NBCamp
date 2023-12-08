@@ -6,7 +6,6 @@ import com.example.sparta_a13.global.post.PostNotFoundException;
 import com.example.sparta_a13.post.Post;
 import com.example.sparta_a13.post.PostRepository;
 import com.example.sparta_a13.user.User;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +28,12 @@ public class LikePostService {
     }
 
     LikePost likePost = LikePost.fromUserAndPost(loginUser, post);
-    return likePostRepository.save(likePost);
+    likePostRepository.save(likePost);
+
+    post.setLikeCount(post.getLikeCount() + 1);
+    postRepository.save(post);
+
+    return likePost;
   }
 
   // 게시글 좋아요 취소하기
@@ -41,6 +45,9 @@ public class LikePostService {
         .orElseThrow(NotFoundLikeException::new);
 
     likePostRepository.deleteById(likePost.getId());
+
+    post.setLikeCount(post.getLikeCount() - 1);
+    postRepository.save(post);
   }
 
 }
