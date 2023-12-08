@@ -1,7 +1,7 @@
 package com.example.sparta_a13.post;
 
 
-import com.example.sparta_a13.CommonResponseDto;
+import com.example.sparta_a13.CommonResponseDTO;
 import com.example.sparta_a13.user.UserDetailsImpl;
 import com.example.sparta_a13.user.UserRequestDTO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -38,7 +38,7 @@ public class PostController {
             PostResponseDto responseDto = postService.getPostDto(postId);
             return ResponseEntity.ok().body(responseDto);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body(new CommonResponseDTO(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
     }
 

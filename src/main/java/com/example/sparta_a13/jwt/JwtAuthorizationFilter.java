@@ -1,6 +1,6 @@
 package com.example.sparta_a13.jwt;
 
-import com.example.sparta_a13.CommonResponseDto;
+import com.example.sparta_a13.CommonResponseDTO;
 import com.example.sparta_a13.user.UserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
@@ -53,7 +53,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 // 위 작업으로 인해 @AuthenticationPrincipal로 조회 가능
             } else {
                 // 인증 토큰 없을떄
-                CommonResponseDto commonResponseDto = new CommonResponseDto("토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST.value());
+                CommonResponseDTO commonResponseDto = new CommonResponseDTO("토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST.value());
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.setContentType("application/json; charset=UTF-8");
                 response.getWriter().write(objectMapper.writeValueAsString(commonResponseDto));
