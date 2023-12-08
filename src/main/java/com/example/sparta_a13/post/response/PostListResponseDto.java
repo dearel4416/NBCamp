@@ -12,11 +12,10 @@ import java.util.List;
 @EqualsAndHashCode
 public class PostListResponseDto {
 
-    private UserRequestDTO user;
+
     private List<PostResponseDto> postList;
 
     public PostListResponseDto(UserRequestDTO user, List<PostResponseDto> postList) {
-        this.user = user;
         this.postList = postList;
     }
 
