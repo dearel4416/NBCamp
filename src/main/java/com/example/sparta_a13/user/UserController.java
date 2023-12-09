@@ -18,10 +18,10 @@ public class UserController {
     private final JwtUtil jwtUtil;
 
     @PostMapping("/signup")
-    public ResponseEntity<CommonResponseDTO> signup(@Valid @RequestBody UserInfoRequestDTO infoRequestDTO){
+    public ResponseEntity<CommonResponseDTO> signup(@Valid @RequestBody UserInfoRequestDTO infoRequestDTO) {
         try {
             userService.signup(infoRequestDTO);
-        }catch (IllegalArgumentException exception){
+        } catch (IllegalArgumentException exception) {
             return ResponseEntity.badRequest().body(new CommonResponseDTO("중복된 username", HttpStatus.BAD_REQUEST.value()));
         }
         return ResponseEntity.status(HttpStatus.CREATED.value())
@@ -29,45 +29,54 @@ public class UserController {
     }
 
     @PostMapping("/login")
-
     public ResponseEntity<CommonResponseDTO> login(@RequestBody UserRequestDTO userRequestDto, HttpServletResponse response){
 
         try {
             userService.login(userRequestDto);
-        } catch (IllegalArgumentException e){
+
+            response.setHeader(JwtUtil.AUTH_HEADER, jwtUtil.createToken(userRequestDto.getUsername()));
+
+            return ResponseEntity.ok().body(new CommonResponseDTO("로그인 성공", HttpStatus.OK.value()));
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new CommonResponseDTO(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
-
-        response.setHeader(JwtUtil.AUTH_HEADER, jwtUtil.createToken(userRequestDto.getUsername()));
-
-        return ResponseEntity.ok().body(new CommonResponseDTO("로그인 성공", HttpStatus.OK.value()));
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<CommonResponseDTO> logout(HttpServletResponse response, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        response.setHeader(null,null);
+    public ResponseEntity<CommonResponseDTO> logout(HttpServletResponse response, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        response.setHeader(null, null);
         return ResponseEntity.ok().body(new CommonResponseDTO("로그아웃 성공", HttpStatus.OK.value()));
     }
 
-    @PatchMapping("/profile/{userId}")
-    public ResponseEntity<CommonResponseDTO> modifyUserInfo(@PathVariable Long userId, @RequestBody UserInfoModifyRequestDTO requestDTO, HttpServletResponse response, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    @GetMapping("/profile/{userId}")
+    public ResponseEntity<CommonResponseDTO> getProfile(@PathVariable Long userId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
-            userService.modifyUserInfo(requestDTO, userDetails.getUser());
+            UserResponseDTO userResponseDTO = userService.getProfile(userDetails.getUser());
+            return ResponseEntity.ok().body(userResponseDTO);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new CommonResponseDTO(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
-        response.setHeader(null,null);
-        return ResponseEntity.ok().body(new CommonResponseDTO("프로필 수정 성공", HttpStatus.OK.value()));
+    }
+
+    @PatchMapping("/profile/{userId}")
+    public ResponseEntity<CommonResponseDTO> modifyUserInfo(@PathVariable Long userId, @RequestBody UserInfoModifyRequestDTO requestDTO, HttpServletResponse response, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        try {
+            userService.modifyUserInfo(requestDTO, userDetails.getUser());
+            response.setHeader(null, null);
+            return ResponseEntity.ok().body(new CommonResponseDTO("프로필 수정 성공", HttpStatus.OK.value()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new CommonResponseDTO(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        }
     }
 
     @PutMapping("/profile/{userId}/password")
-    public ResponseEntity<CommonResponseDTO> modifyUserPassword(@PathVariable Long userId, @RequestBody UserPWModifyRequestDTO requestDTO, HttpServletResponse response, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseEntity<CommonResponseDTO> modifyUserPassword(@PathVariable Long userId, @RequestBody UserPWModifyRequestDTO requestDTO, HttpServletResponse response, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
             userService.modifyUserPassword(requestDTO, userDetails.getUser());
+            response.setHeader(null, null);
+            return ResponseEntity.ok().body(new CommonResponseDTO("비밀번호 변경 성공", HttpStatus.OK.value()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new CommonResponseDTO(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
-        response.setHeader(null,null);
-        return ResponseEntity.ok().body(new CommonResponseDTO("비밀번호 변경 성공", HttpStatus.OK.value()));
     }
 }
