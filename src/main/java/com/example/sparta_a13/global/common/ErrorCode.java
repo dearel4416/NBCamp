@@ -28,6 +28,7 @@ public enum ErrorCode {
 
   // 댓글
   NOT_FOUND_COMMENT_EXCEPTION(401, "댓글을 찾을 수 없습니다."),
+  COMMENT_NOT_BELONGING_TO_POST_EXCEPTION(401, "해당 댓글은 현재 게시글에 존재하지 않습니다."),
 
   // 좋아요
   NOT_FOUND_LIKE_EXCEPTION(401, "좋아요 내역을 찾을 수 없습니다."),

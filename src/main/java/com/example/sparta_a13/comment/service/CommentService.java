@@ -4,6 +4,10 @@ import com.example.sparta_a13.comment.dto.CommentRequestDto;
 import com.example.sparta_a13.comment.dto.CommentResponseDto;
 import com.example.sparta_a13.comment.entity.Comment;
 import com.example.sparta_a13.comment.repository.CommentRepository;
+import com.example.sparta_a13.global.comment.CommentNotBelongingToPostException;
+import com.example.sparta_a13.global.comment.CommentNotFoundException;
+import com.example.sparta_a13.global.post.PostNotFoundException;
+import com.example.sparta_a13.global.user.UnauthorizedModifyException;
 import com.example.sparta_a13.post.Post;
 import com.example.sparta_a13.post.PostRepository;
 import com.example.sparta_a13.user.User;
@@ -48,12 +52,13 @@ public class CommentService {
 
     private Comment validatePostCommentMember(Long postId, Long commentId, User user) {
         Post post = getPost(postId);
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
+        Comment comment = commentRepository.findById(commentId)
+            .orElseThrow(CommentNotFoundException::new);
         if (!comment.getPost().getId().equals(post.getId())) {
-            throw new IllegalArgumentException("게시글 내 해당 댓글이 존재하지 않습니다.");
+            throw new CommentNotBelongingToPostException();
         }
         if(!user.getId().equals(comment.getUser().getId())) {
-            throw  new IllegalArgumentException("해당 개시글의 작성자가 아닙니다.");
+            throw  new UnauthorizedModifyException();
         }
 
         return comment;
@@ -61,7 +66,7 @@ public class CommentService {
 
     // postId에 해당하는 게시글 가져오는 메소드
     private Post getPost(Long postId) {
-      return postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+      return postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
     }
 
 }
