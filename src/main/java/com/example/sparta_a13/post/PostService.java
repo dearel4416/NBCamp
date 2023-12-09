@@ -1,5 +1,7 @@
 package com.example.sparta_a13.post;
 
+import com.example.sparta_a13.global.post.PostNotFoundException;
+import com.example.sparta_a13.global.user.UnauthorizedModifyException;
 import com.example.sparta_a13.user.User;
 import com.example.sparta_a13.user.UserRequestDTO;
 import jakarta.transaction.Transactional;
@@ -74,14 +76,14 @@ public class PostService {
     public Post getPost(Long postId) {
 
         return postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ID 입니다."));
+                .orElseThrow(PostNotFoundException::new);
     }
 
     public Post getUserPost(Long postId, User user) {
         Post post = getPost(postId);
 
         if(!user.getId().equals(post.getUser().getId())) {
-            throw new RejectedExecutionException("작성자만 수정할 수 있습니다.");
+            throw new UnauthorizedModifyException();
         }
         return post;
     }
