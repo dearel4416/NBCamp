@@ -1,5 +1,6 @@
 package com.example.sparta_a13.jwt;
 
+import com.example.sparta_a13.user.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -44,10 +45,20 @@ public class JwtUtil {
     }
 
     // 액세스 토큰 생성
-    public String createToken(String username) {
+    public String createToken(String username, UserRoleEnum role) {
         Date date = new Date();
 
-        return BEARER_PREFIX +
+        if (role == UserRoleEnum.ROLE_ADMIN)
+            return BEARER_PREFIX +
+                    Jwts.builder()
+                            .claim(AUTH_KEY,"ROLE_ADMIN")
+                            .setSubject(username) // 사용자 식별자값(ID)
+                            .setExpiration(new Date(date.getTime() + ACCESS_TOKEN_EXPIRATION)) // 만료 시간  1일
+                            .setIssuedAt(date)
+                            .signWith(key, signatureAlgorithm)
+                            .compact();
+        else
+            return BEARER_PREFIX +
                 Jwts.builder()
                         .claim(AUTH_KEY,"ROLE_USER")
                         .setSubject(username) // 사용자 식별자값(ID)
@@ -71,17 +82,27 @@ public class JwtUtil {
     }
 
     // 리프레시 토큰 생성
-    public String createRefreshToken(String username) {
+    public String createRefreshToken(String username, UserRoleEnum role) {
         Date date = new Date();
 
-        return BEARER_PREFIX +
-                Jwts.builder()
-                        .claim(AUTH_KEY, "ROLE_USER")
-                        .setSubject(username) // 사용자 식별자값(ID)
-                        .setExpiration(new Date(date.getTime() + REFRESH_TOKEN_EXPIRATION)) // 만료 시간  7일
-                        .setIssuedAt(date)
-                        .signWith(key, signatureAlgorithm)
-                        .compact();
+        if (role == UserRoleEnum.ROLE_ADMIN)
+            return BEARER_PREFIX +
+                    Jwts.builder()
+                            .claim(AUTH_KEY,"ROLE_ADMIN")
+                            .setSubject(username) // 사용자 식별자값(ID)
+                            .setExpiration(new Date(date.getTime() + REFRESH_TOKEN_EXPIRATION)) // 만료 시간  7일
+                            .setIssuedAt(date)
+                            .signWith(key, signatureAlgorithm)
+                            .compact();
+        else
+            return BEARER_PREFIX +
+                    Jwts.builder()
+                            .claim(AUTH_KEY,"ROLE_USER")
+                            .setSubject(username) // 사용자 식별자값(ID)
+                            .setExpiration(new Date(date.getTime() + REFRESH_TOKEN_EXPIRATION)) // 만료 시간  7일
+                            .setIssuedAt(date)
+                            .signWith(key, signatureAlgorithm)
+                            .compact();
     }
 
     // 리프레시토큰  쿠키에 저장

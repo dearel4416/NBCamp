@@ -2,6 +2,7 @@ package com.example.sparta_a13.user;
 
 import com.example.sparta_a13.CommonResponseDTO;
 import com.example.sparta_a13.jwt.JwtUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,34 +16,40 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
-    private final JwtUtil jwtUtil;
 
     @PostMapping("/signup")
     public ResponseEntity<CommonResponseDTO> signup(@Valid @RequestBody UserInfoRequestDTO infoRequestDTO) {
         try {
             userService.signup(infoRequestDTO);
+            return ResponseEntity.status(HttpStatus.CREATED.value())
+                    .body(new CommonResponseDTO("회원 가입 성공", HttpStatus.CREATED.value()));
         } catch (IllegalArgumentException exception) {
             return ResponseEntity.badRequest().body(new CommonResponseDTO("중복된 username", HttpStatus.BAD_REQUEST.value()));
         }
-        return ResponseEntity.status(HttpStatus.CREATED.value())
-                .body(new CommonResponseDTO("회원 가입 성공", HttpStatus.CREATED.value()));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<CommonResponseDTO> login(@RequestBody UserRequestDTO userRequestDto, HttpServletResponse response, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<CommonResponseDTO> login(@RequestBody UserRequestDTO userRequestDto, HttpServletResponse response) {
         try {
-            userService.login(userRequestDto);
-
-            response.setHeader(JwtUtil.AUTH_HEADER, jwtUtil.createToken(userRequestDto.getUsername()));
-
+            userService.login(userRequestDto, response);
             return ResponseEntity.ok().body(new CommonResponseDTO("로그인 성공", HttpStatus.OK.value()));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new CommonResponseDTO(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
     }
 
+    @PostMapping("/login/social")
+    public  ResponseEntity<CommonResponseDTO> socialLogin(@RequestParam String code, HttpServletResponse response){
+        try {
+            userService.socailLogin(code, response);
+            return ResponseEntity.ok().body(new CommonResponseDTO("소셜 로그인 성공", HttpStatus.OK.value()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new CommonResponseDTO(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        }
+    }
+
     @GetMapping("/logout")
-    public ResponseEntity<CommonResponseDTO> logout(HttpServletResponse response, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<CommonResponseDTO> logout(HttpServletResponse response) {
         response.setHeader(null, null);
         return ResponseEntity.ok().body(new CommonResponseDTO("로그아웃 성공", HttpStatus.OK.value()));
     }

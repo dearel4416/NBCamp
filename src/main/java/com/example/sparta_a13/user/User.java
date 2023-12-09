@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
@@ -29,13 +30,34 @@ public class User {
     @Column(nullable = false)
     private String introduce;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
+
     @Column
     private String pastPassword;
 
-    public User(String username, String password, String email, String introduce){
+    private Long kakaoId;
+
+    public User(String username, String password, String email, String introduce, UserRoleEnum role){
         this.username = username;
         this.password = password;
         this.email = email;
         this.introduce = introduce;
+        this.role = role;
+    }
+
+    public User(String username, String password, String email, String introduce, UserRoleEnum role, Long kakaoId){
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.introduce = introduce;
+        this.role = role;
+        this.kakaoId =kakaoId;
+    }
+
+    public User kakaoIdUpdate(Long kakaoId) {
+        this.kakaoId = kakaoId;
+        return this;
     }
 }
