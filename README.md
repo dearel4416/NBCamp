@@ -40,9 +40,9 @@
     - [ ]  **팔로우 기능 구현**
 
 
-## Figma
+## [Figma](https://www.figma.com/file/B8V42nuYada7mxXVkpRkTT/%EC%82%AC%EB%8B%A4%EB%A6%AC%EC%A1%B0?type=design&node-id=0-1&mode=design&t=7nI7N57Cg9nSY0cP-0)
 ![image](https://github.com/de123456sdf/spartaTeam_A13/assets/134623719/d42e9569-6b76-4281-80cf-04e8501d0222)
-## ERD
+## [ERD](https://www.erdcloud.com/d/9sNKqNHEJPGqxNEkJ)
 ![image](https://github.com/de123456sdf/spartaTeam_A13/assets/134623719/c85fa2c7-210d-4ce0-94bb-23e4990470fe)
 
 ## [시연영상](https://www.youtube.com/watch?v=NpkRNHXMPVw)
