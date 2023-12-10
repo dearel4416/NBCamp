@@ -30,6 +30,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<CommonResponseDTO> login(@RequestBody UserRequestDTO userRequestDto, HttpServletResponse response) {
+
         try {
             userService.login(userRequestDto, response);
             return ResponseEntity.ok().body(new CommonResponseDTO("로그인 성공", HttpStatus.OK.value()));

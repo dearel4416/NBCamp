@@ -10,4 +10,15 @@ public class UserRequestDTO {
     private String username;
     @Pattern(regexp = "^[a-zA-Z0-9]{8,15}$")
     private String password;
+
+    public UserRequestDTO(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public UserRequestDTO(User user) {
+        this.username = user.getUsername();
+        this.password= user.getPassword();
+    }
+
 }
