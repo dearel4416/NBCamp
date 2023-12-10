@@ -12,4 +12,5 @@ public class UserResponseDTO extends CommonResponseDTO {
     private String username;
     private String email;
     private String introduce;
+    private boolean isAdmin;
 }

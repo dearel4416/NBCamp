@@ -1,15 +1,14 @@
 package com.example.sparta_a13.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class UserInfoRequestDTO extends UserRequestDTO{
     private String email;
     private String introduce;
-
-    public UserInfoRequestDTO(String username, String password, String email, String introduce){
-        super(username, password);
-        this.email = email;
-        this.introduce = introduce;
-    }
+    private boolean admin = false;
+    private String adminToken = "";
 }
