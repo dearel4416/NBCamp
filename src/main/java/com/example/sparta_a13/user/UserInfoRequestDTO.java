@@ -1,6 +1,5 @@
 package com.example.sparta_a13.user;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,4 +10,8 @@ public class UserInfoRequestDTO extends UserRequestDTO{
     private String introduce;
     private boolean admin = false;
     private String adminToken = "";
+
+    public UserInfoRequestDTO(String username, String password) {
+        super(username, password);
+    }
 }

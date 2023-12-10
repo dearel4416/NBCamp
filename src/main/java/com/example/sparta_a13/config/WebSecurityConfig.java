@@ -3,7 +3,6 @@ package com.example.sparta_a13.config;
 import com.example.sparta_a13.jwt.JwtAuthenticationFilter;
 import com.example.sparta_a13.jwt.JwtAuthorizationFilter;
 import com.example.sparta_a13.jwt.JwtUtil;
-import com.example.sparta_a13.user.User;
 import com.example.sparta_a13.user.UserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
