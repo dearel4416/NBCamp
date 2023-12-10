@@ -5,8 +5,8 @@ import com.example.sparta_a13.global.follow.FollowNotFoundException;
 import com.example.sparta_a13.global.follow.SelfFollowException;
 import com.example.sparta_a13.global.user.UserNotFoundException;
 import com.example.sparta_a13.user.User;
-import com.example.sparta_a13.user.UserDTO;
 import com.example.sparta_a13.user.UserRepository;
+import com.example.sparta_a13.user.UserResponseDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,30 +55,39 @@ public class FollowService {
   }
 
   // 팔로우 목록 조회하기 (로그인한 유저가 팔로우 한 유저들의 목록)
-  public List<UserDTO> getFollowers(String username) {
+  public List<UserResponseDTO> getFollowers(String username) {
     User user = checkUser(username);
     List<Follow> followers = followRepository.findByFollowing(user);
 
-    List<UserDTO> followerDTOList = new ArrayList<>();
+    List<UserResponseDTO> followerDTOList = new ArrayList<>();
     for (Follow follow : followers) {
       User follower = follow.getFollower();
-      UserDTO userDTO = new UserDTO(follower.getUsername());
-      followerDTOList.add(userDTO);
+      UserResponseDTO userResponseDTO = new UserResponseDTO(
+          follower.getUsername(),
+          follower.getEmail(),
+          follower.getIntroduce(),
+          false);
+      followerDTOList.add(userResponseDTO);
     }
 
     return followerDTOList;
   }
 
   // 팔로잉 목록 조회하기 (로그인한 유저를 팔로우 한 유저들의 목록)
-  public List<UserDTO> getFollowings(String username) {
+  public List<UserResponseDTO> getFollowings(String username) {
     User user = checkUser(username);
     List<Follow> followings = followRepository.findByFollower(user);
 
-    List<UserDTO> followingDTOList = new ArrayList<>();
+    List<UserResponseDTO> followingDTOList = new ArrayList<>();
     for (Follow follow : followings) {
       User following = follow.getFollowing();
-      UserDTO userDTO = new UserDTO(following.getUsername());
-      followingDTOList.add(userDTO);
+      UserResponseDTO userResponseDTO = new UserResponseDTO(
+          following.getUsername(),
+          following.getEmail(),
+          following.getIntroduce(),
+          false
+          );
+      followingDTOList.add(userResponseDTO);
     }
 
     return followingDTOList;

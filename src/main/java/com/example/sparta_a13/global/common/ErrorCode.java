@@ -28,12 +28,15 @@ public enum ErrorCode {
 
   // 댓글
   NOT_FOUND_COMMENT_EXCEPTION(401, "댓글을 찾을 수 없습니다."),
+  COMMENT_NOT_BELONGING_TO_POST_EXCEPTION(401, "해당 댓글은 현재 게시글에 존재하지 않습니다."),
+  SELF_LIKE_COMMENT_EXCEPTION(401, "자신의 댓글에는 좋아요를 누를 수 없습니다."),
 
   // 좋아요
   NOT_FOUND_LIKE_EXCEPTION(401, "좋아요 내역을 찾을 수 없습니다."),
   DUPLICATED_LIKE_EXCEPTION(401, "좋아요 내역이 이미 존재합니다."),
 
   // 게시글
+  SELF_LIKE_POST_EXCEPTION(401, "자신의 글에는 좋아요를 누를 수 없습니다."),
   NOT_FOUND_POST_EXCEPTION(401, "게시글을 찾을 수 없습니다.");
 
   private final int status;

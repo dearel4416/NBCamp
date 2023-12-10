@@ -1,7 +1,7 @@
 package com.example.sparta_a13.follow;
 
-import com.example.sparta_a13.user.UserDTO;
 import com.example.sparta_a13.user.UserDetailsImpl;
+import com.example.sparta_a13.user.UserResponseDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,21 +45,21 @@ public class FollowController {
 
   // 팔로우 목록 조회하기 (로그인한 유저가 팔로우 한 유저들의 목록)
   @GetMapping("/followers")
-  public ResponseEntity<List<UserDTO>> getFollowers(
+  public ResponseEntity<List<UserResponseDTO>> getFollowers(
       @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
     String username = userDetails.getUsername();
-    List<UserDTO> followers = followService.getFollowers(username);
+    List<UserResponseDTO> followers = followService.getFollowers(username);
     return ResponseEntity.ok(followers);
   }
 
   // 팔로잉 목록 조회하기 (로그인한 유저를 팔로우 한 유저들의 목록)
   @GetMapping("/followings")
-  public ResponseEntity<List<UserDTO>> getFollowings(
+  public ResponseEntity<List<UserResponseDTO>> getFollowings(
       @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
     String username = userDetails.getUsername();
-    List<UserDTO> followers = followService.getFollowings(username);
+    List<UserResponseDTO> followers = followService.getFollowings(username);
     return ResponseEntity.ok(followers);
   }
 }
