@@ -26,7 +26,9 @@ public class LikePostController {
 
     User loginUser = userDetails.getUser();
     likePostService.likePost(loginUser, postId);
-    return ResponseEntity.status(HttpStatus.CREATED).body("게시글 좋아요 성공");
+    
+    return ResponseEntity.status(HttpStatus.CREATED).body("게시글 좋아요");
+
   }
 
   // 게시글 좋아요 취소하기
@@ -36,6 +38,7 @@ public class LikePostController {
 
     User loginUser = userDetails.getUser();
     likePostService.unLikePost(loginUser, postId);
-    return ResponseEntity.ok().body("게시글 좋아요 취소 성공");
+
+    return ResponseEntity.ok().body("게시글 좋아요 취소");
   }
 }
