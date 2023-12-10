@@ -131,6 +131,7 @@ public class UserService {
         String beforePassword = requestDTO.getBeforePassword();
         String afterPassword = requestDTO.getAfterPassword();
         String[] past;
+
         try {
             past = user.getPastPassword().split(" ");
         } catch (NullPointerException e) {
@@ -141,25 +142,25 @@ public class UserService {
             throw new IllegalArgumentException("비밀번호 불일치");
         } else {
             for(int i = 0; i < past.length; i++){
-                if(afterPassword.equals(past[i])){
+                if(passwordEncoder.matches(afterPassword, past[i])){
                     throw new IllegalArgumentException("최근 3번안에 사용한 비밀번호는 사용할 수 없습니다.");
                 }
             }
             afterPassword = passwordEncoder.encode(afterPassword);
             if(past.length == 0){
-                user.setPastPassword(beforePassword);
+                user.setPastPassword(user.getPassword());
             } else if(past.length > 2){
                 String str = user.getPastPassword().substring(past[0].length() + 1);
-                str += " " + beforePassword;
+                str += " " + user.getPassword();
                 user.setPastPassword(str);
             } else {
-                user.setPastPassword(user.getPastPassword() + " " + beforePassword);
+                user.setPastPassword(user.getPastPassword() + " " + user.getPassword());
             }
             user.setPassword(afterPassword);
         }
-
         userRepository.save(user);
     }
+
     private String getToken(String code) throws JsonProcessingException {
         // 요청 URL 만들기
         URI uri = UriComponentsBuilder
