@@ -40,6 +40,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 Claims info = jwtUtil.getUserInfoFromToken(token);
                 // 인증에 유저정보(username) 넣기
                 // username -> user 조회
+                System.out.println(info);
                 String username = info.getSubject();
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 // userDetails에 저장
@@ -62,15 +63,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
-    }
-
-    // 인증 처리
-    public void setAuthentication(String username) {
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
-        Authentication authentication = createAuthentication(username);
-        context.setAuthentication(authentication);
-
-        SecurityContextHolder.setContext(context);
     }
 
     // 인증 객체 생성

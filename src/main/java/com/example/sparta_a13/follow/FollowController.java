@@ -1,6 +1,5 @@
 package com.example.sparta_a13.follow;
 
-import com.example.sparta_a13.user.User;
 import com.example.sparta_a13.user.UserDTO;
 import com.example.sparta_a13.user.UserDetailsImpl;
 import java.util.List;

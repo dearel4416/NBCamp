@@ -2,18 +2,18 @@ package com.example.sparta_a13.jwt;
 
 import com.example.sparta_a13.user.UserDetailsImpl;
 import com.example.sparta_a13.user.UserRequestDTO;
+import com.example.sparta_a13.user.UserRoleEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.io.IOException;
 
 @Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -51,11 +51,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         throws IOException, ServletException {
 
         String username = ((UserDetailsImpl) authen.getPrincipal()).getUsername();
+        UserRoleEnum role = ((UserDetailsImpl) authen.getPrincipal()).getUser().getRole();
 
-        String accessToken = jwtUtil.createToken(username);
+        String accessToken = jwtUtil.createToken(username, role);
         jwtUtil.addAccessTokenToCookie(accessToken, response);
 
-        String refToken = jwtUtil.createRefreshToken(username);
+        String refToken = jwtUtil.createRefreshToken(username, role);
         jwtUtil.addRefreshTokenToCookie(refToken, response);
 
         response.setHeader(JwtUtil.AUTH_HEADER,accessToken);

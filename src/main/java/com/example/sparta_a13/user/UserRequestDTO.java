@@ -2,10 +2,8 @@ package com.example.sparta_a13.user;
 
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class UserRequestDTO {
     @Pattern(regexp = "^[a-z0-9]{4,10}$")
     private String username;
@@ -21,4 +19,5 @@ public class UserRequestDTO {
         this.username = user.getUsername();
         this.password= user.getPassword();
     }
+
 }

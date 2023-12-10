@@ -65,10 +65,10 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/posts/{postId}/comments").permitAll()
                                 .anyRequest().authenticated());
 
+
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), JwtAuthenticationFilter.class);
         httpSecurity.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
 }
-
