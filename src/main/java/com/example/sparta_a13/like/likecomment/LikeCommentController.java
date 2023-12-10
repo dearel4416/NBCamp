@@ -26,7 +26,7 @@ public class LikeCommentController {
 
     User loginUser = userDetails.getUser();
     likeCommentService.likeComment(loginUser, commentId);
-    return ResponseEntity.status(HttpStatus.CREATED).body("요청 성공");
+    return ResponseEntity.status(HttpStatus.CREATED).body("댓글 좋아요");
   }
 
   // 댓글 좋아요 취소하기
@@ -36,7 +36,7 @@ public class LikeCommentController {
 
     User loginUser = userDetails.getUser();
     likeCommentService.unLikeComment(loginUser, commentId);
-    return ResponseEntity.ok().body("요청 성공");
+    return ResponseEntity.ok().body("댓글 좋아요 취소");
   }
 
 }
