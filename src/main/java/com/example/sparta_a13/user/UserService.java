@@ -7,6 +7,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +37,39 @@ public class UserService {
 
     // adminToken
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
+
+    public UserResponseDTO getLadderUser(User user) {
+        List<User> users = userRepository.findAll();
+        List<User> eligibleUsers = filterEligibleUsers(users, user);
+        User randomUser = selectRandomUser(eligibleUsers);
+        return convertToUserResponseDTO(randomUser);
+    }
+
+    private static List<User> filterEligibleUsers(List<User> users, User loginUser) {
+        List<User> eligibleUsers = new ArrayList<>();
+        for (User user : users) {
+            if ((!Objects.equals(user.getUsername(), loginUser.getUsername())) && !isAdmin(user)) {
+                eligibleUsers.add(user);
+            }
+        }
+        return eligibleUsers;
+    }
+
+    private static boolean isAdmin(User user) {
+        return user.getRole() == UserRoleEnum.ROLE_ADMIN;
+    }
+
+    private static User selectRandomUser(List<User> users) {
+        if (users.isEmpty()) {
+            return null;
+        }
+        Random random = new Random();
+        return users.get(random.nextInt(users.size()));
+    }
+
+    private static UserResponseDTO convertToUserResponseDTO(User user) {
+        return new UserResponseDTO(user.getUsername(), user.getEmail(), user.getEmail(), false);
+    }
 
     public void signup(UserInfoRequestDTO infoRequestDTO) {
         String username = infoRequestDTO.getUsername();
