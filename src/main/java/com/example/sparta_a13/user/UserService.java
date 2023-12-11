@@ -68,7 +68,7 @@ public class UserService {
     }
 
     private static UserResponseDTO convertToUserResponseDTO(User user) {
-        return new UserResponseDTO(user.getUsername(), user.getEmail(), user.getEmail(), false);
+        return new UserResponseDTO(user.getUsername(), user.getEmail(), user.getIntroduce(), false);
     }
 
     public void signup(UserInfoRequestDTO infoRequestDTO) {
