@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title id="title"></title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        /* 폰트 */
+        @font-face {
+            font-family: 'Uiyeun';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105@1.1/Uiyeun.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /*헤더 */
+        .center-image {
+            margin-right: 42%;
+        }
+
+        .navbar-nav .nav-link {
+            margin-right: 20px
+        }
+
+        /* 멤버소개 버튼에 마우스를 갖다 대면 나타나는 하위 메뉴 스타일 */
+        .memberIntroMenu {
+            display: none;
+            flex-direction: row;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        .memberIntroMenu a {
+            display: block;
+            padding: 8px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .memberIntroMenu a:hover {
+            background-color: #e4e9d7;
+        }
+
+        /*이미지*/
+        .profile {
+            margin: 20px auto 20px auto;
+            padding: 20px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* 수직 가운데 정렬 */
+            align-items: center;
+            /* 수평 가운데 정렬 */
+            text-align: center;
+            /* 텍스트 가운데 정렬 */
+            width: 80%;
+        }
+
+        .eng_name {
+            text-align: left;
+            font-family: 'Uiyeun';
+            font-size: 65px;
+        }
+
+        .img_pos {
+            background-color: green;
+            margin-top: 20px;
+            width: 250px;
+            height: 250px;
+            border-radius: 70%;
+            /*이미지 둥글게*/
+            background-position: center;
+            background-size: cover;
+        }
+
+        .img_pos>img {
+            margin-top: 10px;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .moveLink {
+            margin-bottom: 60px;
+        }
+
+        .blog_img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+        }
+
+        .github_img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            margin: 10px 0px 10px 0px
+        }
+
+        .sns_img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            margin: 10px 0px 10px 0px
+        }
+
+        /* 소개글 드롭바 */
+        .nav.justify-content-center :hover {
+            /* 마우스 포인터가 올라가 있으면 */
+            transform: scale(1.1);
+            /* 1.1배 커지도록 */
+            transition: transform .3s;
+            /* 애니메이션 속도 */
+        }
+
+        ul {
+            text-align: center;
+            list-style-position: inside;
+        }
+
+        .nav-item1 {
+            margin: 0px 100px 0px 0px;
+        }
+
+        .nav-item2 {
+            margin: 0px 100px 0px 0px;
+        }
+
+        .li1 {
+            color: black;
+            font-family: 'Uiyeun';
+            font-size: 50px;
+        }
+
+        .li2 {
+            color: black;
+            font-family: 'Uiyeun';
+            font-size: 50px;
+        }
+
+        .li3 {
+            color: black;
+            font-family: 'Uiyeun';
+            font-size: 50px;
+        }
+
+        /* 소개글 내용 */
+        .aboutme {
+            display: none;
+            margin-top: 100px;
+            font-family: 'Uiyeun';
+            font-size: 30px;
+        }
+
+        .more {
+            display: none;
+            margin-top: 100px;
+            font-family: 'Uiyeun';
+            font-size: 30px;
+        }
+
+        .moreP1 {
+            margin-bottom: 50px;
+        }
+
+        .hobby {
+            text-decoration: underline;
+            text-underline-offset: 5px;
+            text-decoration-style: wavy;
+            text-decoration-thickness: 2px;
+            letter-spacing: 0.5px;
+            line-height: 40px;
+        }
+
+        .moreP2 {
+            margin-bottom: 50px;
+        }
+
+        .advantage {
+            text-decoration: underline;
+            text-underline-offset: 5px;
+            text-decoration-style: wavy;
+            text-decoration-thickness: 2px;
+            letter-spacing: 0.5px;
+            line-height: 40px;
+        }
+
+        .style {
+            text-decoration: underline;
+            text-underline-offset: 5px;
+            text-decoration-style: wavy;
+            text-decoration-thickness: 2px;
+            letter-spacing: 0.5px;
+            line-height: 40px;
+        }
+
+        .mbti_more {
+            display: none;
+            margin-top: 100px;
+        }
+    </style>
+
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc, getDocs, query, where, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+        // 일단 이민주 DB 가져옴
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBw8nF7iRylWHOkr2CejrhuePQF-FhprbA",
+            authDomain: "sparta-98616.firebaseapp.com",
+            projectId: "sparta-98616",
+            storageBucket: "sparta-98616.appspot.com",
+            messagingSenderId: "441338528647",
+            appId: "1:441338528647:web:f5a7b951b63fd5c9c34922",
+            measurementId: "G-S5SH83J73B"
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 헤더 멤버소개 부분
+        $(document).ready(function () {
+            var menuTimeout;
+
+            // 멤버소개 버튼과 메뉴에 대한 마우스 진입 이벤트
+            $("#memberIntroBtn, .memberIntroMenu").mouseenter(function () {
+                clearTimeout(menuTimeout); // 이전 타임아웃 제거 (메뉴를 숨기는 것을 중지)
+                $(".memberIntroMenu").css("display", "flex");
+            });
+
+            // 멤버소개 버튼과 메뉴에 대한 마우스 이탈 이벤트
+            $("#memberIntroBtn, .memberIntroMenu").mouseleave(function () {
+                menuTimeout = setTimeout(function () {
+                    $(".memberIntroMenu").css("display", "none");
+                }, 500); // 0.5초 후에 숨기도록 설정
+            });
+        });
+
+        //이전페이지 데이터 받아오기(이름으로 받음)
+        const receivedData = location.href.split('?')[1];
+        let name = decodeURI(receivedData); // data
+
+        // mbti 이미지 랜덤 출력
+        function mbti_img() {
+            let img_num = Math.floor(Math.random() * 4 + 1); // Math.random()로 1~4의 숫자 반환, Marh.floor()로 소수점 버리기
+            let mbti_src = "memLogo/hj/hj" + img_num + ".png";
+
+            return mbti_src
+        }
+
+        $('#title').text(name + " 소개 페이지");
+        //데이터 읽어서 개인 페이지 요소에 넣기
+        const q = query(collection(db, "member"), where("name", "==", name));
+        const mem = await getDocs(q);
+        mem.forEach((doc) => {
+            let row = doc.data();
+            let image = row['image2'];
+            let eng_name = row['eng_name'];
+            let blog = row['blog'];
+            let github = row['github'];
+            let sns = row['sns'];
+
+            let intro = row['intro'];
+            let hobby = row['hobby'];
+            let advantage = row['advantage'];
+            let style = row['style'];
+            let mbti = row['mbti'];
+            let link = "https://www.16personalities.com/ko/성격유형-" + mbti.toLowerCase();
+
+            $('#eng_name').text("I'm " + eng_name);
+            $('#img_pos').css("background-image", "url(" + image + ")");
+
+            // velog 또는 tistory 블로그가 존재할때
+            if (blog.indexOf('velog') != -1) {
+                $('.blog_img').attr("src", "velog_icon.png");
+            } else if (blog.indexOf('tistory') != -1) {
+                $('.blog_img').attr("src", "tistory.png");
+            }
+            $('#blog').attr("href", blog); // href 속성에 blog값 추가
+            $('.github_img').attr("src", "hj_image/github.png");
+            $('#github').attr("href", github); // href 속성에 github값 추가
+            $('.sns_img').attr("src", "instagram.png");
+            $('#sns').attr("href", sns); // href 속성에 sns값 추가
+
+            $('#intro').text(intro);
+
+            $('#hobby').text(hobby);
+            $('#advantage').text(advantage);
+            $('#style').text(style);
+
+            $('#mbti').attr("src", mbti_img());
+            $('#mbti_link').attr("href", link);
+        });
+
+        // 소개글 토글
+        $("#aboutme").click(async function () {
+            $('.aboutme').toggle(); // 클릭하면 토글을 열고
+            if ($('.more').css('display') != 'none') { // 열려있던 다른 토글은 닫기
+                $('.more').hide();
+            }
+            if ($('.mbti_more').css('display') != 'none') {
+                $('.mbti_more').hide();
+            }
+        })
+
+        $("#more").click(async function () {
+            $('.more').toggle();
+            if ($('.aboutme').css('display') != 'none') {
+                $('.aboutme').hide();
+            }
+            if ($('.mbti_more').css('display') != 'none') {
+                $('.mbti_more').hide();
+            }
+        })
+
+        $("#mbti_more").click(async function () {
+            $('.mbti_more').toggle();
+            if ($('.aboutme').css('display') != 'none') {
+                $('.aboutme').hide();
+            }
+            if ($('.more').css('display') != 'none') {
+                $('.more').hide();
+            }
+        })
+    </script>
+</head>
+
+<body>
+    <!-- 헤더 -->
+    <header>
+        <a name="home"></a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#5i5imain">5i5i</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="memberIntroBtn" class="nav-link" href="index.html#memberintro">멤버소개</a>
+                            <div class="memberIntroMenu">
+                                <a href="detail_sb.html?이슬비" target="_self">이슬비</a>
+                                <a href="detail_mj.html?이민주" target="_self">이민주</a>
+                                <a href="detail_so.html?이선오" target="_self">이선오</a>
+                                <a href="detail_hj.html?홍효정" target="_self">홍효정</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#commentlink">응원하기</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="center-image">
+                    <a class="navbar-brand" href="index.html#home">
+                        <img src="logo.png" alt="Your Logo" width="125px">
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="profile">
+        <h1 class="eng_name">Hello,<br><span id="eng_name"></span></h1>
+
+        <div class="img_pos" id="img_pos"></div>
+
+        <div class="moveLink">
+            <!-- 블로그 버튼 -->
+            <a id="blog" class="blog" href="" target="_blank">
+                <img src="" class="blog_img" alt="블로그 이동">
+            </a>
+            <!-- 깃허브 버튼 -->
+            <a id="github" class="github" href="" target="_blank">
+                <img src="" class="github_img" alt="깃허브 이동">
+            </a>
+            <!-- sns 버튼 -->
+            <a id="sns" class="sns" href="" target="_blank">
+                <img src="" class="sns_img" alt="인스타그램 이동">
+            </a>
+        </div>
+
+        <ul class="nav justify-content-center">
+            <li class="nav-item1">
+                <a class="nav-link active" id="aboutme" aria-current="page" href="#aboutme">
+                    <h3 class="li1">About me</h3>
+
+                </a>
+            </li>
+            <li class="nav-item2">
+                <a class="nav-link" id="more" href="#more">
+                    <h3 class="li2">more</h3>
+                </a>
+            </li>
+            <li class="nav-item3">
+                <a class="nav-link" id="mbti_more" href="#mbti_more">
+                    <h3 class="li3">mbti</h3>
+                </a>
+            </li>
+        </ul>
+
+        <div class="aboutme">
+            <p>안녕하세요. Spring 3기에 참여하게 된 홍효정 입니다.<br><span id="intro" class="intro"></span></p>
+        </div>
+
+        <div class="more">
+            <div class="moreP1">
+                <p>
+                <h4 style="font-size: 50px">Hobby<img src="hj_image/hobby.png" width="50px"></h4><span id="hobby" class="hobby"></span></p>
+            </div>
+            <div class="moreP2">
+                <p>
+                <h4 style="font-size: 50px">Strength</h4><span id="advantage" class="advantage"></span></p>
+            </div>
+            <div>
+                <p>
+                <h4 style="font-size: 50px">Style<img src="hj_image/style.png" width="50px"></h4><span id="style" class="style"></span></p>
+            </div>
+        </div>
+
+        <div class="mbti_more">
+            <a id="mbti_link" href="" target="_blank"><img src="" id="mbti" class="mbti" width="400px"></a>
+        </div>
+
+        <div style="margin-top: 50px">
+            <a href="#eng_name"><img src="hj_image/up.png" width="25px"></a>
+        </div>
+    </div>
+</body>
+
+</html>

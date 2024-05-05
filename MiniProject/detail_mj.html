@@ -1,0 +1,399 @@
+<html lang="en">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title id="tilte">이민주 소개 페이지</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        /* 폰트 */
+
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@100&family=Nanum+Myeongjo&family=Noto+Sans+KR:wght@100;200;300&family=Orbit&family=Stylish&display=swap');
+
+
+        /*헤더 */
+        .center-image {
+            margin-right: 600px;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .navbar-nav .nav-link {
+            margin-right: 20px;
+        }
+
+
+        /* 멤버소개 버튼에 마우스를 갖다 대면 나타나는 하위 메뉴 스타일 */
+        .memberIntroMenu {
+            display: none;
+            flex-direction: row;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        .memberIntroMenu a {
+            display: block;
+            padding: 8px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .memberIntroMenu a:hover {
+            background-color: #e4e9d7;
+        }
+
+        /*box*/
+        .profile {
+            background-color: pink;
+            margin: 20px auto 20px auto;
+            padding: 30px;
+            border: 10px solid rgba(240, 7, 93, 0.7);
+            border-radius: 30px;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            width: 1100px;
+            height: auto;
+        }
+
+        .name {
+            font-family: 'Stylish';
+        }
+
+        .left {
+            padding: 10px;
+            margin-right: 15px;
+            width: 350px;
+            height: auto;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .right {
+            font-family: 'Stylish', sans-serif;
+            font-size: 20pt;
+            width: 700px;
+            height: auto;
+        }
+
+        /*Left*/
+        .img_pos {
+            margin-bottom: 10px;
+            width: 300px;
+            height: 400px;
+            border-radius: 70%;
+            /*이미지 둥글게*/
+            background-position: center;
+            background-size: cover;
+        }
+
+        .img_pos>img {
+            margin-top: 10px;
+            width: 300px;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .like_btn {
+            width: 25px;
+            height: 25px;
+            object-fit: cover;
+            border: none;
+            background-color: transparent;
+            background-image: url("empty.png");
+            transition: transform 0.3s ease-in-out;
+        }
+        .like_btn:hover {
+            transform: scale(1.05);
+            background-image: url("full.png");
+        }
+
+        .like_num {
+            top: 0%;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+
+        a {
+            text-decoration: none;
+            color: rgba(240, 7, 93, 0.7);
+        }
+
+        .blog_img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        
+        }
+
+        .blog_img:hover{
+            transform: scale(1.5);
+        }
+        
+
+        .sns_img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sns_img:hover{
+            transform: scale(1.5);
+        }
+        
+        .github_img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .github_img:hover{
+            transform: scale(1.5);
+        }
+        .modify_btn {
+            background-image: url("modify.png");
+            width: 40px;
+            height: 40px;
+            float: right;
+            background-color: transparent;
+            border: none;
+        }
+
+
+    </style>
+
+    <script type="module">
+
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc, getDocs, query, where, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+        // 일단 이민주 DB 가져옴
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBw8nF7iRylWHOkr2CejrhuePQF-FhprbA",
+            authDomain: "sparta-98616.firebaseapp.com",
+            projectId: "sparta-98616",
+            storageBucket: "sparta-98616.appspot.com",
+            messagingSenderId: "441338528647",
+            appId: "1:441338528647:web:f5a7b951b63fd5c9c34922",
+            measurementId: "G-S5SH83J73B"
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 헤더 멤버소개 부분
+        $(document).ready(function () {
+            var menuTimeout;
+
+            // 멤버소개 버튼과 메뉴에 대한 마우스 진입 이벤트
+            $("#memberIntroBtn, .memberIntroMenu").mouseenter(function () {
+                clearTimeout(menuTimeout); // 이전 타임아웃 제거 (메뉴를 숨기는 것을 중지)
+                $(".memberIntroMenu").css("display", "flex");
+            });
+
+            // 멤버소개 버튼과 메뉴에 대한 마우스 이탈 이벤트
+            $("#memberIntroBtn, .memberIntroMenu").mouseleave(function () {
+                menuTimeout = setTimeout(function () {
+                    $(".memberIntroMenu").css("display", "none");
+                }, 500); // 0.5초 후에 숨기도록 설정
+            });
+        });
+
+        //이전페이지 데이터 받아오기(이름으로 받음)
+        const receivedData = location.href.split('?')[1];
+        let name = decodeURI(receivedData); // data
+
+        $('title').text(name + " 소개 페이지");
+        //데이터 읽어서 개인 페이지 요소에 넣기
+        const q = query(collection(db, "member"), where("name", "==", name));
+        const mem = await getDocs(q);
+
+        mem.forEach((doc) => {
+            let row = doc.data();
+            let image = row['image2'];
+            let name = row['name'];
+            let blog = row['blog'];
+            let sns = row['sns'];
+            let mbti = row['mbti'];
+            let intro = row['intro'];
+            let advantage = row['advantage'];
+            let style = row['style'];
+            let hobby = row['hobby'];
+            let like = row['like'];
+            let github = row['github'];
+
+            $('#img_pos').css("background-image", "url(" + image + ")");
+            $('#name').text(name);
+            $('#mbti').text(mbti);
+            $("#advantage").text(advantage);
+            $("#style").text(style);
+            $("#intro").text(intro);
+            $("#hobby").text(hobby);
+            $("#like_num").text(like);
+            let link = "https://www.16personalities.com/ko/성격유형-" + mbti.toLowerCase();
+
+
+            $('#mbti_link').attr("href", link);
+            //존재할때
+            if (blog.indexOf('velog') != -1) {
+                $('.blog_img').attr("src", "velog_icon.png");
+            } else if (blog.indexOf('tistory') != -1) {
+                $('.blog_img').attr("src", "tistory.png");
+            }
+            $('#blog').attr("href", blog);
+
+            $('.sns_img').attr("src", "instagram.png");
+            $('.github_img').attr("src", "github.png");
+
+            $('#sns').attr("href", sns);
+            $('#github').attr("href", github);
+
+
+        });
+        //수정하기 버튼
+        $("#modify_btn").click(async function () {
+
+            window.open(
+                "detail_mj_modify.html?"+name,
+                name + " 수정 화면",
+                "width=600, height=900, top=50, left=500"
+            );
+
+        });
+
+        //좋아요 버튼 누르면
+        $(".like_btn").click(async function () {
+
+            $(this).css({
+                "background-image": "url(full.png)"//꽉찬하트로 변경
+            });
+
+            let uid;
+            let like2 = 0;
+
+            const mem = await getDocs(q);
+            mem.forEach((doc) => {
+                uid = doc.id;
+                let row = doc.data();
+                like2 = row['like'];
+            });
+
+            like2++;
+            const member = doc(db, "member", uid);
+
+            await updateDoc(member, {
+                like: increment(1),//1증가
+            });
+
+            $("#like_num").text("  " + like2);//화면 num 값 증가시키기
+
+        });
+
+    </script>
+</head>
+
+<body>
+    <!-- 헤더 -->
+    <header>
+        <a name="home"></a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#5i5imain">5i5i</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="memberIntroBtn" class="nav-link" href="index.html#memberintro">멤버소개</a>
+                            <div class="memberIntroMenu">
+                                <a href="detail_sb.html?이슬비" target="_blank">이슬비</a>
+                                <a href="detail_mj.html?이민주" target="_blank">이민주</a>
+                                <a href="detail_so.html?이선오" target="_blank">이선오</a>
+                                <a href="detail_hj.html?홍효정" target="_blank">홍효정</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#commentlink">응원하기</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="center-image">
+                    <a class="navbar-brand" href="index.html#home">
+                        <img src="memLogo/mj/mj3.png" alt="Your Logo" width="125px">
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="profile">
+        <div class="left">
+            <div class="img_pos" id="img_pos">
+            </div>
+
+            <h2 class="name" id="name"></h2>
+            <p><button class="like_btn" id="like_btn" type="button"></button>
+                <span id="like_num" class="like_num"></span>
+            </p>
+
+            <span>
+                <!-- 블로그 버튼 -->
+                <a id="blog" class="blog" href="" target="_blank">
+                    <img src="" class="blog_img" alt="...">
+                </a>
+
+                <!-- sns 버튼 -->
+                <a id="sns" class="sns" href="" target="_blank">
+                    <img src="" class="sns_img" alt="...">
+                </a>
+
+                <!-- github 버튼 -->
+                <a id="github" class="github" href="" target="_blank">
+                    <img src="" class="github_img" alt="...">
+                </a>
+            </span>
+        </div>
+
+        <div class="right">
+            <button id="modify_btn" class="modify_btn"></button>
+            <p><span><b> MBTI: </b></span>
+                <a id="mbti_link" href="" target="_blank">
+                    <span id="mbti"></span></a>
+            </p>
+            <p><span><b> 장점: </b></span> <span id="advantage"> </span></p>
+            <p><span><b> 협업스타일: </b></span> <span id="style"> </span></p>
+            <p><span><b> 자기소개: </b></span> <span id="intro"> </span></p>
+            <p><span><b> 취미: </b></span> <span id="hobby"> </span></p>
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>
